@@ -1,0 +1,481 @@
+{
+  "noteList": [
+{
+      "interval": 1.5,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+
+    {
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+
+
+    {
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.75,
+      "input": 2
+    },
+
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.125,
+      "input": 1
+    },
+{
+      "interval": 0.125,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.125,
+      "input": 2
+    },
+{
+      "interval": 0.125,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.125,
+      "input": 0
+    },
+{
+      "interval": 0.125,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+
+{
+      "interval": 1,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+
+{
+      "interval": 1,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 1,
+      "input": 1
+    },
+{
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+{
+      "interval": 1,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+{
+      "interval": 1,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 1,
+      "input": 0
+    },
+{
+      "interval": 1,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 0
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 2
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    },
+{
+      "interval": 0.25,
+      "input": 0
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.25,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 1
+    },
+{
+      "interval": 0.5,
+      "input": 2
+    }
+  ]
+}

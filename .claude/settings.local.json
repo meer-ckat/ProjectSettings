@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__claude-vscode__getDiagnostics",
+      "Bash(python -c ' *)",
+      "Bash(python -c *)",
+      "Bash(git -C .. log --oneline -3 -- Resources/one_republic-counting_stars.json)",
+      "PowerShell(Select-String -Path Assets/Scenes/Game.unity -Pattern 'Music:|audioOffset|m_Resource|m_Volume|Mute|m_Enabled: 0' | ForEach-Object { \"$\\($_.LineNumber\\): $\\($_.Line.Trim\\(\\)\\)\" }; Get-Content Assets/Resources/stage1.mp3.meta, Assets/Resources/one_republic-counting_stars.wav.meta; Select-String -Path \"$env:LOCALAPPDATA\\\\Unity\\\\Editor\\\\Editor.log\" -Pattern 'error|exception|File not found|try to load|Match:' | Select-Object -Last 30 | ForEach-Object { $_.Line })"
+    ]
+  }
+}

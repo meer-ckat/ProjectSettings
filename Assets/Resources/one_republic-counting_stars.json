@@ -1,0 +1,2962 @@
+{
+    "bpm": 122.0,
+    "gridOffset": 0.27709999680519106,
+    "noteList": [
+        {
+            "interval": 4.563399791717529,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 1.1875,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 1.125,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 3.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.875,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 1.1875,
+            "input": 2
+        },
+        {
+            "interval": 1.6875,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 1.125,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 1
+        },
+        {
+            "interval": 1.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.3125,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 3.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.3125,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.875,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 0
+        },
+        {
+            "interval": 4.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 1.9375,
+            "input": 2
+        },
+        {
+            "interval": 0.75,
+            "input": 1
+        },
+        {
+            "interval": 1.75,
+            "input": 1
+        },
+        {
+            "interval": 1.25,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.6875,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.875,
+            "input": 2
+        },
+        {
+            "interval": 0.8125,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.875,
+            "input": 0
+        },
+        {
+            "interval": 1.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 1.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 1.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.5,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 2.0,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 4.4375,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.4375,
+            "input": 0
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.875,
+            "input": 0
+        },
+        {
+            "interval": 2.125,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 4.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.875,
+            "input": 1
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 1.125,
+            "input": 2
+        },
+        {
+            "interval": 0.6875,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 2.0,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 0.375,
+            "input": 1
+        },
+        {
+            "interval": 2.875,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 0.8125,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 2.8125,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 1.6875,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.3125,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 2.75,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.8125,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 1.6875,
+            "input": 0
+        },
+        {
+            "interval": 1.25,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 1.5625,
+            "input": 1
+        },
+        {
+            "interval": 1.4375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.4375,
+            "input": 2
+        },
+        {
+            "interval": 1.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.5625,
+            "input": 1
+        },
+        {
+            "interval": 1.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 1.125,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 2.0,
+            "input": 0
+        },
+        {
+            "interval": 1.9375,
+            "input": 0
+        },
+        {
+            "interval": 1.875,
+            "input": 0
+        },
+        {
+            "interval": 2.125,
+            "input": 1
+        },
+        {
+            "interval": 2.0,
+            "input": 1
+        },
+        {
+            "interval": 2.0,
+            "input": 2
+        },
+        {
+            "interval": 1.9375,
+            "input": 2
+        },
+        {
+            "interval": 2.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 0
+        },
+        {
+            "interval": 0.8125,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 1.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.8125,
+            "input": 0
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 0.625,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.8125,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.6875,
+            "input": 1
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 1.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.6875,
+            "input": 0
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 1.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 2.75,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 1.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.125,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 2.6875,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.125,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 2.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.875,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 2.8125,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.875,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 0.9375,
+            "input": 1
+        },
+        {
+            "interval": 2.125,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.3125,
+            "input": 2
+        },
+        {
+            "interval": 0.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 2.625,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.75,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 1.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.875,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 2
+        },
+        {
+            "interval": 0.375,
+            "input": 0
+        },
+        {
+            "interval": 0.625,
+            "input": 2
+        },
+        {
+            "interval": 1.3125,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 0.6875,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.8125,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.125,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.3125,
+            "input": 2
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.8125,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.3125,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.375,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.6875,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.3125,
+            "input": 0
+        },
+        {
+            "interval": 1.3125,
+            "input": 1
+        },
+        {
+            "interval": 8.5,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 2.75,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 0.8125,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 1.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 1
+        },
+        {
+            "interval": 1.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.9375,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 2.875,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.8125,
+            "input": 2
+        },
+        {
+            "interval": 0.375,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 2.0,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 0.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.125,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.75,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.75,
+            "input": 1
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.375,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 1.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.0625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.0,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.125,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 1.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.75,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 1.0625,
+            "input": 1
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.4375,
+            "input": 0
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 0
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.3125,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 0
+        },
+        {
+            "interval": 1.0,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 1.125,
+            "input": 0
+        },
+        {
+            "interval": 0.5,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.3125,
+            "input": 2
+        },
+        {
+            "interval": 0.6875,
+            "input": 1
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 1.0,
+            "input": 0
+        },
+        {
+            "interval": 0.4375,
+            "input": 2
+        },
+        {
+            "interval": 0.5625,
+            "input": 1
+        },
+        {
+            "interval": 0.1875,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.5,
+            "input": 1
+        },
+        {
+            "interval": 0.9375,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 0
+        },
+        {
+            "interval": 0.5625,
+            "input": 2
+        },
+        {
+            "interval": 0.25,
+            "input": 1
+        },
+        {
+            "interval": 0.25,
+            "input": 2
+        },
+        {
+            "interval": 0.1875,
+            "input": 0
+        },
+        {
+            "interval": 0.75,
+            "input": 2
+        },
+        {
+            "interval": 0.625,
+            "input": 1
+        }
+    ]
+}

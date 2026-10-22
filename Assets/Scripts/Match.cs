@@ -1,0 +1,1073 @@
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public enum Accuracy
+{
+    Perfect,
+    Great,
+    Good,
+    Miss,
+    Oops
+}
+
+public class Match : MonoBehaviour
+{
+    public float BPM = 260;
+
+    public float nt(float x)
+    {
+        return 60f / BPM * x;
+    }
+
+    public GameObject Glow;
+    public GameObject Shine;
+
+    public GameObject Particle;
+
+    public GameObject Lit;
+    public GameObject Click;
+
+    public GameObject Mote;
+    public GameObject GuideA;
+    public GameObject GuideB;
+    public GameObject GuideC;
+    public GameObject NotePrefab;
+
+    public Transform SpawnPoint;
+    public Transform HitPoint;
+    public RectTransform SliderUI;
+    public RectTransform Result;
+
+    public EffectScript effectScript;
+
+    [Min(0.01f)]
+    public float previewTime = 1f;
+
+    [Header("Music sync")]
+    public AudioSource Music;
+
+    [Tooltip("노트가 음악보다 늦으면 +, 빠르면 - (초)")]
+    public float audioOffset = 0f;
+
+    [Header("Hit feel")]
+    [Tooltip("비우면 기본 '틱' 소리를 만들어 쓴다")]
+    public AudioClip HitSound;
+
+    [Range(0f, 1f)]
+    public float hitVolume = 0.8f;
+    
+    public float shakeStrength = 0.08f;
+    public float shakeDuration = 0.08f;
+
+    // PlayScheduled는 소스당 예약 1개라서 여러 개 돌려 쓴다
+    private readonly AudioSource[] hitSources = new AudioSource[16];
+    private int nextHitSource;
+    private Transform cameraTransform;
+
+    private int nextSoundIndex;
+
+    public RhythmSpriteBounce rhythmSpriteBounce;
+
+    // 타건음은 키 입력이 아니라 노트에 붙어 있다: 각 노트의 정박에 맞춰 미리 예약 재생한다.
+    // 음악과 같은 시계(dsp)·같은 출력 경로라서 이어폰 딜레이가 있어도 음악과 정확히 겹친다.
+    // (누른 뒤에 재생하면 딜레이만큼 무조건 늦게 들림.) 대신 놓친 노트도 소리는 난다.
+    private void ScheduleNoteSounds()
+    {
+        if (hitSources[0] == null)
+        {
+            for (int i = 0; i < hitSources.Length; i++)
+            {
+                hitSources[i] = gameObject.AddComponent<AudioSource>();
+                hitSources[i].playOnAwake = false;
+            }
+
+            if (HitSound == null)
+            {
+                // 40ms 노이즈가 빠르게 줄어드는 '틱'
+                int rate = AudioSettings.outputSampleRate;
+                var data = new float[(int)(rate * 0.04f)];
+                for (int i = 0; i < data.Length; i++)
+                    data[i] = Random.Range(-1f, 1f) * Mathf.Exp(-i / (rate * 0.006f));
+
+                HitSound = AudioClip.Create("HitTick", data.Length, 1, rate, false);
+                HitSound.SetData(data, 0);
+            }
+        }
+
+        // 0.1초 앞까지 예약 (오디오 버퍼·프레임보다 충분히 앞, 소스 16개로 모자라지 않을 만큼 짧게)
+        double now = AudioSettings.dspTime;
+        while (nextSoundIndex < hitTimes.Length && startDsp + hitTimes[nextSoundIndex] <= now + 0.1)
+        {
+            double at = startDsp + hitTimes[nextSoundIndex++];
+            if (at < now)
+                continue; // 이미 지난 노트
+
+            AudioSource source = hitSources[nextHitSource];
+            nextHitSource = (nextHitSource + 1) % hitSources.Length;
+            source.clip = HitSound;
+            source.volume = hitVolume;
+            source.PlayScheduled(at);
+        }
+    }
+
+    // 노트를 맞히면 카메라 살짝 흔들기
+    private void Shake()
+    {
+        if (cameraTransform == null && Camera.main != null)
+            cameraTransform = Camera.main.transform;
+
+        if (cameraTransform != null)
+        {
+            // 연타해도 위치가 밀리지 않게 이전 흔들림을 끝내고(원위치) 새로 시작
+            cameraTransform.DOComplete();
+            cameraTransform.DOShakePosition(shakeDuration, shakeStrength, 30);
+        }
+    }
+
+    [Header("Judgment windows (seconds)")]
+    [Min(0f)]
+    public float perfectWindow = 0.2f;
+
+    [Min(0f)]
+    public float greatWindow = 0.5f;
+
+    [Min(0f)]
+    public float goodWindow = 1f;
+
+    public bool InputA;
+    public bool InputB;
+    public bool InputC;
+
+    public float currentTime;
+
+    public GameObject Combo;
+
+    private List<Note> notes;
+    private float[] hitTimes;
+
+    // 현재 화면에 보이는(스폰됐고 아직 판정되지 않은) 노트. 판정은 이 목록만 대상으로 한다.
+    private readonly List<NoteObject> activeNotes = new();
+
+    private int nextSpawnIndex;
+    private int judged;
+    private int perfect;
+    private int great;
+    private int good;
+    private int miss;
+    private int combo;
+    private int bestCombo;
+
+    private bool ready;
+    private bool finished;
+    private bool started;
+    private double startDsp;
+
+    // 오디오 로드 + 로딩 끊김이 가라앉을 때까지(10프레임 연속 50ms 미만) 기다린 뒤
+    // 음악을 dsp 시계 기준 정확한 시각에 예약 재생한다.
+    private IEnumerator StartWhenReady()
+    {
+        if (Music != null && Music.clip != null)
+        {
+            Music.clip.LoadAudioData();
+            while (Music.clip.loadState == AudioDataLoadState.Loading)
+                yield return null;
+        }
+
+        int stable = 0;
+        while (stable < 10)
+        {
+            yield return null;
+            stable = Time.unscaledDeltaTime < 0.05f ? stable + 1 : 0;
+        }
+
+        // 시작 전에 설정 창을 열었으면 닫을 때까지 음악 예약을 미룬다
+        while (paused)
+            yield return null;
+
+        startDsp = AudioSettings.dspTime + 0.1;
+
+        if (Music != null)
+            Music.PlayScheduled(startDsp);
+
+        currentTime = (float)(AudioSettings.dspTime - startDsp) + audioOffset;
+        started = true;
+    }
+
+    private string feedback = "Ready";
+    private float feedbackUntil;
+    private Color feedbackColor = Color.white;
+
+    private GUIStyle labelStyle;
+
+    private TextMeshPro comboText;
+    private readonly List<ParticleSystem> comboGlows = new();
+
+    private GameObject moteFolder;
+    private GameObject currentMote;
+    private Vector3 motePos;
+    public float MiracleProgress;
+
+
+    //Pooling 이벤트 핸들러
+    public void OnA(InputAction.CallbackContext c)
+    {
+        if (c.performed)
+        {
+            var g = Instantiate(Click);
+            g.transform.position = GuideA.transform.position;
+            Destroy(g, 1);
+            InputA = true;
+        }
+    }
+
+    public void OnB(InputAction.CallbackContext c)
+    {
+        if (c.performed)
+        {
+            var g = Instantiate(Click);
+            g.transform.position = GuideB.transform.position;
+            Destroy(g, 1);
+            InputB = true;
+        }
+    }
+
+    public void OnC(InputAction.CallbackContext c)
+    {
+        if (c.performed)
+        {
+            var g = Instantiate(Click);
+            g.transform.position = GuideC.transform.position;
+            Destroy(g, 1);
+            InputC = true;
+        }
+    }
+
+    private void Start()
+    {
+        if (!GuideA || !GuideB || !GuideC ||
+            !NotePrefab || !SpawnPoint || !HitPoint)
+        {
+            Debug.LogError(
+                "Match: GuideA, GuideB, GuideC, NotePrefab, SpawnPoint, HitPoint",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
+        if (!NotePrefab.GetComponent<NoteObject>())
+        {
+            Debug.LogError(
+                "Match: NotePrefab�� NoteObject�� �ʿ��մϴ�.",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
+        if (Combo != null)
+        {
+            comboText = Combo.GetComponent<TextMeshPro>();
+
+            for (int i = 0; i < Combo.transform.childCount; i++)
+            {
+                ParticleSystem particle =
+                    Combo.transform.GetChild(i).GetComponent<ParticleSystem>();
+
+                if (particle != null)
+                    comboGlows.Add(particle);
+            }
+        }
+
+        motePos = GuideB.transform.position + new Vector3(0, 1, 0);
+
+        moteFolder = GameObject.Find("Motes");
+
+        if (moteFolder != null)
+            moteFolder.transform.position = motePos;
+
+        if (NoteManager.Instance == null)
+        {
+            Debug.LogError(
+                "Match: NoteManager.Instance�� �����ϴ�.",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
+        notes = NoteManager.Instance.CurrentData.notes;
+
+        if (NoteManager.Instance.CurrentData.bpm > 0f)
+            BPM = NoteManager.Instance.CurrentData.bpm;
+
+        rhythmSpriteBounce.SetBPM(BPM);
+
+        if (notes == null || notes.Count == 0)
+        {
+            Debug.LogError(
+                "Match: JSON���� ä���� ���� ���߽��ϴ�.",
+                this
+            );
+
+            enabled = false;
+            return;
+        }
+
+        // LatencyCalibrator로 측정·저장한 이어폰 딜레이
+        audioOffset = PlayerPrefs.GetFloat(LatencyCalibrator.PrefsKey, audioOffset);
+
+        // 곡 선택 창에서 고른 난이도. 노트가 보이는 시간을 늘린다 (어려움 = 1배)
+        previewTime *= SongSelect.PreviewScale;
+
+        // 메뉴에서 고른 곡 음원 (Resources에 차트와 같은 이름). 없으면 Inspector의 clip 유지
+        var clip = Resources.Load<AudioClip>(SongSelect.Selected);
+        if (clip != null && Music != null)
+            Music.clip = clip;
+        Debug.Log($"Music: song={SongSelect.Selected} clip={(Music != null && Music.clip != null ? Music.clip.name : "NONE")}", this);
+
+        ready = true;
+
+        Restart();
+    }
+    
+    private TextMeshProUGUI Tip => Result.Find("Tip").GetComponent<TextMeshProUGUI>();
+    private TextMeshProUGUI Score => Result.Find("Score").GetComponent<TextMeshProUGUI>();
+    public void Restart()
+    {
+        Result.gameObject.SetActive(false);
+        Result.anchoredPosition = new Vector2(Result.anchoredPosition.x, -Result.rect.height * 3);
+        if (!ready || notes == null)
+            return;
+
+        foreach (NoteObject note in activeNotes)
+        {
+            if (note != null)
+                Destroy(note.gameObject);
+        }
+
+        activeNotes.Clear();
+
+        perfectWindow = Mathf.Max(0f, perfectWindow);
+        greatWindow = Mathf.Max(perfectWindow, greatWindow);
+        goodWindow = Mathf.Max(greatWindow, goodWindow);
+        previewTime = Mathf.Max(0.01f, previewTime);
+        hitTimes = new float[notes.Count];
+
+        float time = 0f;
+        float beatToSecond = 60f / BPM;
+
+        for (int i = 0; i < notes.Count; i++)
+        {
+            time += notes[i].interval * beatToSecond;
+            hitTimes[i] = time;
+        }
+
+        nextSpawnIndex = 0;
+        nextSoundIndex = 0;
+
+        if (Music != null)
+            Music.Stop();
+
+        foreach (AudioSource source in hitSources)
+        {
+            if (source != null)
+                source.Stop(); // 예약된 타건음 취소
+        }
+
+        started = false;
+        StopAllCoroutines();
+        StartCoroutine(StartWhenReady());
+
+        progressLevel = 1;
+        judged = 0;
+        perfect = 0;
+        great = 0;
+        good = 0;
+        miss = 0;
+        combo = 0;
+        bestCombo = 0;
+        MiracleProgress = 0f;
+
+        finished = false;
+
+        ClearInput();
+
+        rhythmSpriteBounce.ResetBounce();
+        rhythmSpriteBounce.setSpriteLevel(0);
+        ShowFeedback("Ready", Color.white);
+    }
+
+    private void Update()
+    {
+        bool a = InputA;
+        bool b = InputB;
+        bool c = InputC;
+
+        ClearInput();
+
+        if (!ready || !started || finished || Time.timeScale <= 0f)
+            return;
+
+        // 오디오 하드웨어 시계(dspTime)가 기준. 프레임마다 deltaTime으로 부드럽게 진행하고,
+        // dspTime과 30ms 넘게 벌어지면 맞춘다 (dspTime은 오디오 버퍼 단위로 뚝뚝 끊겨서 그대로 쓰면 노트가 떨림).
+        float audioClock = (float)(AudioSettings.dspTime - startDsp) + audioOffset;
+        currentTime += Time.deltaTime;
+        if (Mathf.Abs(audioClock - currentTime) > 0.03f)
+            currentTime = audioClock;
+
+        ScheduleNoteSounds();
+        ExpireNotes();
+        SpawnUpcomingNotes();
+
+        if (a)
+            CheckAccuracyAndForward(NoteInputType.A);
+
+        if (b)
+            CheckAccuracyAndForward(NoteInputType.B);
+
+        if (c)
+            CheckAccuracyAndForward(NoteInputType.C);
+
+        if (judged == notes.Count)
+        {
+            FinishGame();
+        }
+
+        UpdateComboUI();
+        UpdateSliderUI();
+    }
+
+    private bool paused;
+    private double pauseDsp;
+
+    // 설정 창 열고 닫을 때. 노트 시계가 dspTime 기준이라 timeScale만 0으로는 안 멈춘다:
+    // 멈춘 동안 흐른 dsp 시간만큼 startDsp를 미루고, 예약해 둔 타건음은 취소 후 다시 예약한다.
+    public void SetPaused(bool pause)
+    {
+        if (pause == paused)
+            return;
+
+        paused = pause;
+        Time.timeScale = pause ? 0f : 1f;
+
+        if (pause)
+        {
+            pauseDsp = AudioSettings.dspTime;
+
+            if (Music != null)
+                Music.Pause();
+
+            foreach (AudioSource source in hitSources)
+            {
+                if (source != null)
+                    source.Stop();
+            }
+        }
+        else
+        {
+            if (started)
+                startDsp += AudioSettings.dspTime - pauseDsp;
+            nextSoundIndex = 0; // 지난 노트는 ScheduleNoteSounds가 건너뜀
+
+            if (Music != null)
+                Music.UnPause();
+        }
+    }
+
+    // Exit 버튼 OnClick에 연결
+    public void Exit()
+    {
+        Time.timeScale = 1f; // 설정 창 연 채로 나가도 메뉴가 멈춰 있지 않게
+        DOTween.KillAll(); // 씬 넘어가며 파괴될 오브젝트의 트윈 정리
+        SceneManager.LoadScene("Menu");
+    }
+
+    // 코드로 만든 차트 치기 (TutorialCoach). music = 음악 대신 깔 소리 (메트로놈)
+    public void Play(List<Note> chart, float bpm, AudioClip music)
+    {
+        notes = chart;
+        BPM = bpm;
+        rhythmSpriteBounce.SetBPM(bpm);
+
+        if (Music != null)
+            Music.clip = music;
+
+        Restart();
+    }
+
+    [Tooltip("끝나면 결과 창 띄우기. 튜토리얼은 마지막 단계에서만 켠다")]
+    public bool showResult = true;
+
+    public void FinishGame()
+    {
+        finished = true;
+        DialogueManager.Send("Finish");
+        ShowFeedback("Finished", Color.white);
+
+        if (!showResult)
+            return;
+
+        Result.gameObject.SetActive(true);
+        Result.DOAnchorPosY(0f, 1f).SetEase(Ease.OutQuad);
+        Tip.text = MiracleProgress >= 0.9f
+            ? "Miracle!"
+            : MiracleProgress >= 0.8f
+                ? "Great!"
+                : MiracleProgress >= 0.7f
+                    ? "Good"
+                    : "Keep practicing!";
+
+        Score.text = $"Score: {MiracleProgress * 100f:0.00}%\n" +
+                     $"Perfect: {perfect}\n" +
+                     $"Great: {great}\n" +
+                     $"Good: {good}\n" +
+                     $"Miss: {miss}\n" +
+                     $"Best Combo: {bestCombo}";
+    }
+
+    private void ExpireNotes()
+    {
+        for (int i = activeNotes.Count - 1; i >= 0; i--)
+        {
+            NoteObject note = activeNotes[i];
+
+            if (currentTime - note.hitTime > goodWindow)
+                Resolve(note, Accuracy.Miss);
+        }
+    }
+
+    private RectTransform SliderParent;
+
+    public int noteCount;
+    int progressLevel = 1;
+    int totalLevel = 3;
+    float levelOffset = 0.1f;
+    void stage3(){rhythmSpriteBounce.setSpriteLevel(3);} 
+
+    private void UpdateSliderUI()
+    {
+        if (SliderParent == null)
+            SliderParent = SliderUI?.parent as RectTransform;
+
+        if (SliderUI == null || SliderParent == null || notes.Count == 0)
+            return;
+
+        if (MiracleProgress >= (progressLevel - levelOffset) / totalLevel && progressLevel <= totalLevel) //valid 판정
+        {
+            if (progressLevel == 1){effectScript.Level1(); rhythmSpriteBounce.setSpriteLevel(1);}
+            else if (progressLevel == 2){effectScript.Level2(); rhythmSpriteBounce.setSpriteLevel(2);}
+            else if (progressLevel == 3)
+            {
+                effectScript.Level3(); 
+                Invoke(nameof(stage3), 2.5f);
+            }
+            else{Debug.LogWarning("Invalid progress level: " + progressLevel);}
+            progressLevel++;
+        }
+
+        SliderUI.offsetMax = new Vector2(-SliderParent.rect.width + MiracleProgress * SliderParent.rect.width - SliderUI.offsetMin.x, SliderUI.offsetMax.y);
+    }
+
+    private void ClearInput()
+    {
+        InputA = false;
+        InputB = false;
+        InputC = false;
+    }
+
+    private void OnDisable()
+    {
+        ClearInput();
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+            ClearInput();
+    }
+
+    public Accuracy CheckAccuracyAndForward(NoteInputType input)
+    {
+        if (!ready ||
+            finished ||
+            !isActiveAndEnabled ||
+            Time.timeScale <= 0f)
+        {
+            return Accuracy.Miss;
+        }
+
+        NoteObject candidate = null;
+        NoteObject earliest = null;
+        float closest = float.PositiveInfinity;
+        bool upcoming = false;
+
+        foreach (NoteObject note in activeNotes)
+        {
+            if (note.input != input)
+                continue;
+
+            upcoming = true;
+
+            float distance =
+                Mathf.Abs(currentTime - note.hitTime);
+
+            if (distance > goodWindow)
+                continue;
+
+            if (earliest == null || note.hitTime < earliest.hitTime)
+                earliest = note;
+
+            if (distance < closest)
+            {
+                candidate = note;
+                closest = distance;
+            }
+        }
+
+        // 하이브리드: 기본은 가장 이른 노트(앞 노트를 건너뛰지 않음).
+        // 단, 가장 이른 노트가 Perfect 범위 밖이고 뒤 노트가 정박에 더 가까우면 뒤 노트를 친다.
+        // → 살짝 늦게 친 입력이 다음 노트를 뺏지 않으면서, 이미 많이 지난 노트에 발목 잡히지도 않음.
+        if (earliest != null &&
+            Mathf.Abs(currentTime - earliest.hitTime) <= perfectWindow)
+        {
+            candidate = earliest;
+            closest = Mathf.Abs(currentTime - earliest.hitTime);
+        }
+
+        if (candidate == null)
+        {
+
+            ShowFeedback(
+                input + (upcoming ? " - Too early" : " - No note"),
+                Color.gray
+            );
+
+            return Accuracy.Miss;
+        }
+
+        Accuracy result =
+            closest <= perfectWindow
+                ? Accuracy.Perfect
+                : closest <= greatWindow
+                    ? Accuracy.Great
+                    : Accuracy.Good;
+
+        string timing =
+            currentTime < candidate.hitTime
+                ? "Early"
+                : "Late";
+
+        Resolve(candidate, result);
+
+        ShowFeedback(
+            input + " - " + result +
+            (result == Accuracy.Perfect
+                ? ""
+                : " / " + timing),
+            JudgmentColor(result)
+        );
+
+        return result;
+    }
+
+    private void Resolve(NoteObject note, Accuracy result)
+    {
+        if (!activeNotes.Remove(note))
+            return;
+
+        judged++;
+        DialogueManager.Send(result.ToString()); // Perfect/Great/Good/Miss (아래에서 Oops로 바뀌기 전)
+
+        bool missed = result == Accuracy.Miss; // 아래에서 result가 Oops로 바뀔 수 있어서 미리 저장
+
+        if (!missed)
+            Shake();
+
+        // 곡 완성도(총 정확도): 노트마다 판정 가중치 / 전체 노트 수를 더한다. 전부 Perfect면 1.
+        float weight = 0f;
+
+        if (result == Accuracy.Perfect)
+        {
+            weight = 1f;
+            perfect++;
+        }
+        else if (result == Accuracy.Great)
+        {
+            weight = 0.8f;
+            great++;
+        }
+        else if (result == Accuracy.Good)
+        {
+            weight = 0.5f;
+            good++;
+        }
+        else if (result == Accuracy.Miss)
+            miss++;
+
+        noteCount = notes.Count;
+
+        MiracleProgress = Mathf.Clamp01(MiracleProgress + weight / noteCount);
+
+        int lastCombo = combo;
+
+        combo =
+            result == Accuracy.Miss ||
+            result == Accuracy.Good
+                ? 0
+                : combo + 1;
+
+        if (lastCombo > combo)
+            result = Accuracy.Oops;
+
+        bestCombo = Mathf.Max(bestCombo, combo);
+
+        // 친 노트는 즉시 제거, 놓친 노트는 그대로 지나가서 화면 밖으로 나간 뒤 제거
+        Destroy(note.gameObject, missed ? previewTime : 0f);
+
+        ShowFeedback(
+            note.input + " - " + result,
+            JudgmentColor(result)
+        );
+
+        //print("Mote!");
+        CreateMote(note.input, result);
+    }
+
+    private void SpawnUpcomingNotes()
+    {
+        while (nextSpawnIndex < notes.Count &&
+               hitTimes[nextSpawnIndex] - currentTime <= previewTime)
+        {
+            int i = nextSpawnIndex++;
+
+            NoteObject note =
+                Instantiate(NotePrefab).GetComponent<NoteObject>();
+
+            note.Setup(
+                notes[i].input,
+                hitTimes[i],
+                this,
+                GetGuide(notes[i].input).transform.position.x,
+                i
+            );
+
+            activeNotes.Add(note);
+        }
+    }
+
+    // 다음에 쳐야 할 노트: 보이는 노트 중 가장 이른 것, 없으면 다음 스폰 예정 노트
+    private bool TryGetNextNote(out NoteInputType input, out float hitTime)
+    {
+        NoteObject earliest = null;
+
+        foreach (NoteObject note in activeNotes)
+        {
+            if (earliest == null || note.hitTime < earliest.hitTime)
+                earliest = note;
+        }
+
+        if (earliest != null)
+        {
+            input = earliest.input;
+            hitTime = earliest.hitTime;
+            return true;
+        }
+
+        if (nextSpawnIndex < notes.Count)
+        {
+            input = notes[nextSpawnIndex].input;
+            hitTime = hitTimes[nextSpawnIndex];
+            return true;
+        }
+
+        input = default;
+        hitTime = 0f;
+        return false;
+    }
+
+    private GameObject GetGuide(NoteInputType input)
+    {
+        return input == NoteInputType.A
+            ? GuideA
+            : input == NoteInputType.B
+                ? GuideB
+                : GuideC;
+    }
+
+    private Color JudgmentColor(Accuracy result)
+    {
+        return result == Accuracy.Perfect
+            ? Color.yellow
+            : result == Accuracy.Great
+                ? Color.green
+                : result == Accuracy.Good
+                    ? new Color(1f, 0.5f, 0f)
+                    : Color.red;
+    }
+
+    private void CreateMote(
+        NoteInputType input,
+        Accuracy accuracy)
+    {
+        if (moteFolder == null)
+            return;
+
+        if (currentMote != null)
+            currentMote.SetActive(false);
+
+        if(accuracy != Accuracy.Oops && accuracy != Accuracy.Miss)
+        {
+            
+            if (Particle != null)
+            {
+                GameObject particle = Instantiate(Particle);
+
+                particle.transform.position =
+                    GetGuide(input).transform.position;
+
+                Destroy(particle, 3f);
+            }
+            
+            if (Lit != null)
+            {
+                GameObject lit = Instantiate(Lit);
+
+                lit.transform.position =
+                    GetGuide(input).transform.position;
+
+                Destroy(lit, 3f);
+            }
+        }
+            
+
+        switch (accuracy)
+        {
+            case Accuracy.Perfect:
+                CreateMoteInternal(
+                    "Perfect",
+                    motePos
+                );
+
+                effectScript.Progression(3);
+                if (Shine != null)
+                {
+                    GameObject shine = Instantiate(Shine);
+
+                    shine.transform.position =
+                        motePos + new Vector3(0, 0, 1);
+
+                    Destroy(shine, 3f);
+                }
+
+                break;
+
+            case Accuracy.Great:
+                CreateMoteInternal(
+                    "Great",
+                    motePos
+                );
+                effectScript.Progression(2);
+                break;
+
+            case Accuracy.Good:
+                CreateMoteInternal(
+                    "Good",
+                    motePos
+                );
+                effectScript.Progression(1);
+                break;
+
+            case Accuracy.Miss:
+                CreateMoteInternal(
+                    "Miss",
+                    motePos
+                );
+                break;
+
+            case Accuracy.Oops:
+                CreateMoteInternal(
+                    "Oops",
+                    motePos
+                );
+                break;
+        }
+    }
+
+    private void CreateMoteInternal(
+        string name,
+        Vector3 pos)
+    {
+        Transform moteTransform =
+            moteFolder.transform.Find(name);
+
+        if (moteTransform == null)
+            return;
+
+        GameObject mote = moteTransform.gameObject;
+
+        mote.SetActive(true);
+        currentMote = mote;
+
+        mote.transform.position = pos;
+        mote.transform.localScale = new Vector3(10f,10f,10f);
+        mote.transform.DOKill();
+
+        if (name == "Perfect")
+        {
+            mote.transform
+                .DOScale(10f * 1.2f, 0.05f)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    mote.transform
+                        .DOScale(10f, 0.1f)
+                        .SetEase(Ease.InQuad);
+                });
+        }
+        else if (name == "Great")
+        {
+            mote.transform
+                .DOScale(10f * 1.1f, 0.05f)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    mote.transform
+                        .DOScale(10f, 0.1f)
+                        .SetEase(Ease.InQuad);
+                });
+        }
+
+        mote.transform.DOScale(Vector3.zero, 5f);
+    }
+
+    private void UpdateComboUI()
+    {
+        if (comboText == null)
+            return;
+
+        if (combo > 0)
+        {
+            string text = $"Combo {combo}";
+
+            if (comboText.text != text)
+            {
+                if (combo == 1 && Combo != null)
+                {
+                    Combo.transform.DOKill();
+                    Combo.transform.DOPunchPosition(
+                        Vector3.up * 0.5f,
+                        0.5f
+                    );
+                }
+
+                comboText.text = text;
+            }
+
+            foreach (ParticleSystem p in comboGlows)
+            {
+                if (p == null)
+                    continue;
+
+                var emission = p.emission;
+                emission.enabled = combo > 9;
+            }
+        }
+        else
+        {
+            comboText.text = "";
+
+            foreach (ParticleSystem p in comboGlows)
+            {
+                if (p == null)
+                    continue;
+
+                var emission = p.emission;
+                emission.enabled = false;
+            }
+        }
+    }
+
+    private void ShowFeedback(
+        string message,
+        Color color)
+    {
+        feedback = message;
+        feedbackColor = color;
+        feedbackUntil = currentTime + 0.7f;
+    }
+
+    private void OnGUI()
+    {
+        if (!ready)
+            return;
+
+        if (labelStyle == null)
+        {
+            labelStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 18,
+                wordWrap = true
+            };
+        }
+
+        GUILayout.BeginArea(
+            new Rect(16, 16, 330, 280),
+            GUI.skin.box
+        );
+
+        GUILayout.Label(
+            finished
+                ? "RESULT"
+                : $"NOTES  {judged} / {notes.Count}",
+            labelStyle
+        );
+
+        GUILayout.Label(
+            $"Perfect {perfect}   Great {great}\n" +
+            $"Good {good}   Miss {miss}",
+            labelStyle
+        );
+
+        if (!finished &&
+            TryGetNextNote(out NoteInputType nextInput, out float nextHitTime))
+        {
+            GUILayout.Label(
+                $"Next: {nextInput} / " +
+                $"{Mathf.Max(0f, nextHitTime - currentTime):0.00}s",
+                labelStyle
+            );
+        }
+
+        Color previous = GUI.contentColor;
+
+        GUI.contentColor = feedbackColor;
+
+        GUILayout.Label(
+            finished || currentTime <= feedbackUntil
+                ? feedback
+                : " ",
+            labelStyle
+        );
+
+        GUI.contentColor = previous;
+
+        if (GUILayout.Button(
+            "Restart",
+            GUILayout.Height(32)))
+        {
+            Restart();
+        }
+
+        GUILayout.EndArea();
+    }
+}

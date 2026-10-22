@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
+using IMGUI;
 using UnityEngine;
 
-// 화면 위쪽 대사 팝업 (단독 OnGUI). 게임은 멈추지 않는다
+// 화면 위쪽 대사 팝업 (I'm GUI 리테인드 + 트윈). 게임은 멈추지 않는다
 // Resources/<file>.json 의 대사를 곡 시간(at, 초)에 맞춰 띄운다. at이 커지는 순서로 적는다
 // 코드에서 바로 띄우려면 Say (TutorialCoach)
 // 다음 대사가 오거나, 다 나온 뒤 hold초가 지나면 사라진다
@@ -46,6 +47,14 @@ public class DialogueManager : MonoBehaviour
     float shownAt;
     float lastNow;
     GUIStyle boxStyle, nameStyle, textStyle;
+    // 필드로 꼭 붙잡는다. GUIStyle 안의 참조는 안 쳐줘서, 씬 로드 직후 UnloadUnusedAssets가
+    // 이 텍스처·폰트를 지운다 → 대사창 배경이 사라지고 글꼴이 기본으로 돌아감
+    Texture2D boxTexture;
+    Font font;
+    GUIGroup box;
+    GUILabel nameLabel, textLabel;
+    GUIItem[] parts; // 같이 움직이는 것 (그룹은 자식을 안 끌고 다님)
+    bool showing;    // 떠 있거나 들어오는 중
 
     // Match가 없는 씬이면 씬 시작부터 잰다
     float Now => match ? match.currentTime : Time.timeSinceLevelLoad;
@@ -62,6 +71,8 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         lines = JsonUtility.FromJson<DialogueFile>(json.text).lines;
+        InitStyles();
+        BuildWidgets();
     }
 
     // Message는 static이라 씬이 바뀌어도 남는다 → 꼭 떼야 함
@@ -96,41 +107,78 @@ public class DialogueManager : MonoBehaviour
             if (!string.IsNullOrEmpty(lines[cur].sendEvent))
                 Send(lines[cur].sendEvent);
         }
-    }
-
-    void OnGUI()
-    {
-        if (current == null) return;
 
         Line l = current;
         float t = Time.time - shownAt;
-        if (t > l.text.Length * charDelay + hold) return;
+        if (l == null || t > l.text.Length * charDelay + hold)
+        {
+            if (showing) Hide();
+            return;
+        }
 
-        InitStyles();
-
-        // 1080p 기준 좌표로 그리고 화면 높이에 맞춰 확대/축소
-        float scale = Screen.height / RefH;
-        GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
-        var box = new Rect((Screen.width / scale - BoxW) * 0.5f, Top, BoxW, BoxH);
-
-        GUI.Box(box, GUIContent.none, boxStyle);
-        GUI.Label(new Rect(box.x + 36f, box.y + 18f, box.width - 72f, 36f), l.speaker, nameStyle);
+        if (!showing) Show();
+        nameLabel.Content.text = l.speaker;
 
         // 안 나온 글자도 투명하게 같이 그린다. 안 그러면 타이핑 중에 줄바꿈 위치가 바뀜
         int shown = Mathf.Min((int)(t / charDelay), l.text.Length);
-        string text = l.text.Substring(0, shown) + "<color=#00000000>" + l.text.Substring(shown) + "</color>";
-        GUI.Label(new Rect(box.x + 36f, box.y + 58f, box.width - 72f, box.height - 70f), text, textStyle);
+        textLabel.Content.text = l.text.Substring(0, shown) + "<color=#00000000>" + l.text.Substring(shown) + "</color>";
     }
 
-    // GUI.skin은 OnGUI 안에서만 접근 가능 → 첫 OnGUI에서 생성
+    // 인트로: 위에서 튀어 내려오며 나타난다. 나갈 때마다 자리가 밀리므로 매번 처음 자리부터 다시 잡는다
+    void Show()
+    {
+        showing = true;
+
+        // 1080p 기준 값에 화면 높이 배율을 곱해 화면 픽셀로 둔다 (GUI.matrix로 키우면 글자가 흐려짐)
+        float k = Screen.height / RefH;
+        nameStyle.fontSize = Mathf.RoundToInt(28f * k);
+        textStyle.fontSize = Mathf.RoundToInt(32f * k);
+        var r = new Rect((Screen.width - BoxW * k) * 0.5f, Top * k, BoxW * k, BoxH * k);
+        box.SetRect(r); // 그룹의 SetRect는 자식을 안 옮긴다 → 자식도 따로
+        nameLabel.SetRect(new Rect(r.x + 36f * k, r.y + 18f * k, r.width - 72f * k, 36f * k));
+        textLabel.SetRect(new Rect(r.x + 36f * k, r.y + 58f * k, r.width - 72f * k, r.height - 70f * k));
+
+        box.isVisible = true;
+        box.FadeIn(0.25f); // 그룹 투명도는 자식에도 곱해진다
+        GUITween.Wave(parts, new Vector2(0f, -60f * k), 0.4f, 0f, TweenHelper.EaseOutBack);
+    }
+
+    // 아웃트로: 위로 빠지며 사라진다. 도중에 새 대사가 오면 Show의 FadeIn이 이 페이드를 끊는다
+    void Hide()
+    {
+        showing = false;
+        float k = Screen.height / RefH;
+        box.FadeOut(0.25f, onComplete: () => box.isVisible = false);
+        GUITween.Wave(parts, new Vector2(0f, -40f * k), 0.25f, 0f, TweenHelper.EaseInQuad, inward: false);
+    }
+
+    // 위젯은 한 번 만들어 두고 보이기만 켜고 끈다
+    void BuildWidgets()
+    {
+        box = Widget.Window(GUIContent.none, Rect.zero, "dialogue", boxStyle);
+        box.Mask = false; // Widget.Window 기본 Mask=true는 자식을 안쪽 여백 10px에서 잘라 버린다
+        nameLabel = Widget.Label(box, "", Rect.zero, nameStyle);
+        textLabel = Widget.Label(box, "", Rect.zero, textStyle);
+        box.SetLayer(100);            // 게임 HUD 위
+        box.isInteractable = false;   // 장식이라 밑의 버튼 클릭을 막지 않게
+        box.isVisible = false;
+        parts = new GUIItem[] { box, nameLabel, textLabel };
+    }
+
+    void OnDestroy()
+    {
+        GUIManager.Unregister(box);
+        Destroy(boxTexture);
+    }
+
+    // GUI.skin을 안 쓰므로 OnGUI 밖(Start)에서 만들어도 된다
     void InitStyles()
     {
-        if (boxStyle != null) return;
-
-        var font = Resources.Load<Font>("Fonts/A2Z5"); // 없으면 기본 폰트
+        font = Resources.Load<Font>("Fonts/A2Z5"); // 없으면 기본 폰트
+        boxTexture = RoundedBox(BrilliantWhite, Obsidian);
 
         boxStyle = new GUIStyle { border = new RectOffset(14, 14, 14, 14) };
-        boxStyle.normal.background = RoundedBox(BrilliantWhite, Obsidian);
+        boxStyle.normal.background = boxTexture;
 
         nameStyle = new GUIStyle { font = font, fontSize = 28 };
         nameStyle.normal.textColor = Obsidian;

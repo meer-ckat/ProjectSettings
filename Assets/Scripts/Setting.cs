@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Setting : MonoBehaviour
@@ -28,6 +29,12 @@ public class Setting : MonoBehaviour
         shake_image = shakeButton.transform.Find("Image").GetComponent<RawImage>();
         shake_Text = shakeButton.transform.Find("Text").GetComponent<TextMeshProUGUI>();
         UpdateShake();
+    }
+
+    public void OnJump(InputAction.CallbackContext c)
+    {
+        if(c.performed)
+            SettingButtonClicked();
     }
 
     public void SettingButtonClicked()

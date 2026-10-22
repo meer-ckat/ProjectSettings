@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using IMGUI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public enum Accuracy
 {
@@ -73,6 +73,10 @@ public class Match : MonoBehaviour
     private int nextSoundIndex;
 
     public RhythmSpriteBounce rhythmSpriteBounce;
+
+    private GUIBoxLabel guideAText;
+    private GUIBoxLabel guideBText;
+    private GUIBoxLabel guideCText;
 
     // 타건음은 키 입력이 아니라 노트에 붙어 있다: 각 노트의 정박에 맞춰 미리 예약 재생한다.
     // 음악과 같은 시계(dsp)·같은 출력 경로라서 이어폰 딜레이가 있어도 음악과 정확히 겹친다.
@@ -167,6 +171,7 @@ public class Match : MonoBehaviour
     private bool finished;
     private bool started;
     private double startDsp;
+    private const float MusicDelay = 3f; // 씬 진입 → 음악 시작(초). 그동안 A/B/C 안내가 떴다 사라진다
 
     // 오디오 로드 + 로딩 끊김이 가라앉을 때까지(10프레임 연속 50ms 미만) 기다린 뒤
     // 음악을 dsp 시계 기준 정확한 시각에 예약 재생한다.
@@ -190,7 +195,8 @@ public class Match : MonoBehaviour
         while (paused)
             yield return null;
 
-        startDsp = AudioSettings.dspTime + 0.1;
+        // 씬에 들어온 뒤 MusicDelay초에 맞춰 시작. 로딩이 그보다 길었거나 씬 중간의 Restart면 바로(0.1초 뒤)
+        startDsp = AudioSettings.dspTime + Mathf.Max(0.1f, MusicDelay - Time.timeSinceLevelLoad);
 
         if (Music != null)
             Music.PlayScheduled(startDsp);
@@ -203,7 +209,10 @@ public class Match : MonoBehaviour
     private float feedbackUntil;
     private Color feedbackColor = Color.white;
 
-    private GUIStyle labelStyle;
+    private GUIStyle labelStyle, feedbackStyle;
+    private GUIGroup hudPanel;
+    private GUILabel notesLabel, countsLabel, nextLabel, feedbackLabel;
+    private bool feedbackShown; // 판정 문구가 떠 있음. 사라지는 페이드를 한 번만 걸려고
 
     private TextMeshPro comboText;
     private readonly List<ParticleSystem> comboGlows = new();
@@ -250,6 +259,7 @@ public class Match : MonoBehaviour
 
     private void Start()
     {
+
         if (!GuideA || !GuideB || !GuideC ||
             !NotePrefab || !SpawnPoint || !HitPoint)
         {
@@ -588,6 +598,9 @@ public class Match : MonoBehaviour
     private void OnDisable()
     {
         ClearInput();
+
+        if (hudPanel != null)
+            hudPanel.isVisible = false;
     }
 
     private void OnApplicationFocus(bool focus)
@@ -1004,70 +1017,119 @@ public class Match : MonoBehaviour
         feedback = message;
         feedbackColor = color;
         feedbackUntil = currentTime + 0.7f;
+
+        // 판정 문구는 번쩍 나타났다가 feedbackUntil 지나면 LateUpdate가 흐리게 지운다
+        if (feedbackLabel != null)
+        {
+            feedbackLabel.Content.text = message;
+            feedbackStyle.normal.textColor = color;
+            feedbackLabel.FadeIn(0.08f);
+            feedbackShown = true;
+        }
     }
 
-    private void OnGUI()
+    // 왼쪽 위 판정 패널 (I'm GUI 리테인드). 처음 한 번 만들어 왼쪽에서 밀어 넣고, 글만 매 프레임 바꾼다
+    // Update는 곡이 안 돌 때 일찍 빠지므로 여기서
+    private void LateUpdate()
     {
-        if (!ready)
+        if (!ready || !GUIStyleMaker.Initialized)
             return;
 
-        if (labelStyle == null)
+        if (hudPanel == null)
+            BuildHud();
+
+        notesLabel.Content.text = finished ? "RESULT" : $"NOTES  {judged} / {notes.Count}";
+        countsLabel.Content.text = $"Perfect {perfect}   Great {great}\nGood {good}   Miss {miss}";
+
+        var aPos = Camera.main.WorldToScreenPoint(GuideA.transform.position);
+        aPos = new Vector2(aPos.x, GUIManager.ScreenSize.y - aPos.y);
+        var bPos = Camera.main.WorldToScreenPoint(GuideB.transform.position);
+        bPos = new Vector2(bPos.x, GUIManager.ScreenSize.y - bPos.y);
+        var cPos = Camera.main.WorldToScreenPoint(GuideC.transform.position);
+        cPos = new Vector2(cPos.x, GUIManager.ScreenSize.y - cPos.y);
+
+        guideAText.SetRect(new Rect(aPos - new Vector3(50, -100), new Vector2(100, 100)));
+        guideBText.SetRect(new Rect(bPos - new Vector3(50, -100), new Vector2(100, 100)));
+        guideCText.SetRect(new Rect(cPos - new Vector3(50, -100), new Vector2(100, 100)));
+
+        nextLabel.isVisible = false;
+        if (!finished && TryGetNextNote(out NoteInputType nextInput, out float nextHitTime))
         {
-            labelStyle = new GUIStyle(GUI.skin.label)
-            {
-                fontSize = 18,
-                wordWrap = true
-            };
+            nextLabel.isVisible = true;
+            nextLabel.Content.text = $"Next: {nextInput} / {Mathf.Max(0f, nextHitTime - currentTime):0.00}s";
         }
 
-        GUILayout.BeginArea(
-            new Rect(16, 16, 330, 280),
-            GUI.skin.box
-        );
-
-        GUILayout.Label(
-            finished
-                ? "RESULT"
-                : $"NOTES  {judged} / {notes.Count}",
-            labelStyle
-        );
-
-        GUILayout.Label(
-            $"Perfect {perfect}   Great {great}\n" +
-            $"Good {good}   Miss {miss}",
-            labelStyle
-        );
-
-        if (!finished &&
-            TryGetNextNote(out NoteInputType nextInput, out float nextHitTime))
+        if (feedbackShown && !finished && currentTime > feedbackUntil)
         {
-            GUILayout.Label(
-                $"Next: {nextInput} / " +
-                $"{Mathf.Max(0f, nextHitTime - currentTime):0.00}s",
-                labelStyle
-            );
+            feedbackShown = false;
+            feedbackLabel.FadeOut(0.25f);
+        }
+    }
+
+    // 줄 높이는 GUILayout 대신 고정 칸. Next가 없을 때(결과 화면)는 그 칸이 빈다
+    private void BuildHud()
+    {
+        var tutorsytle = GUIStyleMaker.Label(fontSize: 30);
+        tutorsytle = GUIStyleMaker.Align(tutorsytle, TextAnchor.UpperCenter);
+        tutorsytle = GUIStyleMaker.Background(tutorsytle, new Color(0.0f, 0.498f,1.0f,0.2f), Color.azure);
+
+        guideAText = Widget.BoxLabel("키보드 A", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideA.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+        guideBText = Widget.BoxLabel("키보드 S", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideB.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+        guideCText = Widget.BoxLabel("키보드 D", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideC.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+        FlashGuide(guideAText);
+        FlashGuide(guideBText);
+        FlashGuide(guideCText);
+
+        labelStyle = GUIStyleMaker.Label(fontSize: 18).Wrap();
+        feedbackStyle = new GUIStyle(labelStyle);
+        feedbackStyle.normal.textColor = feedbackColor;
+
+        const float x = 24f, w = 314f;
+        float line = labelStyle.CalcHeight(new GUIContent("가"), w);
+        float y = 24f;
+        Rect Row(int lines)
+        {
+            var r = new Rect(x, y, w, line * lines);
+            y += line * lines + 4f;
+            return r;
         }
 
-        Color previous = GUI.contentColor;
+        hudPanel = Widget.Window(GUIContent.none, new Rect(16, 16, 330, 280), "match", null); // null = 기본 skin.box
+        hudPanel.Mask = false; // Widget.Window 기본 Mask=true는 자식을 안쪽 여백 10px에서 잘라 버린다
+        notesLabel = Widget.Label(hudPanel, "", Row(1), labelStyle);
+        countsLabel = Widget.Label(hudPanel, "", Row(2), labelStyle);
+        nextLabel = Widget.Label(hudPanel, "", Row(1), labelStyle);
+        feedbackLabel = Widget.Label(hudPanel, feedback, Row(1), feedbackStyle);
+        Widget.Button(hudPanel, "Restart", new Rect(x, y, w, 32f), Restart);
+        feedbackShown = true;
 
-        GUI.contentColor = feedbackColor;
+        // 인트로: 패널과 줄이 왼쪽에서 차례로 튀어 들어온다 (그룹은 자식을 안 끌고 다녀서 전부에 건다)
+        var parts = new List<GUIItem> { hudPanel };
+        parts.AddRange(hudPanel.Childrens);
+        GUITween.Wave(parts, new Vector2(-360f, 0f), 0.45f, 0.04f, TweenHelper.EaseOutBack);
+        hudPanel.FadeIn(0.3f);
+    }
 
-        GUILayout.Label(
-            finished || currentTime <= feedbackUntil
-                ? feedback
-                : " ",
-            labelStyle
-        );
+    // 음악 시작 전 MusicDelay초 동안: 0.5초 나타나고, 머물다가, 0.5초 사라진 뒤 지운다
+    // 페이드는 위젯당 하나라 FadeOut을 바로 걸면 FadeIn이 끊긴다 → FadeIn이 끝난 뒤에 건다
+    private static void FlashGuide(GUIItem guide)
+    {
+        guide.FadeIn(0.5f, onComplete: () =>
+            guide.FadeOut(0.5f, MusicDelay - 1f, onComplete: () => GUIManager.Unregister(guide)));
+    }
 
-        GUI.contentColor = previous;
+    // 꺼져 있는 동안(보정 중)은 패널도 숨긴다. 예전 OnGUI도 꺼지면 안 불렸다
+    private void OnEnable()
+    {
+        if (hudPanel != null)
+            hudPanel.isVisible = true;
+    }
 
-        if (GUILayout.Button(
-            "Restart",
-            GUILayout.Height(32)))
-        {
-            Restart();
-        }
-
-        GUILayout.EndArea();
+    private void OnDestroy()
+    {
+        GUIManager.Unregister(hudPanel);
+        GUIManager.Unregister(guideAText); // 3초 안에 씬을 떠나면 아직 남아 있다
+        GUIManager.Unregister(guideBText);
+        GUIManager.Unregister(guideCText);
     }
 }

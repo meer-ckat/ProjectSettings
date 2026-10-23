@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using IMGUI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,8 +12,10 @@ using UnityEngine.SceneManagement;
 // 곡 뒤에 CREDIT/EXIT 카드가 코드로 자동으로 붙는다 (인스펙터 songs에는 곡만 넣는다)
 public class SongSelect : MonoBehaviour
 {
-    public static string Selected = "stage1"; // Game 씬을 바로 Play해도 동작
+    public static string SelectedNote = "stage1"; // Game 씬을 바로 Play해도 동작
+    public static string SelectedSong = "stage1"; 
     public static float PreviewScale = 1f;    // 난이도. Match가 previewTime에 곱한다 (어려움 = 1)
+    public static float JudgeScale = 1f;
     public AudioClip swipeClip;
     public AudioClip enterClip;
     private AudioSource source;
@@ -24,6 +27,10 @@ public class SongSelect : MonoBehaviour
         public string title;
         public string artist;
         public Texture2D cover;  // 없어도 됨
+        
+        public string easy_id;
+        public string normal_id;
+        public string hard_id;
     }
 
     public SongEntry[] songs;
@@ -48,7 +55,8 @@ public class SongSelect : MonoBehaviour
     public float fadeSpeed = 4f;     // 버튼 페이드 속도 (초당)
 
     [Header("난이도 (미리보기 배율)")]
-    public float[] difficultyScales = { 1f, 1.5f, 2f, 3f }; // 어려움(기본)·중간·쉬움·매우 쉬움
+    public float[] difficultyScales_PreviewScale = { 1f, 1.5f, 2f, 3f };
+    public float[] difficultyScales_judgeScale =  {0.7f, 1f, 1.5f, 2f};
     public float windowTime = 0.2f;  // 난이도 창 열림/닫힘 시간
     static readonly string[] DifficultyNames = { "어려움", "중간", "쉬움", "매우 쉬움" };
 
@@ -98,16 +106,17 @@ public class SongSelect : MonoBehaviour
         if (loadProgress >= 0f) return; // 연타로 중복 로드 방지
         if (song == CreditId) { OpenCredit(); return; }
         if (song == ExitId) { Quit(); return; }
-        if (song == TutorialId) { PreviewScale = 1f; Load(TutorialSong, "Tutorial"); return; }
+        if (song == TutorialId) { PreviewScale = 1f; Load(TutorialSong, TutorialSong, "Tutorial"); return; }
         // 일반 곡은 난이도 창을 먼저 띄운다. 고르면 ConfirmDifficulty → Load
         pendingSong = song;
         OpenDifficulty();
     }
 
-    void Load(string song, string scene)
+    void Load(string note, string song, string scene)
     {
         loadProgress = 0f;
-        Selected = song; // Game/Tutorial 씬의 NoteManager/Match가 이 값으로 차트·음원을 읽음
+        SelectedNote = note; // Game/Tutorial 씬의 NoteManager/Match가 이 값으로 차트·음원을 읽음
+        SelectedSong = song;
         ShowLoading();
         StartCoroutine(LoadScene(scene));
     }
@@ -117,8 +126,33 @@ public class SongSelect : MonoBehaviour
         CloseDifficulty(); // 닫히는 애니메이션 동안 로딩 게이지가 찬다
         if (diffCursor >= DifficultyNames.Length) return; // 나가기
         source.PlayOneShot(enterClip);
-        PreviewScale = difficultyScales[Mathf.Min(diffCursor, difficultyScales.Length - 1)];
-        Load(pendingSong, "Game");
+        PreviewScale = difficultyScales_PreviewScale[Mathf.Min(diffCursor, difficultyScales_PreviewScale.Length - 1)];
+        JudgeScale = difficultyScales_judgeScale[Mathf.Min(diffCursor, difficultyScales_judgeScale.Length - 1)];
+
+        //난이도별 노트변화
+        //일단 먼저 pendingSong에 맞는 entry를 찾는다
+        SongEntry song = songs.FirstOrDefault(x => x.id == pendingSong);
+        if (song == null) return;
+
+        string DifficultySong = "";
+
+        switch (diffCursor)
+        {
+            case 0:
+                DifficultySong = string.IsNullOrEmpty(song.hard_id)? song.id : song.hard_id;
+                break;
+            case 1:
+                DifficultySong = string.IsNullOrEmpty(song.normal_id)? song.id : song.normal_id;
+                break;
+            case 2:
+                DifficultySong = string.IsNullOrEmpty(song.easy_id)? song.id : song.easy_id;
+                break;
+            case 3:
+                DifficultySong = string.IsNullOrEmpty(song.easy_id)? song.id : song.easy_id;
+                break;
+        }
+
+        Load(DifficultySong, pendingSong, "Game");
     }
 
     void Quit()
@@ -132,7 +166,7 @@ public class SongSelect : MonoBehaviour
 
     public IEnumerator LoadScene(string scene)
     {
-        Debug.Log("<color=green>Loading " + scene + " (" + Selected + ")...</color>");
+        Debug.Log("<color=green>Loading " + scene + " (" + SelectedNote + ")...</color>");
         AsyncOperation op = SceneManager.LoadSceneAsync(scene);
 
         // 2. 씬 로드가 완료되어도 자동으로 바로 전환되지 않도록 설정 (부드러운 연출용)
@@ -268,7 +302,7 @@ public class SongSelect : MonoBehaviour
         InitStyles();
 
         // 이전에 고른 곡이 목록에 있으면 처음부터 중앙에 둔다
-        selected = Mathf.Max(0, System.Array.FindIndex(songs, s => s.id == Selected));
+        selected = Mathf.Max(0, System.Array.FindIndex(songs, s => s.id == pendingSong));
         targetX = selected * Step;
 
         cards = new GUIGroup[songs.Length];

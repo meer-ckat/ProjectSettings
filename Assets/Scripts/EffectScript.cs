@@ -41,8 +41,11 @@ public class EffectScript : MonoBehaviour
         Destroy(glow, 3);
     }
 
+    public bool forceOff;
+
     public void Level1()
     {
+        if(forceOff) return;
         print("Yo Stage1");
         GameObject leaf = Instantiate(leafEffectPrefab);
         GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
@@ -52,6 +55,7 @@ public class EffectScript : MonoBehaviour
 
     public void Level2()
     {
+        if(forceOff) return;
         print("Yo Stage2");
         GameObject leaf = Instantiate(leafEffectPrefab);
         GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
@@ -61,6 +65,7 @@ public class EffectScript : MonoBehaviour
 
     public void Level3()
     {
+        if(forceOff) return;
         print("Yo Stage3");
         StartCoroutine(SpawnMagic());
         //super mega ukulele
@@ -69,6 +74,7 @@ public class EffectScript : MonoBehaviour
 
     IEnumerator SpawnMagic()
     {
+        if(forceOff) yield break;
         GameObject magic = Instantiate(magicPrefab);
         GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
         Destroy(magic, 2);

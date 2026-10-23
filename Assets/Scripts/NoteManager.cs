@@ -60,7 +60,7 @@ public class NoteManager : MonoBehaviour
             return;
         }
 
-        Instance = this; LoadNoteData(SongSelect.Selected);
+        Instance = this; LoadNoteData(SongSelect.SelectedNote);
     }
 
     public void LoadNoteData(string fileName)

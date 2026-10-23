@@ -338,12 +338,15 @@ public class Match : MonoBehaviour
 
         // 곡 선택 창에서 고른 난이도. 노트가 보이는 시간을 늘린다 (어려움 = 1배)
         previewTime *= SongSelect.PreviewScale;
+        perfectWindow *= SongSelect.JudgeScale;
+        greatWindow *= SongSelect.JudgeScale;
+        goodWindow *= SongSelect.JudgeScale;
 
         // 메뉴에서 고른 곡 음원 (Resources에 차트와 같은 이름). 없으면 Inspector의 clip 유지
-        var clip = Resources.Load<AudioClip>(SongSelect.Selected);
+        var clip = Resources.Load<AudioClip>(SongSelect.SelectedSong);
         if (clip != null && Music != null)
             Music.clip = clip;
-        Debug.Log($"Music: song={SongSelect.Selected} clip={(Music != null && Music.clip != null ? Music.clip.name : "NONE")}", this);
+        Debug.Log($"Music: song={SongSelect.SelectedSong} clip={(Music != null && Music.clip != null ? Music.clip.name : "NONE")}", this);
 
         ready = true;
 

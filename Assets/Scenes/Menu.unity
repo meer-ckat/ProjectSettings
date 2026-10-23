@@ -246,22 +246,37 @@ MonoBehaviour:
     title: Bounce
     artist: Pixabay
     cover: {fileID: 2800000, guid: e89589c378373284887b7c6a6bc792b5, type: 3}
+    easy_id: stage1_easy
+    normal_id: stage1
+    hard_id: stage1_hard
   - id: one_republic-counting_stars
     title: Counting Stars
     artist: One Republic
     cover: {fileID: 2800000, guid: 1224ce321fc4c2e489863d7d1db64c16, type: 3}
+    easy_id: 
+    normal_id: 
+    hard_id: 
   - id: VivaLaVida
     title: Viva La Vida
     artist: Coldplay
     cover: {fileID: 2800000, guid: facbc793b15688043834b91ea26163b9, type: 3}
+    easy_id: 
+    normal_id: 
+    hard_id: 
   - id: SuperMarioWorld
     title: Super Mario World Overworld
     artist: Nintendo
     cover: {fileID: 2800000, guid: 3d51ac74f499a39468b2ef194bc46a7a, type: 3}
+    easy_id: 
+    normal_id: 
+    hard_id: 
   - id: AS
     title: "\uB610 \uD558\uB098\uC758 \uACC4\uC808"
     artist: "\uCD5C\uC900\uC624"
     cover: {fileID: 2800000, guid: 384deaecd831a0f40838ffc54f667416, type: 3}
+    easy_id: 
+    normal_id: 
+    hard_id: 
   creditText: "\uD06C\uB808\uB527\r\n\r\n\uC194\uAC00\uB78C\uACE0\uB4F1\uD559\uAD50
     \uC0C1\uC0C1\uACF5\uC791 \uC804\uB78C\uD68C \uCD9C\uD488\uC791 (\uBE44\uC601\uB9AC
     \uD559\uC0DD \uC791\uD488)\r\n\r\n[\uC81C\uC791]\r\n\uAC8C\uC784 \uB514\uC790\uC778,
@@ -309,11 +324,16 @@ MonoBehaviour:
   cardY: 320
   smoothTime: 0.2
   fadeSpeed: 4
-  difficultyScales:
+  difficultyScales_PreviewScale:
   - 1
   - 1.5
   - 2
   - 3
+  difficultyScales_judgeScale:
+  - 0.7
+  - 1
+  - 1.5
+  - 2
   windowTime: 0.2
 --- !u!114 &104606392
 MonoBehaviour:

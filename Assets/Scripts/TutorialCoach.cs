@@ -21,7 +21,7 @@ public class TutorialCoach : MonoBehaviour
 
     const string Speaker = "박치";
     const int CountIn = 4;        // 첫 노트 전에 메트로놈만 나오는 박 수
-    const float NextDelay = 2f;   // 대사 띄우고 다음(또는 다시) 시작까지
+    const   float NextDelay = 2f;   // 대사 띄우고 다음(또는 다시) 시작까지
 
     public Stage[] stages =
     {
@@ -29,7 +29,6 @@ public class TutorialCoach : MonoBehaviour
         new() { tip = "1/2박: 삑과 삑 사이에 한 번 더.", steps = new[] { 1 / 2f } },
         new() { tip = "1/4박: 한 박을 넷으로 쪼개.", steps = new[] { 1 / 4f } },
         new() { tip = "1/8박: 한 박에 여덟 번!", steps = new[] { 1 / 8f } },
-        new() { tip = "1/16박: 한 박에 열여섯 번!!", steps = new[] { 1 / 16f }, repeat = 16 },
         new()
         {
             tip = "변박: 박마다 1, 2, 3, 4, 3, 2, 1개로 쪼갠다.",
@@ -71,7 +70,7 @@ public class TutorialCoach : MonoBehaviour
         else if (e == "Good" || e == "Miss")
             Next(stage, $"{e}! Great 이상만 통과야. 다시.");
         else if (e == "Finish" && stage + 1 < stages.Length)
-            Next(stage + 1, "좋습니다, 다음.\n" + stages[stage + 1].tip);
+            Next(stage + 1, "나중에 수정해요 나중에, 다음.\n" + stages[stage + 1].tip);
         else if (e == "Finish")
             dialogue.Say(Speaker, "튜토리얼 끝! 이제 박자는 몸이 기억할 거야.");
     }

@@ -187,8 +187,8 @@ public class DialogueManager : MonoBehaviour
         textStyle.normal.textColor = Obsidian;
     }
 
-    // 둥근 모서리 + 테두리 3px. GUIStyle.border로 늘려 쓴다
-    static Texture2D RoundedBox(Color fill, Color edge)
+    // 둥근 모서리 + 테두리 3px. GUIStyle.border로 늘려 쓴다. StoryDialogue도 같은 상자를 쓴다
+    internal static Texture2D RoundedBox(Color fill, Color edge)
     {
         const int size = 32, radius = 14;
         var tex = new Texture2D(size, size) { wrapMode = TextureWrapMode.Clamp };

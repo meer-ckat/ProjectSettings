@@ -249,13 +249,20 @@ MonoBehaviour:
     easy_id: stage1_easy
     normal_id: stage1
     hard_id: stage1_hard
+    easy_desc: "Pixabay\uC5D0\uC11C \uBB34\uB8CC\uB85C \uAC00\uC838\uC628 \uADF8
+      \uBB50\uC9C0, \uC544\uBB34\uD2BC BGM\uC785\uB2C8\uB2E4."
+    normal_desc: 
+    hard_desc: 
   - id: one_republic-counting_stars
     title: Counting Stars
     artist: One Republic
     cover: {fileID: 2800000, guid: 1224ce321fc4c2e489863d7d1db64c16, type: 3}
-    easy_id: 
-    normal_id: 
-    hard_id: 
+    easy_id: one_republic-counting_stars_easy
+    normal_id: one_republic-counting_stars_normal
+    hard_id: one_republic-counting_stars_hard
+    easy_desc: 
+    normal_desc: 
+    hard_desc: 
   - id: VivaLaVida
     title: Viva La Vida
     artist: Coldplay
@@ -263,6 +270,9 @@ MonoBehaviour:
     easy_id: 
     normal_id: 
     hard_id: 
+    easy_desc: 
+    normal_desc: 
+    hard_desc: 
   - id: SuperMarioWorld
     title: Super Mario World Overworld
     artist: Nintendo
@@ -270,13 +280,36 @@ MonoBehaviour:
     easy_id: 
     normal_id: 
     hard_id: 
+    easy_desc: 
+    normal_desc: 
+    hard_desc: 
   - id: AS
     title: "\uB610 \uD558\uB098\uC758 \uACC4\uC808"
     artist: "\uCD5C\uC900\uC624"
-    cover: {fileID: 2800000, guid: 384deaecd831a0f40838ffc54f667416, type: 3}
+    cover: {fileID: 2800000, guid: de3f6aa052c2eae4aacb2bf6f2d3ff5d, type: 3}
     easy_id: 
-    normal_id: 
-    hard_id: 
+    normal_id: AS_normal
+    hard_id: AS_hard
+    easy_desc: 
+    normal_desc: 
+    hard_desc: "\uB09C\uC774\uB3C4\uAC00 \uC218\uC0C1\uD569\uB2C8\uB2E4."
+  - id: badapple
+    title: Bad Apple!!
+    artist: Alstroemeria Records feat. nomico
+    cover: {fileID: 2800000, guid: b6b5d8d9499f5604d9e7956e04ba0ca3, type: 3}
+    easy_id: badapple_easy
+    normal_id: badapple_normal
+    hard_id: badapple_hard
+    easy_desc: "\uB098\uC05C \uC0AC\uACFC"
+    normal_desc: "\uC369\uC740 \uC0AC\uACFC"
+    hard_desc: "<b><color=red>\uAD11\uACFC\uBBFC\uC131 \uBC1C\uC791 \uACBD\uACE0:\n\uC774
+      \uACE1\uC740 \uACE1 \uC804\uBC18\uC5D0 \uAC78\uCCD0 \uADF9\uB2E8\uC801\uC778
+      \uD751\uBC31 \uBC18\uC804 \uBC0F \uACE0\uC18D \uC2E4\uB8E8\uC5E3 \uC5F0\uCD9C\uC774
+      \uBC18\uBCF5\uB429\uB2C8\uB2E4.</color></b>\n\n\uD504\uB85C\uADF8\uB798\uBC0D
+      \uC2E4\uB825\uC744 \uC99D\uBA85\uD558\uB824\uBA74 \uC5B4\uCA54 \uC218\uAC00
+      \uC5C6\uC5C8\uC2B5\uB2C8\uB2E4. \uD30C\uC774\uC36C \uC778\uCF54\uB354\uB791
+      ffmpeg \uBA85\uB839\uC5B4 \uBE7C\uACE0\uB294 \uC81C\uAC00 \uB2E4 \uD504\uB85C\uADF8\uB798\uBC0D
+      \uD588\uC8E0."
   creditText: "\uD06C\uB808\uB527\r\n\r\n\uC194\uAC00\uB78C\uACE0\uB4F1\uD559\uAD50
     \uC0C1\uC0C1\uACF5\uC791 \uC804\uB78C\uD68C \uCD9C\uD488\uC791 (\uBE44\uC601\uB9AC
     \uD559\uC0DD \uC791\uD488)\r\n\r\n[\uC81C\uC791]\r\n\uAC8C\uC784 \uB514\uC790\uC778,
@@ -287,37 +320,39 @@ MonoBehaviour:
     \uC0C1\uC0C1\uACF5\uC791 \uC804\uB78C\uD68C \uCE21\uC774 \uD5C8\uC6A9\uD55C \uAD50\uB0B4
     \uC804\uC2DC \uBC94\uC704\uC5D0\uC11C\uB9CC \uC0AC\uC6A9\uD569\uB2C8\uB2E4.\r\nCounting
     Stars - OneRepublic\r\nViva La Vida - Coldplay\r\nSuper Mario World - Overworld
-    Theme - \uCF58\uB3C4 \uCF54\uC9C0 (Nintendo)\r\nKerosene - Crystal Castles\r\nMusic
-    provided by Matteo Bosi - www.alchemystudio.it (2D Handcrafted Art \uC218\uB85D\uACE1)\r\n\r\n[\uD6A8\uACFC\uC74C]\r\nPixabay
-    (Pixabay Content License)\r\n\r\n[\uAE00\uAF34]\r\n\uC5D0\uC774\uD22C\uC9C0\uCCB4
-    Medium - \uC5D0\uC774\uD22C\uC9C0\r\nLiberation Sans - Red Hat (SIL Open Font
-    License 1.1)\r\n\r\n[\uADF8\uB798\uD53D\xB7\uC774\uD399\uD2B8 \uC5D0\uC14B]\r\nCartoon
-    FX Remaster FREE - Jean Moreno (JMO)\r\nHyper Casual FX - Lana Studio\r\nProgress
-    Bar - Magic Pig Games (InfinityPBR)\r\n2D Handcrafted Art (Free Asset) - Alien
-    Nude\r\n\r\n[\uB77C\uC774\uBE0C\uB7EC\uB9AC\xB7\uB3C4\uAD6C]\r\nUnity - Unity
-    Technologies\r\nTextMesh Pro - Unity Technologies\r\nDOTween - Demigiant (Daniele
-    Giardini)\r\nDryWetMIDI - Maxim Dobroselsky (MIT License)\n\n\n\nMIT License\r\n\r\nCopyright
-    (c) 2026 Github.com Meer\r\n\r\nPermission is hereby granted, free of charge,
-    to any person obtaining a copy\r\nof this software and associated documentation
-    files (the \"Software\"), to deal\r\nin the Software without restriction, including
-    without limitation the rights\r\nto use, copy, modify, merge, publish, distribute,
-    sublicense, and/or sell\r\ncopies of the Software, and to permit persons to whom
-    the Software is\r\nfurnished to do so, subject to the following conditions:\r\n\r\nThe
-    above copyright notice and this permission notice shall be included in all\r\ncopies
-    or substantial portions of the Software.\r\n\r\nTHE SOFTWARE IS PROVIDED \"AS
-    IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\r\nIMPLIED, INCLUDING BUT NOT
-    LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\r\nFITNESS FOR A PARTICULAR PURPOSE
-    AND NONINFRINGEMENT. IN NO EVENT SHALL THE\r\nAUTHORS OR COPYRIGHT HOLDERS BE
-    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\r\nLIABILITY, WHETHER IN AN ACTION OF
-    CONTRACT, TORT OR OTHERWISE, ARISING FROM,\r\nOUT OF OR IN CONNECTION WITH THE
-    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\r\nSOFTWARE.\r\n\r\nScope\r\n\r\nThis
-    license applies only to the original source code and original assets\r\ncreated
-    by the author (mainly Assets/Scripts and the author's own artwork).\r\n\r\nThird-party
-    assets, plugins, fonts, sounds and music included in this project\r\nare NOT
-    covered by this license. They remain the property of their respective\r\nowners
-    and are used under their own licenses. See THIRD_PARTY_NOTICES.md.\r\n\r\nThis
-    project is a non-commercial student work for the Solgaram High School\r\n\"Sangsang
-    Gongjak\" (Imagination Workshop) exhibition."
+    Theme - \uCF58\uB3C4 \uCF54\uC9C0 (Nintendo)\r\nKerosene - Crystal Castles\r\nBad
+    Apple!! - Alstroemeria Records (feat. nomico), \uC601\uC0C1 \u3042\u306B\u3089
+    (Anira)\r\nMusic provided by Matteo Bosi - www.alchemystudio.it (2D Handcrafted
+    Art \uC218\uB85D\uACE1)\r\n\r\n[\uD6A8\uACFC\uC74C]\r\nPixabay (Pixabay Content
+    License)\r\n\r\n[\uAE00\uAF34]\r\n\uC5D0\uC774\uD22C\uC9C0\uCCB4 Medium - \uC5D0\uC774\uD22C\uC9C0\r\nLiberation
+    Sans - Red Hat (SIL Open Font License 1.1)\r\n\r\n[\uADF8\uB798\uD53D\xB7\uC774\uD399\uD2B8
+    \uC5D0\uC14B]\r\nCartoon FX Remaster FREE - Jean Moreno (JMO)\r\nHyper Casual
+    FX - Lana Studio\r\nProgress Bar - Magic Pig Games (InfinityPBR)\r\n2D Handcrafted
+    Art (Free Asset) - Alien Nude\r\n\r\n[\uB77C\uC774\uBE0C\uB7EC\uB9AC\xB7\uB3C4\uAD6C]\r\nUnity
+    - Unity Technologies\r\nTextMesh Pro - Unity Technologies\r\nDOTween - Demigiant
+    (Daniele Giardini)\r\nDryWetMIDI - Maxim Dobroselsky (MIT License)\n\n\n\nMIT
+    License\r\n\r\nCopyright (c) 2026 Github.com Meer\r\n\r\nPermission is hereby
+    granted, free of charge, to any person obtaining a copy\r\nof this software and
+    associated documentation files (the \"Software\"), to deal\r\nin the Software
+    without restriction, including without limitation the rights\r\nto use, copy,
+    modify, merge, publish, distribute, sublicense, and/or sell\r\ncopies of the
+    Software, and to permit persons to whom the Software is\r\nfurnished to do so,
+    subject to the following conditions:\r\n\r\nThe above copyright notice and this
+    permission notice shall be included in all\r\ncopies or substantial portions
+    of the Software.\r\n\r\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY
+    OF ANY KIND, EXPRESS OR\r\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+    OF MERCHANTABILITY,\r\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE\r\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER\r\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+    ARISING FROM,\r\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE\r\nSOFTWARE.\r\n\r\nScope\r\n\r\nThis license applies only to
+    the original source code and original assets\r\ncreated by the author (mainly
+    Assets/Scripts and the author's own artwork).\r\n\r\nThird-party assets, plugins,
+    fonts, sounds and music included in this project\r\nare NOT covered by this license.
+    They remain the property of their respective\r\nowners and are used under their
+    own licenses. See THIRD_PARTY_NOTICES.md.\r\n\r\nThis project is a non-commercial
+    student work for the Solgaram High School\r\n\"Sangsang Gongjak\" (Imagination
+    Workshop) exhibition."
   cardW: 400
   cardH: 560
   gap: 60

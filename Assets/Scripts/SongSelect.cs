@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using IMGUI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +17,8 @@ public class SongSelect : MonoBehaviour
     public static string SelectedSong = "stage1"; 
     public static float PreviewScale = 1f;    // 난이도. Match가 previewTime에 곱한다 (어려움 = 1)
     public static float JudgeScale = 1f;
+    public static int SelectedDiff = -1; //0~3 = DifficultyNames 순서. -1 = 튜토리얼이나 바로 실행
+    public static string BestKey(string song, int diff) => "best_" + song + "_" + diff;
     public AudioClip swipeClip;
     public AudioClip enterClip;
     private AudioSource source;
@@ -31,6 +34,11 @@ public class SongSelect : MonoBehaviour
         public string easy_id;
         public string normal_id;
         public string hard_id;
+
+        //난이도 창 옆에 뜨는 난이도별 설명 (매우 쉬움은 easy_desc 같이씀)
+        [TextArea] public string easy_desc;
+        [TextArea] public string normal_desc;
+        [TextArea] public string hard_desc;
     }
 
     public SongEntry[] songs;
@@ -55,8 +63,8 @@ public class SongSelect : MonoBehaviour
     public float fadeSpeed = 4f;     // 버튼 페이드 속도 (초당)
 
     [Header("난이도 (미리보기 배율)")]
-    public float[] difficultyScales_PreviewScale = { 1f, 1.5f, 2f, 3f };
-    public float[] difficultyScales_judgeScale =  {0.7f, 1f, 1.5f, 2f};
+    public float[] difficultyScales_PreviewScale = { 1f, 1.8f, 2f, 2.5f };
+    public float[] difficultyScales_judgeScale =  {0.5f, 1f, 1.5f, 2f};
     public float windowTime = 0.2f;  // 난이도 창 열림/닫힘 시간
     static readonly string[] DifficultyNames = { "어려움", "중간", "쉬움", "매우 쉬움" };
 
@@ -73,6 +81,8 @@ public class SongSelect : MonoBehaviour
     bool diffReady;           // 다 열린 뒤에만 클릭 받음
     int diffCursor;           // 0~3 = 난이도, 4 = 나가기
     string pendingSong;       // 난이도 창에서 고르는 중인 곡
+    AudioSource sampleAudio;
+    Dictionary<string, AudioClip> sampleClips = new(); //곡 id → 미리 읽어둔 음원. 카드 넘길때 안 끊기게
 
     // 위젯. 처음 한 번 만들고 트윈으로 움직인다. 창은 열 때 만들고 닫는 트윈이 끝나면 지운다
     GUIGroup[] cards;
@@ -82,9 +92,13 @@ public class SongSelect : MonoBehaviour
     GUILabel[] diffLabels;
     GUIImage loadFill;
     float loadFullW;
+    GUIGroup infoPanel; //곡 위 정보창
+    GUILabel infoLabel;
+    GUIGroup descPanel; //난이도 창 왼쪽 설명창. 난이도 창이랑 같이 열고 닫음
+    GUILabel descLabel;
     readonly List<GUIItem> roots = new(); // 만든 루트 전부. 씬이 내려갈 때 지운다
 
-    GUIStyle cardStyle, titleStyle, artistStyle, playStyle, creditStyle, creditTextStyle, diffHiStyle, hintStyle;
+    GUIStyle cardStyle, titleStyle, artistStyle, playStyle, creditStyle, creditTextStyle, diffHiStyle, hintStyle, infoStyle, infoBoxStyle, descStyle;
 
     float Step => cardW + gap;
     float SlideTime => smoothTime * 3f;
@@ -106,7 +120,7 @@ public class SongSelect : MonoBehaviour
         if (loadProgress >= 0f) return; // 연타로 중복 로드 방지
         if (song == CreditId) { OpenCredit(); return; }
         if (song == ExitId) { Quit(); return; }
-        if (song == TutorialId) { PreviewScale = 1f; Load(TutorialSong, TutorialSong, "Tutorial"); return; }
+        if (song == TutorialId) { PreviewScale = 1f; SelectedDiff = -1; Load(TutorialSong, TutorialSong, "Tutorial"); return; }
         // 일반 곡은 난이도 창을 먼저 띄운다. 고르면 ConfirmDifficulty → Load
         pendingSong = song;
         OpenDifficulty();
@@ -134,25 +148,26 @@ public class SongSelect : MonoBehaviour
         SongEntry song = songs.FirstOrDefault(x => x.id == pendingSong);
         if (song == null) return;
 
-        string DifficultySong = "";
+        SelectedDiff = diffCursor;
+        Load(DiffId(song, diffCursor), pendingSong, "Game");
+    }
 
-        switch (diffCursor)
+    //난이도에 맞는 차트 id. 없으면 원본(song.id)
+    //곡 위 정보창에서도 노트 수 셀때 씀
+    string DiffId(SongEntry song, int diff)
+    {
+        switch (diff)
         {
             case 0:
-                DifficultySong = string.IsNullOrEmpty(song.hard_id)? song.id : song.hard_id;
-                break;
+                return string.IsNullOrEmpty(song.hard_id)? song.id : song.hard_id;
             case 1:
-                DifficultySong = string.IsNullOrEmpty(song.normal_id)? song.id : song.normal_id;
-                break;
+                return string.IsNullOrEmpty(song.normal_id)? song.id : song.normal_id;
             case 2:
-                DifficultySong = string.IsNullOrEmpty(song.easy_id)? song.id : song.easy_id;
-                break;
+                return string.IsNullOrEmpty(song.easy_id)? song.id : song.easy_id;
             case 3:
-                DifficultySong = string.IsNullOrEmpty(song.easy_id)? song.id : song.easy_id;
-                break;
+                return string.IsNullOrEmpty(song.easy_id)? song.id : song.easy_id;
         }
-
-        Load(DifficultySong, pendingSong, "Game");
+        return song.id;
     }
 
     void Quit()
@@ -219,6 +234,24 @@ public class SongSelect : MonoBehaviour
     {
         wait = true;
         Invoke(nameof(a), 2f);
+        StartCoroutine(PreloadSamples());
+    }
+
+    //인트로 2초 동안 곡 음원을 하나씩 미리 읽어둔다
+    //음원이 Decompress On Load라 LoadAudioData가 그 자리에서 압축을 풂 → 한 프레임에 한 곡씩
+    //곡 전부 메모리에 풀어둠 (곡당 수십MB). 곡 많아지면 옆 카드만 읽게 바꾸기
+    IEnumerator PreloadSamples()
+    {
+        foreach (SongEntry s in songs)
+        {
+            ResourceRequest req = Resources.LoadAsync<AudioClip>(s.id);
+            yield return req;
+            AudioClip clip = req.asset as AudioClip;
+            if (clip == null) continue;
+            clip.LoadAudioData();
+            sampleClips[s.id] = clip;
+            yield return null;
+        }
     }
 
     void OnDestroy()
@@ -312,6 +345,15 @@ public class SongSelect : MonoBehaviour
         play = Root(Widget.Button(PlayLabel(), R(centerX - 130f, cardY + cardH + 60f, 260f, 80f), OnPlayClicked, playStyle), PlayLayer);
         play.Opacity = 0f;
 
+        //곡 위 정보창. 카드 위(cardY) 빈자리에 둔다
+        Rect ip = R(centerX - 450f, 20f, 900f, 170f);
+        infoPanel = Widget.Window(GUIContent.none, ip, "info", infoBoxStyle);
+        infoPanel.Mask = false;
+        infoLabel = Widget.Label(infoPanel, "", new Rect(ip.x + 20f * k, ip.y, ip.width - 40f * k, ip.height), infoStyle);
+        Root(infoPanel, PlayLayer);
+        infoPanel.Opacity = 0f;
+        ShowInfo(0.5f);
+
         // 인트로: 가운데 카드부터 바깥으로 차례로 아래에서 튀어 오르며 나타난다
         for (int i = 0; i < cards.Length; i++)
         {
@@ -363,6 +405,8 @@ public class SongSelect : MonoBehaviour
         i = Mathf.Clamp(i, 0, songs.Length - 1);
         left = right = false; //특수기술: 기술부채 생성
         if (i == selected) return;
+
+        cards[selected].ScaleTo(Vector2.one, 0.1f);
         selected = i;
         targetX = i * Step;
 
@@ -370,19 +414,100 @@ public class SongSelect : MonoBehaviour
         GUITween.Kill(play);
         play.Opacity = 0f;
         play.Content.text = PlayLabel();
+        GUITween.Kill(infoPanel);
+        infoPanel.Opacity = 0f;
 
         for (int j = 0; j < cards.Length; j++)
         {
-            MoveCard(cards[j], CardPos(j), SlideTime, j == i ? () => play.FadeIn(1f / fadeSpeed) : null);
+            MoveCard(cards[j], CardPos(j), SlideTime, j == i ? () => { play.FadeIn(1f / fadeSpeed); ShowInfo(0f); } : null);
             cards[j].FadeTo(j == i ? 1f : 0.55f, 0.2f);
         }
+        cards[i].RenderScale = new Vector2(1,1);
         cards[i].PunchScale(0.06f, 0.3f);
+
+        if(sampleAudio == null)
+        {
+            sampleAudio = new GameObject("Sample Audio", typeof(AudioSource)).GetComponent<AudioSource>();
+        }
+        else
+            if(sampleAudio.isPlaying)
+                sampleAudio.Stop();
+         StopCoroutine(godamnasssAudioStopper());
+
+        //미리 읽어둔게 있으면 그거, 아직 못 읽었으면 그냥 바로 읽음
+        if(songs[selected].id.StartsWith("_")) //특수 기능 꺼지게 하는 특수 기능
+            return;
+
+        if (!sampleClips.TryGetValue(songs[selected].id, out var clip))
+            clip = Resources.Load<AudioClip>(songs[selected].id);
+        sampleAudio.PlayOneShot(clip);
+        StartCoroutine(godamnasssAudioStopper());
+    }
+
+    IEnumerator godamnasssAudioStopper()
+    {
+        float end = Time.time + 20;
+
+        while(Time.time < end && sampleAudio.isPlaying)
+        {
+            if(sampleAudio != null)
+                yield return null;
+            else
+                yield break;
+        }
+        sampleAudio.Stop();
     }
 
     string PlayLabel()
     {
         string id = songs[selected].id;
         return id == CreditId ? "CREDIT" : id == ExitId ? "EXIT" : id == TutorialId ? "START" : "PLAY";
+    }
+
+    // ---------------------------------------------------------------
+    // 곡 위 정보창: 난이도별 노트 수, 최고기록 (설명은 난이도 창 옆 descPanel)
+    // ---------------------------------------------------------------
+
+    [System.Serializable]
+    class NoteList { public List<Note> noteList; } //노트 수만 셀거라 noteList만
+
+    Dictionary<string, int> noteCounts = new(); //차트 id → 노트 수. 넘길때마다 json 다시 안읽게
+
+    int NoteCount(string id)
+    {
+        if (noteCounts.ContainsKey(id)) return noteCounts[id];
+        TextAsset json = Resources.Load<TextAsset>(id);
+        int count = json == null ? 0 : JsonUtility.FromJson<NoteList>(json.text)?.noteList?.Count ?? 0;
+        noteCounts[id] = count;
+        return count;
+    }
+
+    string Desc(SongEntry song, int diff)
+    {
+        switch (diff)
+        {
+            case 0: return song.hard_desc;
+            case 1: return song.normal_desc;
+        }
+        return song.easy_desc;
+    }
+
+    //가운데 카드 정보로 글자 바꾸고 페이드인. 특수카드(튜토리얼/크레딧/나가기)는 안띄움
+    void ShowInfo(float delay)
+    {
+        SongEntry s = songs[selected];
+        if (s.id == TutorialId || s.id == CreditId || s.id == ExitId) return;
+
+        string text = "";
+        for (int i = 0; i < DifficultyNames.Length; i++)
+        {
+            float best = PlayerPrefs.GetFloat(BestKey(s.id, i), -1f);
+            string rank = best >= 0.9f ? "S" : best >= 0.8f ? "A" : best >= 0.7f ? "B" : "C"; //Match.FinishGame이랑 같은 기준
+            string record = best < 0f ? "기록 없음" : $"{rank}  {best * 100f:0.00}%";
+            text += $"{DifficultyNames[i]}  |  노트 {NoteCount(DiffId(s, i))}  |  최고 {record}\n";
+        }
+        infoLabel.Content.text = text.TrimEnd('\n');
+        infoPanel.FadeIn(1f / fadeSpeed, delay);
     }
 
     void OnPlayClicked()
@@ -481,6 +606,17 @@ public class SongSelect : MonoBehaviour
             Widget.Button(diffPanel, "", row, () => ClickRow(index), GUIStyle.none);
         }
         Root(diffPanel, WindowLayer);
+
+        //설명창: 난이도 창 바로 왼쪽, 같은 높이. 글자는 UpdateCursor가 커서 따라 바꿈
+        Rect dp = R(p.x - 20f - 360f, p.y, 360f, p.height);
+        descPanel = Widget.Window(GUIContent.none, dp, "difficulty.desc", infoBoxStyle);
+        descPanel.Mask = false;
+        descLabel = Widget.Label(descPanel, "", new Rect(dp.x + 20f * k, dp.y + 20f * k, dp.width - 40f * k, dp.height - 40f * k), descStyle);
+        Root(descPanel, WindowLayer);
+        descPanel.FadeIn(windowTime, 0f, TweenHelper.EaseOutQuad);
+        descPanel.MoveIn(new Vector2(-30f * k, 0f), 0.25f, 0f, TweenHelper.EaseOutQuad);
+        descLabel.MoveIn(new Vector2(-30f * k, 0f), 0.25f, 0f, TweenHelper.EaseOutQuad);
+
         UpdateCursor();
 
         // 인트로: 카드 크기에서 펼쳐지며 나타나고, 줄이 위에서부터 차례로 미끄러져 들어온다
@@ -503,6 +639,10 @@ public class SongSelect : MonoBehaviour
         panel.isInteractable = false;
         panel.ScaleTo(new Vector2(cardW / (cardW + 60f), cardH / (cardH + 60f)), windowTime, 0f, TweenHelper.EaseInQuad);
         panel.FadeOut(windowTime, 0f, TweenHelper.EaseInQuad, () => GUIManager.Unregister(panel));
+
+        GUIGroup desc = descPanel;
+        desc.isInteractable = false;
+        desc.FadeOut(windowTime, 0f, TweenHelper.EaseInQuad, () => GUIManager.Unregister(desc));
     }
 
     // 클릭: 다른 줄이면 커서 이동, 커서 줄이면 결정. 다 열린 뒤에만 받음
@@ -529,6 +669,11 @@ public class SongSelect : MonoBehaviour
             diffBars[i].isVisible = hi;
             diffLabels[i].Style = hi ? diffHiStyle : creditTextStyle;
         }
+
+        //커서 난이도 설명. 나가기거나 설명 비어있으면 창 숨김
+        string desc = diffCursor < DifficultyNames.Length ? Desc(songs[selected], diffCursor) : "";
+        descLabel.Content.text = desc;
+        descPanel.isVisible = !string.IsNullOrEmpty(desc);
     }
 
     // ---------------------------------------------------------------
@@ -574,5 +719,11 @@ public class SongSelect : MonoBehaviour
         creditTextStyle = GUIStyleMaker.Label(Color.black, Px(28), TextAnchor.MiddleCenter).Wrap();
         diffHiStyle = new GUIStyle(creditTextStyle).Text(Color.white);
         hintStyle = GUIStyleMaker.Label(fontSize: Px(16));
+        //정보창은 반전: 검정 배경에 펄 글자
+        infoBoxStyle = GUIStyleMaker.Box(pearl);
+        infoStyle = GUIStyleMaker.Label(Color.black, Px(20), TextAnchor.MiddleLeft);
+        infoStyle.clipping = TextClipping.Clip;
+        infoStyle.richText = true;
+        descStyle = new GUIStyle(infoStyle) { fontSize = Px(24), alignment = TextAnchor.MiddleCenter }.Wrap();
     }
 }

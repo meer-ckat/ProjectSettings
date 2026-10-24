@@ -14,6 +14,9 @@ public class EffectScript : MonoBehaviour
     public Sprite fallback;
     public List<Sprite> skillTextures;
 
+    // 레벨 순서대로 고정: Level1=0번, Level2=1번, Level3=2번 (Level3 뒤 연타는 0→1→2 전원 등장). 순서는 인스펙터 리스트 순서
+    Sprite Skill(int i) => i < skillTextures.Count && skillTextures[i] != null ? skillTextures[i] : fallback;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -48,7 +51,7 @@ public class EffectScript : MonoBehaviour
         if(forceOff) return;
         print("Yo Stage1");
         GameObject leaf = Instantiate(leafEffectPrefab);
-        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
+        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), Skill(0));
         Destroy(leaf, 5);
         leaf.transform.position = tree.transform.position;
     }
@@ -58,7 +61,7 @@ public class EffectScript : MonoBehaviour
         if(forceOff) return;
         print("Yo Stage2");
         GameObject leaf = Instantiate(leafEffectPrefab);
-        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
+        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), Skill(1));
         Destroy(leaf, 5);
         leaf.transform.position = tree.transform.position;
     }
@@ -76,21 +79,21 @@ public class EffectScript : MonoBehaviour
     {
         if(forceOff) yield break;
         GameObject magic = Instantiate(magicPrefab);
-        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
+        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 0), Skill(2));
         Destroy(magic, 2);
         magic.transform.position = tree.transform.position;
         yield return new WaitForSeconds(1f);
-        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 2), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
+        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 2), Skill(0));
         GameObject leaf = Instantiate(leafEffectPrefab);
         Destroy(leaf, 5);
         leaf.transform.position = tree.transform.position;
         yield return new WaitForSeconds(1f);
-        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 1), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
+        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, 1), Skill(1));
         leaf = Instantiate(leafEffectPrefab);
         Destroy(leaf, 5);
         leaf.transform.position = tree.transform.position + new Vector3(-1, 1, 0);
         yield return new WaitForSeconds(0.5f);
-        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, -1), skillTextures[Random.Range(0, skillTextures.Count)]??fallback);
+        GetComponent<SkillEffect>().Launch(new Vector2(10,-3.5f), new Vector2(7.29f, -1), Skill(2));
         leaf = Instantiate(leafEffectPrefab);
         Destroy(leaf, 5);
         leaf.transform.position = tree.transform.position + new Vector3(1, 2, 0);

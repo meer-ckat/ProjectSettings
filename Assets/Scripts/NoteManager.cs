@@ -15,6 +15,9 @@ public struct Note
 {
     public float interval;
     public NoteInputType input;
+    // 비어 있지 않으면 이 노트의 박에 DialogueManager.Send(message)를 보낸다 (클라이맥스 이펙트, 보컬/드럼 예고 등)
+    // 미리 알리고 싶으면 그만큼 앞 노트에 단다
+    public string message;
     public static float NotesLength;
     public float noteTime;
 
@@ -22,6 +25,7 @@ public struct Note
     {
         this.interval = interval;
         this.input = input;
+        this.message = null;
         this.noteTime = NotesLength;
         NotesLength += interval;
     }

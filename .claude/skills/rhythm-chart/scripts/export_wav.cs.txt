@@ -1,0 +1,23 @@
+// Unity MCP execute_code에 그대로 붙여 쓴다 (에디터, 플레이 중 아닐 때).
+// mp3 등 Unity가 읽는 음원을 모노 16bit wav로 Temp/chart/<이름>.wav에 뽑는다. CLIP 경로만 바꿀 것
+var CLIP = "Assets/Resources/one_republic-counting_stars.mp3";
+var a = AssetDatabase.LoadAssetAtPath<AudioClip>(CLIP);
+a.LoadAudioData();
+var data = new float[a.samples * a.channels];
+if (!a.GetData(data, 0)) return "GetData 실패: 음원 Import 설정 Load Type을 Decompress On Load로";
+System.IO.Directory.CreateDirectory("Temp/chart");
+var path = "Temp/chart/" + System.IO.Path.GetFileNameWithoutExtension(CLIP) + ".wav";
+using (var w = new System.IO.BinaryWriter(System.IO.File.Create(path)))
+{
+    int n = a.samples, rate = a.frequency, ch = a.channels;
+    w.Write(System.Text.Encoding.ASCII.GetBytes("RIFF")); w.Write(36 + n * 2);
+    w.Write(System.Text.Encoding.ASCII.GetBytes("WAVEfmt ")); w.Write(16); w.Write((short)1); w.Write((short)1);
+    w.Write(rate); w.Write(rate * 2); w.Write((short)2); w.Write((short)16);
+    w.Write(System.Text.Encoding.ASCII.GetBytes("data")); w.Write(n * 2);
+    for (int i = 0; i < n; i++)
+    {
+        float s = 0; for (int c = 0; c < ch; c++) s += data[i * ch + c];
+        w.Write((short)Mathf.Clamp(s / ch * 32767f, -32768f, 32767f));
+    }
+}
+return path + " (" + a.length.ToString("0.0") + "s)";

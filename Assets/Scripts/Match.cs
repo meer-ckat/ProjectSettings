@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum Accuracy
 {
@@ -78,6 +79,16 @@ public class Match : MonoBehaviour
     private GUIBoxLabel guideBText;
     private GUIBoxLabel guideCText;
 
+    // 노트를 치면 그 레인 기둥이 레인 색으로 번쩍했다 사라진다 (노트 에디터 재생 강조와 같은 색·시간)
+    private static readonly Color[] LaneColors =
+    {
+        new(1f, 0.45f, 0.45f),
+        new(0.45f, 1f, 0.55f),
+        new(0.45f, 0.65f, 1f)
+    };
+    private const float LaneFlashTime = 0.2f;
+    private readonly GUIImage[] laneFlash = new GUIImage[3];
+
     // 타건음은 키 입력이 아니라 노트에 붙어 있다: 각 노트의 정박에 맞춰 미리 예약 재생한다.
     // 음악과 같은 시계(dsp)·같은 출력 경로라서 이어폰 딜레이가 있어도 음악과 정확히 겹친다.
     // (누른 뒤에 재생하면 딜레이만큼 무조건 늦게 들림.) 대신 놓친 노트도 소리는 난다.
@@ -120,6 +131,19 @@ public class Match : MonoBehaviour
         }
     }
 
+    // 노트의 박이 지나가는 순간 그 노트의 message를 보낸다. 플레이어가 쳤는지와 상관없이 곡 시간 기준
+    // 받는 쪽: DialogueManager.Message += ... (대사 waitUntilEvent로도 쓸 수 있다)
+    // all = 박이 안 와도 남은 것 전부 (곡이 끝나면 Update가 멈춰서, 마지막 노트를 일찍 친 경우 그 메시지가 영영 안 나감)
+    private void SendNoteMessages(bool all = false)
+    {
+        while (nextMessageIndex < notes.Count && (all || hitTimes[nextMessageIndex] <= currentTime))
+        {
+            string message = notes[nextMessageIndex++].message;
+            if (!string.IsNullOrEmpty(message))
+                DialogueManager.Send(message);
+        }
+    }
+
     // 노트를 맞히면 카메라 살짝 흔들기
     private void Shake()
     {
@@ -159,6 +183,7 @@ public class Match : MonoBehaviour
     private readonly List<NoteObject> activeNotes = new();
 
     private int nextSpawnIndex;
+    private int nextMessageIndex; // 다음에 메시지를 확인할 노트
     private int judged;
     private int perfect;
     private int great;
@@ -171,7 +196,21 @@ public class Match : MonoBehaviour
     private bool finished;
     private bool started;
     private double startDsp;
-    private const float MusicDelay = 3f; // 씬 진입 → 음악 시작(초). 그동안 A/B/C 안내가 떴다 사라진다
+    private const float MusicDelay = 3f; // 씬 진입(스토리가 있으면 스토리 끝) → 음악 시작(초). 그동안 A/B/C 안내가 떴다 사라진다
+    private StoryDialogue story;          // 곡 전 스토리. 없으면 null
+    private double enteredDsp;            // 씬에 들어온 시각 (dspTime)
+    private bool guidesFlashed;
+
+    // 연출용 스위치 (BadAppleDirector가 쓴다)
+    // InputBlocked: 입력을 버리고 곡 시계도 멈춘다 → 노트가 그 자리에 얼고, 판정·Miss도 안 난다
+    // HoldStart: Restart 뒤 음악 예약을 미룬다 (화면이 까만 동안 처음부터 다시 시작할 준비만)
+    [HideInInspector] public bool InputBlocked;
+    [HideInInspector] public bool HoldStart;
+    public bool Started => started; // 음악이 예약돼서 currentTime이 이번 판 기준으로 돌고 있음 (BadApple이 본다)
+
+    // 음악 위치(초)를 오디오 시계로 바로 계산한 값. currentTime과 달리 채보가 끝나도(finished) 계속 간다.
+    // 정지 중에는 정지한 순간 값에 멈춘다 (풀 때 SetPaused가 startDsp를 미뤄서 이어진다). 이어폰 딜레이 보정 포함
+    public float SongTime => (float)((paused ? pauseDsp : AudioSettings.dspTime) - startDsp) + audioOffset;
 
     // 오디오 로드 + 로딩 끊김이 가라앉을 때까지(10프레임 연속 50ms 미만) 기다린 뒤
     // 음악을 dsp 시계 기준 정확한 시각에 예약 재생한다.
@@ -191,12 +230,16 @@ public class Match : MonoBehaviour
             stable = Time.unscaledDeltaTime < 0.05f ? stable + 1 : 0;
         }
 
-        // 시작 전에 설정 창을 열었으면 닫을 때까지 음악 예약을 미룬다
-        while (paused)
+        // 스토리가 끝나고 설정 창도 닫혀 있을 때까지 음악 예약을 미룬다. 한 조건으로 같이 본다:
+        // 따로 기다리면 스토리 도중 설정 창을 연 경우 멈춘 채로 예약되고, 풀 때 노트 시계만 밀린다
+        while (paused || HoldStart || (story != null && story.Playing))
             yield return null;
 
-        // 씬에 들어온 뒤 MusicDelay초에 맞춰 시작. 로딩이 그보다 길었거나 씬 중간의 Restart면 바로(0.1초 뒤)
-        startDsp = AudioSettings.dspTime + Mathf.Max(0.1f, MusicDelay - Time.timeSinceLevelLoad);
+        // 씬에 들어온 뒤(스토리가 있었으면 끝난 뒤) MusicDelay초에 맞춰 시작.
+        // 로딩이 그보다 길었거나 씬 중간의 Restart면 바로(0.1초 뒤)
+        // 기준 시각도 dsp로 잰다: 게임 시간(timeSinceLevelLoad)은 프레임이 끊기면 오디오 시계와 벌어진다
+        double from = story != null ? story.EndedDsp : enteredDsp;
+        startDsp = System.Math.Max(AudioSettings.dspTime + 0.1, from + MusicDelay);
 
         if (Music != null)
             Music.PlayScheduled(startDsp);
@@ -259,6 +302,15 @@ public class Match : MonoBehaviour
 
     private void Start()
     {
+        enteredDsp = AudioSettings.dspTime;
+
+        // 노트 메시지 배너("이제 보컬 리듬!"). 씬에 직접 붙여 뒀으면 그걸 쓴다
+        if (GetComponent<RhythmCallout>() == null)
+            gameObject.AddComponent<RhythmCallout>();
+
+        // Bad Apple!! 곡이면 5초 "Real BadApple" 연출
+        if (SongSelect.SelectedNote == BadAppleDirector.SongId && GetComponent<BadAppleDirector>() == null)
+            gameObject.AddComponent<BadAppleDirector>();
 
         if (!GuideA || !GuideB || !GuideC ||
             !NotePrefab || !SpawnPoint || !HitPoint)
@@ -348,6 +400,10 @@ public class Match : MonoBehaviour
             Music.clip = clip;
         Debug.Log($"Music: song={SongSelect.SelectedSong} clip={(Music != null && Music.clip != null ? Music.clip.name : "NONE")}", this);
 
+        // 곡 전 스토리 (Resources/Story/<곡 id>.json 있을 때). 튜토리얼은 자기 대사창이 따로 있어서 안 띄운다
+        if (FindAnyObjectByType<TutorialCoach>() == null)
+            story = StoryDialogue.TryStart(gameObject, SongSelect.SelectedSong);
+
         ready = true;
 
         Restart();
@@ -387,6 +443,7 @@ public class Match : MonoBehaviour
 
         nextSpawnIndex = 0;
         nextSoundIndex = 0;
+        nextMessageIndex = 0;
 
         if (Music != null)
             Music.Stop();
@@ -428,7 +485,7 @@ public class Match : MonoBehaviour
 
         ClearInput();
 
-        if (!ready || !started || finished || Time.timeScale <= 0f)
+        if (!ready || !started || finished || InputBlocked || Time.timeScale <= 0f)
             return;
 
         // 오디오 하드웨어 시계(dspTime)가 기준. 프레임마다 deltaTime으로 부드럽게 진행하고,
@@ -439,6 +496,7 @@ public class Match : MonoBehaviour
             currentTime = audioClock;
 
         ScheduleNoteSounds();
+        SendNoteMessages();
         ExpireNotes();
         SpawnUpcomingNotes();
 
@@ -521,11 +579,28 @@ public class Match : MonoBehaviour
     [Tooltip("끝나면 결과 창 띄우기. 튜토리얼은 마지막 단계에서만 켠다")]
     public bool showResult = true;
 
+    public Sprite S;
+    public Sprite A;
+    public Sprite B;
+    public Sprite C;
+
     public void FinishGame()
     {
         finished = true;
+        SendNoteMessages(all: true);
         DialogueManager.Send("Finish");
         ShowFeedback("Finished", Color.white);
+
+        //최고기록 저장 (튜토리얼이나 Game씬 바로 실행은 SelectedDiff = -1이라 저장 안함)
+        if (SongSelect.SelectedDiff >= 0)
+        {
+            string key = SongSelect.BestKey(SongSelect.SelectedSong, SongSelect.SelectedDiff);
+            if (MiracleProgress > PlayerPrefs.GetFloat(key, -1f))
+            {
+                PlayerPrefs.SetFloat(key, MiracleProgress);
+                PlayerPrefs.Save();
+            }
+        }
 
         if (!showResult)
             return;
@@ -546,6 +621,14 @@ public class Match : MonoBehaviour
                      $"Good: {good}\n" +
                      $"Miss: {miss}\n" +
                      $"Best Combo: {bestCombo}";
+
+        Result.Find("Image").GetComponent<Image>().sprite = MiracleProgress >= 0.9f
+            ? S
+            : MiracleProgress >= 0.8f
+                ? A
+                : MiracleProgress >= 0.7f
+                    ? B
+                    : C;
     }
 
     private void ExpireNotes()
@@ -707,7 +790,10 @@ public class Match : MonoBehaviour
         bool missed = result == Accuracy.Miss; // 아래에서 result가 Oops로 바뀔 수 있어서 미리 저장
 
         if (!missed)
+        {
             Shake();
+            FlashLane(note.input, result);
+        }
 
         // 곡 완성도(총 정확도): 노트마다 판정 가중치 / 전체 노트 수를 더한다. 전부 Perfect면 1.
         float weight = 0f;
@@ -1041,6 +1127,15 @@ public class Match : MonoBehaviour
         if (hudPanel == null)
             BuildHud();
 
+        // 음악 시작 전 MusicDelay초 동안 키 안내. 스토리가 있으면 끝난 다음부터
+        if (!guidesFlashed && (story == null || !story.Playing))
+        {
+            guidesFlashed = true;
+            FlashGuide(guideAText);
+            FlashGuide(guideBText);
+            FlashGuide(guideCText);
+        }
+
         notesLabel.Content.text = finished ? "RESULT" : $"NOTES  {judged} / {notes.Count}";
         countsLabel.Content.text = $"Perfect {perfect}   Great {great}\nGood {good}   Miss {miss}";
 
@@ -1051,9 +1146,17 @@ public class Match : MonoBehaviour
         var cPos = Camera.main.WorldToScreenPoint(GuideC.transform.position);
         cPos = new Vector2(cPos.x, GUIManager.ScreenSize.y - cPos.y);
 
-        guideAText.SetRect(new Rect(aPos - new Vector3(50, -100), new Vector2(100, 100)));
-        guideBText.SetRect(new Rect(bPos - new Vector3(50, -100), new Vector2(100, 100)));
-        guideCText.SetRect(new Rect(cPos - new Vector3(50, -100), new Vector2(100, 100)));
+        // 레인 기둥: 가이드 x를 가운데로 레인 간격만큼 폭, 화면 위아래 전체. 카메라가 흔들려도 따라가게 매 프레임
+        float laneW = Mathf.Abs(bPos.x - aPos.x);
+        for (int i = 0; i < laneFlash.Length; i++)
+        {
+            float laneX = i == 0 ? aPos.x : i == 1 ? bPos.x : cPos.x;
+            laneFlash[i].SetRect(new Rect(laneX - laneW / 2f, 0f, laneW, Screen.height));
+        }
+
+        guideAText.SetRect(new Rect(aPos - new Vector3(50, -200), new Vector2(100, 100)));
+        guideBText.SetRect(new Rect(bPos - new Vector3(50, -200), new Vector2(100, 100)));
+        guideCText.SetRect(new Rect(cPos - new Vector3(50, -200), new Vector2(100, 100)));
 
         nextLabel.isVisible = false;
         if (!finished && TryGetNextNote(out NoteInputType nextInput, out float nextHitTime))
@@ -1079,9 +1182,17 @@ public class Match : MonoBehaviour
         guideAText = Widget.BoxLabel("키보드 A", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideA.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
         guideBText = Widget.BoxLabel("키보드 S", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideB.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
         guideCText = Widget.BoxLabel("키보드 D", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideC.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
-        FlashGuide(guideAText);
-        FlashGuide(guideBText);
-        FlashGuide(guideCText);
+        // 안내는 스토리가 끝난 뒤 LateUpdate가 띄운다
+        guideAText.Opacity = guideBText.Opacity = guideCText.Opacity = 0f;
+
+        // 레인 기둥은 평소 투명. 레이어 -1 = 다른 UI 밑, 클릭은 안 막음
+        for (int i = 0; i < laneFlash.Length; i++)
+        {
+            laneFlash[i] = Widget.Image(GUIStyleMaker.Solid(LaneColors[i]), Rect.zero);
+            laneFlash[i].SetLayer(-1);
+            laneFlash[i].isInteractable = false;
+            laneFlash[i].Opacity = 0f;
+        }
 
         labelStyle = GUIStyleMaker.Label(fontSize: 18).Wrap();
         feedbackStyle = new GUIStyle(labelStyle);
@@ -1121,6 +1232,26 @@ public class Match : MonoBehaviour
             guide.FadeOut(0.5f, MusicDelay - 1f, onComplete: () => GUIManager.Unregister(guide)));
     }
 
+    // 판정이 좋을수록 밝게 번쩍. 연타하면 페이드가 처음부터 다시 걸린다
+    private void FlashLane(NoteInputType lane, Accuracy result)
+    {
+        GUIImage flash = laneFlash[(int)lane];
+        if (flash == null)
+            return; // HUD가 아직 안 만들어짐
+
+        flash.Opacity = result == Accuracy.Perfect ? 0.45f : result == Accuracy.Great ? 0.3f : 0.18f;
+        flash.FadeTo(0f, LaneFlashTime, 0f, TweenHelper.EaseOutQuad);
+    }
+
+    // 왼쪽 위 판정 패널을 서서히 지운다 (BadAppleDirector: 마지막 쉬는 구간). 그룹 투명도라 줄·버튼도 같이 사라진다
+    public void FadeOutHud(float duration)
+    {
+        if (hudPanel == null)
+            return;
+        hudPanel.FadeOut(duration);
+        hudPanel.isInteractable = false; // 사라진 Restart 버튼이 눌리지 않게
+    }
+
     // 꺼져 있는 동안(보정 중)은 패널도 숨긴다. 예전 OnGUI도 꺼지면 안 불렸다
     private void OnEnable()
     {
@@ -1134,5 +1265,7 @@ public class Match : MonoBehaviour
         GUIManager.Unregister(guideAText); // 3초 안에 씬을 떠나면 아직 남아 있다
         GUIManager.Unregister(guideBText);
         GUIManager.Unregister(guideCText);
+        foreach (GUIImage flash in laneFlash)
+            GUIManager.Unregister(flash);
     }
 }

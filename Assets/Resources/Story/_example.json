@@ -1,0 +1,7 @@
+{
+  "lines": [
+    { "speaker": "나레이션", "portrait": "", "text": "이 파일은 형식 예시입니다. 곡 id와 같은 이름(예: AS.json)으로 복사해서 쓰세요." },
+    { "speaker": "주인공", "portrait": "Portraits/hero", "text": "portrait에는 Resources 안 이미지 경로를 확장자 없이 적어요. 없으면 초상화 칸이 비어요." },
+    { "speaker": "주인공", "portrait": "Portraits/hero", "text": "같은 사람이 이어서 말하면 초상화는 그대로, 글만 바뀌어요." }
+  ]
+}

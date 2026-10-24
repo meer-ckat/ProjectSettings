@@ -19,6 +19,7 @@ public class NoteEditor : EditorWindow
     {
         public float beat; // 곡 시작부터의 박 (BPM 기준)
         public int lane;   // 0=A, 1=B, 2=C
+        public string message; // 이 박에 게임이 DialogueManager.Send로 보낼 메시지. 비면 안 보냄
     }
 
     // NoteManager가 읽는 포맷 (MidiToStage와 같음)
@@ -27,6 +28,7 @@ public class NoteEditor : EditorWindow
     {
         public float interval;
         public int input;
+        public string message;
     }
 
     [Serializable]
@@ -658,7 +660,7 @@ public class NoteEditor : EditorWindow
     {
         float first = selected.Min(n => n.beat);
         clipboard.Clear();
-        clipboard.AddRange(selected.Select(n => new EditorNote { beat = n.beat - first, lane = n.lane }));
+        clipboard.AddRange(selected.Select(n => new EditorNote { beat = n.beat - first, lane = n.lane, message = n.message }));
         ShowNotification(new GUIContent($"노트 {clipboard.Count}개 복사"));
     }
 
@@ -669,7 +671,11 @@ public class NoteEditor : EditorWindow
         Undo.RecordObject(this, "Paste Notes");
         selected.Clear();
         foreach (EditorNote c in clipboard)
-            selected.Add(AddNote(c.lane, at + c.beat));
+        {
+            EditorNote pasted = AddNote(c.lane, at + c.beat);
+            pasted.message = c.message;
+            selected.Add(pasted);
+        }
     }
 
     // Ctrl+C/X/V/A는 KeyDown이 아니라 Validate→Execute 명령으로 온다. Validate를 Use해야 Execute가 옴
@@ -909,6 +915,24 @@ public class NoteEditor : EditorWindow
             GUILayout.Label($"{(int)seconds / 60}:{seconds % 60:00.00}  /  {playheadBeat:0.00}박  /  노트 {notes.Count}개");
         }
 
+        // 선택한 노트의 메시지. 여러 개 골랐으면 한 번에 같은 값으로
+        using (new EditorGUI.DisabledScope(selected.Count == 0))
+        {
+            string first = selected.Count > 0 ? selected.First().message ?? "" : "";
+            EditorGUI.showMixedValue = selected.Any(n => (n.message ?? "") != first);
+            EditorGUI.BeginChangeCheck();
+            string message = EditorGUILayout.DelayedTextField(new GUIContent("메시지",
+                "노트의 박이 지나갈 때 게임이 DialogueManager.Send로 보낸다. 미리 알리려면 앞 노트에 달 것. 비우면 안 보냄"),
+                first);
+            EditorGUI.showMixedValue = false;
+            if (EditorGUI.EndChangeCheck())
+            {
+                Undo.RecordObject(this, "Note Message");
+                foreach (EditorNote n in selected)
+                    n.message = message;
+            }
+        }
+
         GUILayout.Label("레인 빈 곳 클릭: 노트 추가 · 노트 끌기: 이동 · 우클릭: 삭제 · 왼쪽 숫자 칸 클릭: 재생 바 이동 · " +
                         "Shift+클릭/Shift+끌기: 여러 개 선택 · Ctrl+C/X/V: 복사/잘라내기/재생 바 자리에 붙여넣기 · Ctrl+A: 전체 선택 · " +
                         "Space: 재생 · A/S/D: 재생 바 자리에 노트 · Ctrl+휠: 확대 · Ctrl+Z: 되돌리기",
@@ -1090,6 +1114,10 @@ public class NoteEditor : EditorWindow
             else if (selected.Contains(n))
                 EditorGUI.DrawRect(new Rect(r.x - 2f, r.y - 2f, r.width + 4f, r.height + 4f), Color.white);
             EditorGUI.DrawRect(r, LaneColors[n.lane]);
+
+            // 메시지 달린 노트: 노트 오른쪽에 이름을 띄운다
+            if (!string.IsNullOrEmpty(n.message))
+                GUI.Label(new Rect(r.xMax + 2f, r.center.y - 8f, laneW, 16f), "✉ " + n.message, EditorStyles.miniBoldLabel);
         }
 
         if (boxStart != null)
@@ -1153,7 +1181,7 @@ public class NoteEditor : EditorWindow
         foreach (StageNote n in stage?.noteList ?? new List<StageNote>())
         {
             beat += n.interval;
-            notes.Add(new EditorNote { beat = beat, lane = Mathf.Clamp(n.input, 0, 2) });
+            notes.Add(new EditorNote { beat = beat, lane = Mathf.Clamp(n.input, 0, 2), message = n.message });
         }
 
         if (stage != null && stage.bpm > 0f)
@@ -1180,7 +1208,7 @@ public class NoteEditor : EditorWindow
         foreach (EditorNote n in notes.OrderBy(n => n.beat).ThenBy(n => n.lane))
         {
             double beat = Math.Round(n.beat, 4);
-            stage.noteList.Add(new StageNote { interval = (float)Math.Round(beat - prev, 4), input = n.lane });
+            stage.noteList.Add(new StageNote { interval = (float)Math.Round(beat - prev, 4), input = n.lane, message = n.message });
             prev = beat;
         }
 

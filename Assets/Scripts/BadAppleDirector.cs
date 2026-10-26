@@ -108,7 +108,7 @@ public class BadAppleDirector : MonoBehaviour
 
         // 덩굴 = 레인 가이드 아래 키 큰 스프라이트. 작은 판정 박스는 마지막 노트를 쳐야 하니 남긴다
         var tall = new System.Collections.Generic.List<SpriteRenderer>();
-        foreach (GameObject guide in new[] { match.GuideA, match.GuideB, match.GuideC })
+        foreach (GameObject guide in new[] { match.GuideA, match.GuideB, match.GuideC, match.GuideD })
         {
             if (guide == null)
                 continue;

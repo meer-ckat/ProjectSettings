@@ -18,7 +18,7 @@ public class NoteEditor : EditorWindow
     private class EditorNote
     {
         public float beat; // 곡 시작부터의 박 (BPM 기준)
-        public int lane;   // 0=A, 1=B, 2=C
+        public int lane;   // 0=A, 1=B, 2=C, 3=펌프(F)
         public string message; // 이 박에 게임이 DialogueManager.Send로 보낼 메시지. 비면 안 보냄
     }
 
@@ -43,13 +43,16 @@ public class NoteEditor : EditorWindow
     private const float NoteHeight = 12f;
     private const float HitFlash = 0.2f; // 재생 중 친 노트 강조 시간(초)
 
-    private static readonly KeyCode[] LaneKeys = { KeyCode.A, KeyCode.S, KeyCode.D };
-    private static readonly string[] LaneNames = { "A", "B", "C" };
+    // 4번째 = 펌프 레인(F키). 게임은 펌프 모드에서만 이 레인을 쓰고, 키보드 모드에서는 불러올 때 뺀다
+    private const int LaneCount = 4;
+    private static readonly KeyCode[] LaneKeys = { KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.F };
+    private static readonly string[] LaneNames = { "A", "B", "C", "펌프" };
     private static readonly Color[] LaneColors =
     {
         new(1f, 0.45f, 0.45f),
         new(0.45f, 1f, 0.55f),
-        new(0.45f, 0.65f, 1f)
+        new(0.45f, 0.65f, 1f),
+        new(1f, 0.8f, 0.3f)
     };
 
     private static readonly int[] Divisions = { 1, 2, 3, 4, 6, 8, 12, 16 };
@@ -161,7 +164,7 @@ public class NoteEditor : EditorWindow
     }
     private float Y(float beat) => beat * pxPerBeat - scroll;
     private float BeatAt(float y) => (y + scroll) / pxPerBeat;
-    private float LaneWidth => Mathf.Min(120f, (timeline.width - Gutter - (guide.Count > 0 ? GuideWidth : 0f)) / 3f);
+    private float LaneWidth => Mathf.Min(120f, (timeline.width - Gutter - (guide.Count > 0 ? GuideWidth : 0f)) / LaneCount);
 
     private Rect BoxRect => Rect.MinMaxRect(Mathf.Min(boxStart.Value.x, boxEnd.x), Mathf.Min(boxStart.Value.y, boxEnd.y),
                                             Mathf.Max(boxStart.Value.x, boxEnd.x), Mathf.Max(boxStart.Value.y, boxEnd.y));
@@ -983,7 +986,7 @@ public class NoteEditor : EditorWindow
                     float beat = Snap(BeatAt(e.mousePosition.y));
                     int lane = Mathf.FloorToInt((e.mousePosition.x - Gutter) / LaneWidth);
                     selected.Clear();
-                    if (e.mousePosition.x >= Gutter && lane < 3)
+                    if (e.mousePosition.x >= Gutter && lane < LaneCount)
                         selected.Add(AddNote(lane, beat));
                     else
                         Seek(beat);
@@ -997,8 +1000,8 @@ public class NoteEditor : EditorWindow
             {
                 // 잡은 노트 기준으로 스냅하고, 같은 만큼 묶음 전체를 옮긴다 (레인 밖·0박 앞으로는 안 나감)
                 float delta = Snap(BeatAt(e.mousePosition.y) - dragOffset) - dragging.beat;
-                int laneDelta = Mathf.Clamp(Mathf.FloorToInt((e.mousePosition.x - Gutter) / LaneWidth), 0, 2) - dragging.lane;
-                laneDelta = Mathf.Clamp(laneDelta, -selected.Min(n => n.lane), 2 - selected.Max(n => n.lane));
+                int laneDelta = Mathf.Clamp(Mathf.FloorToInt((e.mousePosition.x - Gutter) / LaneWidth), 0, LaneCount - 1) - dragging.lane;
+                laneDelta = Mathf.Clamp(laneDelta, -selected.Min(n => n.lane), LaneCount - 1 - selected.Max(n => n.lane));
                 delta = Mathf.Max(delta, -selected.Min(n => n.beat));
                 foreach (EditorNote n in selected)
                 {
@@ -1053,7 +1056,7 @@ public class NoteEditor : EditorWindow
         scroll = Mathf.Max(-NoteHeight, scroll);
 
         EditorGUI.DrawRect(new Rect(0, 0, timeline.width, h), new Color(0.12f, 0.12f, 0.12f));
-        for (int lane = 0; lane < 3; lane++)
+        for (int lane = 0; lane < LaneCount; lane++)
         {
             Color c = LaneColors[lane];
             EditorGUI.DrawRect(new Rect(Gutter + lane * laneW, 0, laneW - 1f, h), new Color(c.r, c.g, c.b, 0.06f));
@@ -1072,7 +1075,7 @@ public class NoteEditor : EditorWindow
         float origin = OffsetBeats;
         int first = Mathf.FloorToInt((BeatAt(0f) - origin) * div);
         int last = Mathf.CeilToInt((BeatAt(h) - origin) * div);
-        float right = Gutter + laneW * 3f;
+        float right = Gutter + laneW * LaneCount;
         float lineRight = guide.Count > 0 ? timeline.width : right; // 가이드 패널까지 그리드를 이어서 같은 박을 맞춰 보게
 
         DrawGuide(right + 8f, timeline.width - 4f, h);
@@ -1127,7 +1130,7 @@ public class NoteEditor : EditorWindow
         EditorGUI.DrawRect(new Rect(0, Y(playheadBeat) - 1f, lineRight, 2f), new Color(1f, 0.85f, 0.2f));
 
         // 레인 이름
-        for (int lane = 0; lane < 3; lane++)
+        for (int lane = 0; lane < LaneCount; lane++)
             GUI.Label(new Rect(Gutter + lane * laneW, 0, laneW, 18f),
                       $"{LaneNames[lane]} ({LaneKeys[lane]})", EditorStyles.centeredGreyMiniLabel);
     }
@@ -1181,7 +1184,7 @@ public class NoteEditor : EditorWindow
         foreach (StageNote n in stage?.noteList ?? new List<StageNote>())
         {
             beat += n.interval;
-            notes.Add(new EditorNote { beat = beat, lane = Mathf.Clamp(n.input, 0, 2), message = n.message });
+            notes.Add(new EditorNote { beat = beat, lane = Mathf.Clamp(n.input, 0, LaneCount - 1), message = n.message });
         }
 
         if (stage != null && stage.bpm > 0f)

@@ -1,0 +1,556 @@
+{
+    "bpm": 110.0,
+    "gridOffset": 0.3237999975681305,
+    "noteList": [
+        {
+            "interval": 3.2836,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.6417,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.847,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.7182,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.9236,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.7182,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 2.4626,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.2314,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0261,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.2313,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 2.0522,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0261,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0261,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.6418,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.7444,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.6156,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0262,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 3.2835,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.6418,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.2313,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 2.0523,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.7182,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.7444,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0261,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.2313,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0262,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.6156,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0262,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.6156,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.847,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.9235,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0261,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.2314,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.2313,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.6156,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 2.1548,
+            "input": 0,
+            "message": ""
+        }
+    ]
+}

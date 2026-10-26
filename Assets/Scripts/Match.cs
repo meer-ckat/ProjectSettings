@@ -38,6 +38,8 @@ public class Match : MonoBehaviour
     public GameObject GuideA;
     public GameObject GuideB;
     public GameObject GuideC;
+    [Tooltip("펌프 레인(F키). 비워 두면 펌프 모드일 때 GuideC를 복제해서 오른쪽에 만든다")]
+    public GameObject GuideD;
     public GameObject NotePrefab;
 
     public Transform SpawnPoint;
@@ -78,16 +80,21 @@ public class Match : MonoBehaviour
     private GUIBoxLabel guideAText;
     private GUIBoxLabel guideBText;
     private GUIBoxLabel guideCText;
+    private GUIBoxLabel guideDText; // 펌프 모드에서만
 
     // 노트를 치면 그 레인 기둥이 레인 색으로 번쩍했다 사라진다 (노트 에디터 재생 강조와 같은 색·시간)
     private static readonly Color[] LaneColors =
     {
         new(1f, 0.45f, 0.45f),
         new(0.45f, 1f, 0.55f),
-        new(0.45f, 0.65f, 1f)
+        new(0.45f, 0.65f, 1f),
+        new(1f, 0.8f, 0.3f) // 펌프
     };
     private const float LaneFlashTime = 0.2f;
-    private readonly GUIImage[] laneFlash = new GUIImage[3];
+    private readonly GUIImage[] laneFlash = new GUIImage[4];
+
+    // 펌프 모드: 곡 선택에서 켜고, 튜토리얼은 항상 키보드(3레인)
+    bool pumpLane;
 
     // 타건음은 키 입력이 아니라 노트에 붙어 있다: 각 노트의 정박에 맞춰 미리 예약 재생한다.
     // 음악과 같은 시계(dsp)·같은 출력 경로라서 이어폰 딜레이가 있어도 음악과 정확히 겹친다.
@@ -160,17 +167,27 @@ public class Match : MonoBehaviour
 
     [Header("Judgment windows (seconds)")]
     [Min(0f)]
-    public float perfectWindow = 0.2f;
+    public float perfectWindow = 0.05f;
 
     [Min(0f)]
-    public float greatWindow = 0.5f;
+    public float greatWindow = 0.1f;
 
     [Min(0f)]
-    public float goodWindow = 1f;
+    public float goodWindow = 0.15f;
+
+    // 연타 방지. Good 범위보다 이만큼 더 일찍 누르면 그 노트를 Miss로 먹는다.
+    // 사람이 연타하는 간격(약 0.06~0.1초)보다 넓어야 연타가 이 구간을 못 건너뛴다. 난이도 배율(JudgeScale)은 안 곱한다
+    [Min(0f)]
+    public float earlyMissWindow = 0.1f;
+
+    // 레인마다 마지막으로 Miss 처리된 노트의 정박 시각 (지나가서 놓침 + 얼리 미스).
+    // 그 노트에 더 가까운 입력은 "그 노트를 늦게 친 것"이라 다음 노트를 얼리 미스로 먹지 않는다 (아래 CheckAccuracyAndForward)
+    private readonly float[] lastMissTime = { float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity, float.NegativeInfinity };
 
     public bool InputA;
     public bool InputB;
     public bool InputC;
+    public bool InputD; // 펌프
 
     public float currentTime;
 
@@ -254,7 +271,7 @@ public class Match : MonoBehaviour
 
     private GUIStyle labelStyle, feedbackStyle;
     private GUIGroup hudPanel;
-    private GUILabel notesLabel, countsLabel, nextLabel, feedbackLabel;
+    private GUILabel notesLabel, scoreLabel, countsLabel, nextLabel, feedbackLabel;
     private bool feedbackShown; // 판정 문구가 떠 있음. 사라지는 페이드를 한 번만 걸려고
 
     private TextMeshPro comboText;
@@ -298,6 +315,53 @@ public class Match : MonoBehaviour
             Destroy(g, 1);
             InputC = true;
         }
+    }
+
+    // 펌프(F키). 씬 PlayerInput 이벤트 대신 Start에서 "d" 액션에 직접 붙인다 (씬 수정 없이)
+    public void OnD(InputAction.CallbackContext c)
+    {
+        if (c.performed && pumpLane)
+        {
+            var g = Instantiate(Click);
+            g.transform.position = GuideD.transform.position;
+            Destroy(g, 1);
+            InputD = true;
+        }
+    }
+
+    InputAction pumpAction;
+
+    // 펌프 모드 준비. 키보드 모드면 채보에서 펌프 노트를 빼고, 펌프 모드면 C 레인 오른쪽에 D 레인을 만든다
+    private void SetupPumpLane()
+    {
+        pumpLane = SongSelect.PumpMode && FindAnyObjectByType<TutorialCoach>() == null;
+
+        if (!pumpLane)
+        {
+            notes = NoteManager.WithoutLane(notes, NoteInputType.D);
+            if (GuideD != null)
+                GuideD.SetActive(false);
+            return;
+        }
+
+        if (GuideD == null)
+        {
+            // C 레인을 레인 간격만큼 오른쪽에 복제 (판정 칸·덩굴 그림이 자식이라 같이 온다)
+            Vector3 step = GuideC.transform.localPosition - GuideB.transform.localPosition;
+            GuideD = Instantiate(GuideC, GuideC.transform.parent);
+            GuideD.name = "GuideD (pump)";
+            GuideD.transform.localPosition = GuideC.transform.localPosition + step;
+            // 레인 4개를 가운데로: 전체를 반 칸 왼쪽으로 (오른쪽 나무·게이지와 안 겹치게)
+            GuideC.transform.parent.position -= GuideC.transform.parent.TransformVector(step) * 0.5f;
+        }
+        GuideD.SetActive(true);
+
+        var playerInput = FindAnyObjectByType<PlayerInput>();
+        pumpAction = playerInput != null ? playerInput.actions.FindAction("d") : null;
+        if (pumpAction != null)
+            pumpAction.performed += OnD;
+        else
+            Debug.LogWarning("Match: 입력 액션 'd'(F키)를 못 찾음. 펌프 입력이 안 들어온다", this);
     }
 
     private void Start()
@@ -368,6 +432,7 @@ public class Match : MonoBehaviour
         }
 
         notes = NoteManager.Instance.CurrentData.notes;
+        SetupPumpLane();
 
         if (NoteManager.Instance.CurrentData.bpm > 0f)
             BPM = NoteManager.Instance.CurrentData.bpm;
@@ -443,6 +508,8 @@ public class Match : MonoBehaviour
 
         nextSpawnIndex = 0;
         nextSoundIndex = 0;
+        for (int i = 0; i < lastMissTime.Length; i++)
+            lastMissTime[i] = float.NegativeInfinity;
         nextMessageIndex = 0;
 
         if (Music != null)
@@ -456,7 +523,10 @@ public class Match : MonoBehaviour
 
         started = false;
         StopAllCoroutines();
-        StartCoroutine(StartWhenReady());
+        // 꺼져 있으면(캘리브레이션 중) 판만 치우고 음악은 예약 안 함. 코루틴은 꺼진 컴포넌트에서도 돌아서 음악만 나온다
+        // 캘리브레이션이 끝나면 LatencyCalibrator.Close가 켜고 다시 Restart한다
+        if (enabled)
+            StartCoroutine(StartWhenReady());
 
         progressLevel = 1;
         judged = 0;
@@ -475,6 +545,14 @@ public class Match : MonoBehaviour
         rhythmSpriteBounce.ResetBounce();
         rhythmSpriteBounce.setSpriteLevel(0);
         ShowFeedback("Ready", Color.white);
+
+        // 결과창(또는 BadApple 마지막 구간)에서 치운 판정 패널을 다시 보이게
+        if (hudPanel != null)
+        {
+            GUITween.Kill(hudPanel);
+            hudPanel.Opacity = 1f;
+            hudPanel.isInteractable = true;
+        }
     }
 
     private void Update()
@@ -482,6 +560,7 @@ public class Match : MonoBehaviour
         bool a = InputA;
         bool b = InputB;
         bool c = InputC;
+        bool d = InputD;
 
         ClearInput();
 
@@ -508,6 +587,9 @@ public class Match : MonoBehaviour
 
         if (c)
             CheckAccuracyAndForward(NoteInputType.C);
+
+        if (d)
+            CheckAccuracyAndForward(NoteInputType.D);
 
         if (judged == notes.Count)
         {
@@ -591,15 +673,22 @@ public class Match : MonoBehaviour
         DialogueManager.Send("Finish");
         ShowFeedback("Finished", Color.white);
 
+        // 점수 = 정확도(MiracleProgress) x 100만 x 난이도·엄격 배율. 어려움+엄격 올 Perfect = 1,000,000
+        // 랭크는 정확도만 보고, 점수는 어떤 설정으로 쳤는지까지 반영한다
+        int points = Points;
+
         //최고기록 저장 (튜토리얼이나 Game씬 바로 실행은 SelectedDiff = -1이라 저장 안함)
         if (SongSelect.SelectedDiff >= 0)
         {
             string key = SongSelect.BestKey(SongSelect.SelectedSong, SongSelect.SelectedDiff);
             if (MiracleProgress > PlayerPrefs.GetFloat(key, -1f))
-            {
                 PlayerPrefs.SetFloat(key, MiracleProgress);
-                PlayerPrefs.Save();
-            }
+
+            string scoreKey = SongSelect.ScoreKey(SongSelect.SelectedSong);
+            if (points > PlayerPrefs.GetInt(scoreKey, -1))
+                PlayerPrefs.SetInt(scoreKey, points);
+
+            PlayerPrefs.Save();
         }
 
         if (!showResult)
@@ -607,28 +696,56 @@ public class Match : MonoBehaviour
 
         Result.gameObject.SetActive(true);
         Result.DOAnchorPosY(0f, 1f).SetEase(Ease.OutQuad);
-        Tip.text = MiracleProgress >= 0.9f
-            ? "Miracle!"
-            : MiracleProgress >= 0.8f
-                ? "Great!"
-                : MiracleProgress >= 0.7f
-                    ? "Good"
-                    : "Keep practicing!";
+        LayoutResult();
+        FadeOutHud(0.3f); // 결과창이 왼쪽 위 판정 패널과 겹쳐서 치운다. Restart가 다시 켠다
+        int rank = RankIndex(MiracleProgress); // 0=C, 1=B, 2=A, 3=S
+        Tip.text = new[] { "Keep practicing!", "Good", "Great!", "Miracle!" }[rank];
 
-        Score.text = $"Score: {MiracleProgress * 100f:0.00}%\n" +
+        Score.text = $"Score: {points:N0}  ({MiracleProgress * 100f:0.00}%)\n" +
                      $"Perfect: {perfect}\n" +
                      $"Great: {great}\n" +
                      $"Good: {good}\n" +
                      $"Miss: {miss}\n" +
                      $"Best Combo: {bestCombo}";
 
-        Result.Find("Image").GetComponent<Image>().sprite = MiracleProgress >= 0.9f
-            ? S
-            : MiracleProgress >= 0.8f
-                ? A
-                : MiracleProgress >= 0.7f
-                    ? B
-                    : C;
+        Result.Find("Image").GetComponent<Image>().sprite = new[] { C, B, A, S }[rank];
+    }
+
+    // 결과창 배치 (Result 패널 기준, 패널은 약 296x395). 씬 기본 배치는 점수 글 칸이 75x72로 작아서
+    // 글이 왼쪽 밖으로 넘치고 랭크 그림과 겹친다 → 위에서부터 문구 / 랭크 그림 / 점수 / 버튼 순으로 잡는다
+    // ponytail: 씬에서 옮겨도 여기서 덮어씀. 배치를 인스펙터로 만지고 싶어지면 씬 값으로 옮기고 이 함수를 지울 것
+    GameObject scoreBack;
+    private void LayoutResult()
+    {
+        static void Place(RectTransform r, float y, float w, float h)
+        {
+            r.anchorMin = r.anchorMax = r.pivot = new Vector2(0.5f, 0.5f);
+            r.anchoredPosition = new Vector2(0f, y);
+            r.sizeDelta = new Vector2(w, h);
+        }
+
+        Place(Tip.rectTransform, 138f, 260f, 50f);
+
+        var rankImage = Result.Find("Image").GetComponent<Image>();
+        rankImage.preserveAspect = true;
+        Place(rankImage.rectTransform, 70f, 90f, 90f);
+
+        // 점수 글: 밝은 배경 위라 반투명 검정 판을 깔고 가운데 정렬, 칸에 맞게 글자 크기 자동
+        if (scoreBack == null)
+        {
+            scoreBack = new GameObject("ScoreBack", typeof(RectTransform), typeof(Image));
+            scoreBack.transform.SetParent(Result, false);
+            scoreBack.transform.SetSiblingIndex(Score.transform.GetSiblingIndex()); // 점수 글 바로 밑에 그려지게
+            var img = scoreBack.GetComponent<Image>();
+            img.color = new Color(0f, 0f, 0f, 0.35f);
+            img.raycastTarget = false;
+        }
+        Place((RectTransform)scoreBack.transform, -50f, 250f, 150f);
+        Place(Score.rectTransform, -50f, 236f, 140f);
+        Score.alignment = TextAlignmentOptions.Center;
+        Score.enableAutoSizing = true;
+        Score.fontSizeMin = 10f;
+        Score.fontSizeMax = 22f;
     }
 
     private void ExpireNotes()
@@ -646,19 +763,35 @@ public class Match : MonoBehaviour
 
     public int noteCount;
     int progressLevel = 1;
-    int totalLevel = 3;
-    float levelOffset = 0.1f;
-    void stage3(){rhythmSpriteBounce.setSpriteLevel(3);} 
+    // 랭크 기준 (0~1, B·A·S 순). 나무 단계·게이지 눈금·결과창·곡 선택 최고기록이 전부 이것 하나를 본다
+    public static readonly float[] RankAt = { 0.3f, 0.6f, 0.9f };
+    public const int MaxPoints = 1000000; // 어려움 + 엄격한 판정으로 전부 Perfect일 때 점수
+    // 지금까지 점수. 판정이 날 때마다 MiracleProgress가 쌓여서 같이 오른다 (HUD·결과창)
+    int Points => Mathf.RoundToInt(MiracleProgress * MaxPoints * SongSelect.ScoreScale);
+    static readonly string[] StageNames = { "B", "A", "S" };
+    public static string RankName(float p) => new[] { "C", "B", "A", "S" }[RankIndex(p)];
+    public static int RankIndex(float p) // 0=C, 1=B, 2=A, 3=S
+    {
+        int r = 0;
+        while (r < RankAt.Length && p >= RankAt[r])
+            r++;
+        return r;
+    }
+    void stage3(){rhythmSpriteBounce.setSpriteLevel(3);}
 
     private void UpdateSliderUI()
     {
         if (SliderParent == null)
+        {
             SliderParent = SliderUI?.parent as RectTransform;
+            if (SliderParent != null)
+                MakeStageMarks();
+        }
 
         if (SliderUI == null || SliderParent == null || notes.Count == 0)
             return;
 
-        if (MiracleProgress >= (progressLevel - levelOffset) / totalLevel && progressLevel <= totalLevel) //valid 판정
+        if (progressLevel <= RankAt.Length && MiracleProgress >= RankAt[progressLevel - 1]) //valid 판정
         {
             if (progressLevel == 1){effectScript.Level1(); rhythmSpriteBounce.setSpriteLevel(1);}
             else if (progressLevel == 2){effectScript.Level2(); rhythmSpriteBounce.setSpriteLevel(2);}
@@ -674,11 +807,44 @@ public class Match : MonoBehaviour
         SliderUI.offsetMax = new Vector2(-SliderParent.rect.width + MiracleProgress * SliderParent.rect.width - SliderUI.offsetMin.x, SliderUI.offsetMax.y);
     }
 
+    // 게이지 위 단계 눈금: RankAt 자리에 세로선 + 랭크 글자. 앵커를 비율로 걸어서 게이지 크기가 바뀌어도 따라간다
+    // SliderParent(Border Mask)가 마스크라 게이지 밖은 잘림 → 글자도 게이지 안쪽, 선 오른쪽에 둔다
+    private void MakeStageMarks()
+    {
+        for (int i = 0; i < RankAt.Length; i++)
+        {
+            var mark = new GameObject("Stage " + StageNames[Mathf.Min(i, StageNames.Length - 1)], typeof(RectTransform), typeof(Image)).GetComponent<RectTransform>();
+            mark.SetParent(SliderParent, false);
+            mark.anchorMin = new Vector2(RankAt[i], 0f);
+            mark.anchorMax = new Vector2(RankAt[i], 1f);
+            mark.sizeDelta = new Vector2(3f, 0f);
+            mark.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.8f);
+            mark.GetComponent<Image>().raycastTarget = false;
+
+            var label = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
+            var rt = label.rectTransform;
+            rt.SetParent(mark, false);
+            rt.anchorMin = new Vector2(1f, 0f);
+            rt.anchorMax = new Vector2(1f, 1f);
+            rt.pivot = new Vector2(0f, 0.5f);
+            rt.anchoredPosition = new Vector2(4f, 0f);
+            rt.sizeDelta = new Vector2(30f, 0f);
+            label.text = StageNames[Mathf.Min(i, StageNames.Length - 1)];
+            label.fontStyle = FontStyles.Bold;
+            label.alignment = TextAlignmentOptions.MidlineLeft;
+            label.enableAutoSizing = true;
+            label.fontSizeMin = 8f;
+            label.fontSizeMax = 28f;
+            label.raycastTarget = false;
+        }
+    }
+
     private void ClearInput()
     {
         InputA = false;
         InputB = false;
         InputC = false;
+        InputD = false;
     }
 
     private void OnDisable()
@@ -706,8 +872,9 @@ public class Match : MonoBehaviour
         }
 
         NoteObject candidate = null;
-        NoteObject earliest = null;
+        NoteObject tooEarly = null; // Good 범위 바로 앞(earlyMissWindow 안)에 있는 노트
         float closest = float.PositiveInfinity;
+        int bestGrade = int.MaxValue; // 0 Perfect, 1 Great, 2 Good
         bool upcoming = false;
 
         foreach (NoteObject note in activeNotes)
@@ -721,26 +888,41 @@ public class Match : MonoBehaviour
                 Mathf.Abs(currentTime - note.hitTime);
 
             if (distance > goodWindow)
+            {
+                float ahead = note.hitTime - currentTime;
+                if (ahead > 0f && ahead <= goodWindow + earlyMissWindow &&
+                    (tooEarly == null || note.hitTime < tooEarly.hitTime))
+                    tooEarly = note;
                 continue;
+            }
 
-            if (earliest == null || note.hitTime < earliest.hitTime)
-                earliest = note;
-
-            if (distance < closest)
+            // 판정을 가장 후하게 받는 노트를 친다. 판정이 같으면 앞 노트
+            // (가장 가까운 노트만 보면 앞 노트를 Great로 칠 수 있는데 뒤 노트를 Great로 뺏어서 앞 노트가 Miss가 된다)
+            int grade = distance <= perfectWindow ? 0 : distance <= greatWindow ? 1 : 2;
+            if (grade < bestGrade || (grade == bestGrade && note.hitTime < candidate.hitTime))
             {
                 candidate = note;
                 closest = distance;
+                bestGrade = grade;
             }
         }
 
-        // 하이브리드: 기본은 가장 이른 노트(앞 노트를 건너뛰지 않음).
-        // 단, 가장 이른 노트가 Perfect 범위 밖이고 뒤 노트가 정박에 더 가까우면 뒤 노트를 친다.
-        // → 살짝 늦게 친 입력이 다음 노트를 뺏지 않으면서, 이미 많이 지난 노트에 발목 잡히지도 않음.
-        if (earliest != null &&
-            Mathf.Abs(currentTime - earliest.hitTime) <= perfectWindow)
+        // 칠 노트는 없는데 너무 일찍 누른 노트가 있으면 그 노트를 Miss로 먹는다 (얼리 미스)
+        // 없으면 연타가 공짜라서 계속 누르기만 해도 모든 노트가 범위 안에서 잡힌다.
+        // 단, 방금 Miss 난 노트에 더 가까운 입력은 그 노트를 치려던 것 → 벌 없이 넘긴다.
+        // 이게 없으면 빠른 같은 레인 연타에서 한 번 밀린 뒤 입력마다 다음 노트를 얼리 미스로 먹어서 끝까지 Miss가 이어졌다
+        if (candidate == null && tooEarly != null &&
+            currentTime - lastMissTime[(int)input] <= tooEarly.hitTime - currentTime)
         {
-            candidate = earliest;
-            closest = Mathf.Abs(currentTime - earliest.hitTime);
+            ShowFeedback(input + " - Late", Color.gray);
+            return Accuracy.Miss;
+        }
+
+        if (candidate == null && tooEarly != null)
+        {
+            Resolve(tooEarly, Accuracy.Miss);
+            ShowFeedback(input + " - Too early (Miss)", JudgmentColor(Accuracy.Miss));
+            return Accuracy.Miss;
         }
 
         if (candidate == null)
@@ -788,6 +970,8 @@ public class Match : MonoBehaviour
         DialogueManager.Send(result.ToString()); // Perfect/Great/Good/Miss (아래에서 Oops로 바뀌기 전)
 
         bool missed = result == Accuracy.Miss; // 아래에서 result가 Oops로 바뀔 수 있어서 미리 저장
+        if (missed)
+            lastMissTime[(int)note.input] = Mathf.Max(lastMissTime[(int)note.input], note.hitTime);
 
         if (!missed)
         {
@@ -903,7 +1087,9 @@ public class Match : MonoBehaviour
             ? GuideA
             : input == NoteInputType.B
                 ? GuideB
-                : GuideC;
+                : input == NoteInputType.C
+                    ? GuideC
+                    : GuideD;
     }
 
     private Color JudgmentColor(Accuracy result)
@@ -1134,9 +1320,12 @@ public class Match : MonoBehaviour
             FlashGuide(guideAText);
             FlashGuide(guideBText);
             FlashGuide(guideCText);
+            if (guideDText != null)
+                FlashGuide(guideDText);
         }
 
         notesLabel.Content.text = finished ? "RESULT" : $"NOTES  {judged} / {notes.Count}";
+        scoreLabel.Content.text = Points.ToString("N0");
         countsLabel.Content.text = $"Perfect {perfect}   Great {great}\nGood {good}   Miss {miss}";
 
         var aPos = Camera.main.WorldToScreenPoint(GuideA.transform.position);
@@ -1150,13 +1339,21 @@ public class Match : MonoBehaviour
         float laneW = Mathf.Abs(bPos.x - aPos.x);
         for (int i = 0; i < laneFlash.Length; i++)
         {
-            float laneX = i == 0 ? aPos.x : i == 1 ? bPos.x : cPos.x;
+            if (laneFlash[i] == null)
+                continue; // 키보드 모드면 펌프 레인 기둥은 안 만든다
+            float laneX = Camera.main.WorldToScreenPoint(GetGuide((NoteInputType)i).transform.position).x;
             laneFlash[i].SetRect(new Rect(laneX - laneW / 2f, 0f, laneW, Screen.height));
         }
 
         guideAText.SetRect(new Rect(aPos - new Vector3(50, -200), new Vector2(100, 100)));
         guideBText.SetRect(new Rect(bPos - new Vector3(50, -200), new Vector2(100, 100)));
         guideCText.SetRect(new Rect(cPos - new Vector3(50, -200), new Vector2(100, 100)));
+        if (guideDText != null)
+        {
+            var dPos = Camera.main.WorldToScreenPoint(GuideD.transform.position);
+            dPos = new Vector2(dPos.x, GUIManager.ScreenSize.y - dPos.y);
+            guideDText.SetRect(new Rect(dPos - new Vector3(50, -200), new Vector2(100, 100)));
+        }
 
         nextLabel.isVisible = false;
         if (!finished && TryGetNextNote(out NoteInputType nextInput, out float nextHitTime))
@@ -1184,37 +1381,50 @@ public class Match : MonoBehaviour
         guideCText = Widget.BoxLabel("키보드 D", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideC.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
         // 안내는 스토리가 끝난 뒤 LateUpdate가 띄운다
         guideAText.Opacity = guideBText.Opacity = guideCText.Opacity = 0f;
+        if (pumpLane)
+        {
+            guideDText = Widget.BoxLabel("펌프 F", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideD.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+            guideDText.Opacity = 0f;
+        }
 
         // 레인 기둥은 평소 투명. 레이어 -1 = 다른 UI 밑, 클릭은 안 막음
         for (int i = 0; i < laneFlash.Length; i++)
         {
+            if (i == (int)NoteInputType.D && !pumpLane)
+                continue;
             laneFlash[i] = Widget.Image(GUIStyleMaker.Solid(LaneColors[i]), Rect.zero);
             laneFlash[i].SetLayer(-1);
             laneFlash[i].isInteractable = false;
             laneFlash[i].Opacity = 0f;
         }
 
-        labelStyle = GUIStyleMaker.Label(fontSize: 18).Wrap();
+        // 곡 선택 화면 정보창과 같은 톤: 어두운 반투명 상자 + 펄색 글자. 점수만 크고 굵게
+        var pearl = new Color(0xF8 / 255f, 0xF6 / 255f, 0xF0 / 255f, 1f);
+        var panelStyle = GUIStyleMaker.Box(new Color(0.1667f, 0.2137f, 0.2333f, 0.7f));
+        labelStyle = GUIStyleMaker.Label(pearl, 18, TextAnchor.UpperLeft).Wrap();
+        var scoreStyle = new GUIStyle(labelStyle) { fontSize = 30, fontStyle = FontStyle.Bold };
         feedbackStyle = new GUIStyle(labelStyle);
         feedbackStyle.normal.textColor = feedbackColor;
 
-        const float x = 24f, w = 314f;
+        const float x = 32f, w = 298f;
         float line = labelStyle.CalcHeight(new GUIContent("가"), w);
-        float y = 24f;
-        Rect Row(int lines)
+        float y = 30f;
+        Rect Row(float height)
         {
-            var r = new Rect(x, y, w, line * lines);
-            y += line * lines + 4f;
+            var r = new Rect(x, y, w, height);
+            y += height + 4f;
             return r;
         }
 
-        hudPanel = Widget.Window(GUIContent.none, new Rect(16, 16, 330, 280), "match", null); // null = 기본 skin.box
+        hudPanel = Widget.Window(GUIContent.none, new Rect(16, 16, 330, 280), "match", panelStyle);
         hudPanel.Mask = false; // Widget.Window 기본 Mask=true는 자식을 안쪽 여백 10px에서 잘라 버린다
-        notesLabel = Widget.Label(hudPanel, "", Row(1), labelStyle);
-        countsLabel = Widget.Label(hudPanel, "", Row(2), labelStyle);
-        nextLabel = Widget.Label(hudPanel, "", Row(1), labelStyle);
-        feedbackLabel = Widget.Label(hudPanel, feedback, Row(1), feedbackStyle);
-        Widget.Button(hudPanel, "Restart", new Rect(x, y, w, 32f), Restart);
+        scoreLabel = Widget.Label(hudPanel, "", Row(scoreStyle.CalcHeight(new GUIContent("0"), w)), scoreStyle);
+        notesLabel = Widget.Label(hudPanel, "", Row(line), labelStyle);
+        countsLabel = Widget.Label(hudPanel, "", Row(line * 2f), labelStyle);
+        nextLabel = Widget.Label(hudPanel, "", Row(line), labelStyle);
+        feedbackLabel = Widget.Label(hudPanel, feedback, Row(line), feedbackStyle);
+        Widget.Button(hudPanel, "Restart", new Rect(x, y + 4f, w, 34f), Restart, GUIStyleMaker.Button(fontSize: 18));
+        hudPanel.Rect.height = y + 4f + 34f + 14f - 16f; // 줄 수에 맞춰 상자 높이 (위 16px은 창 y)
         feedbackShown = true;
 
         // 인트로: 패널과 줄이 왼쪽에서 차례로 튀어 들어온다 (그룹은 자식을 안 끌고 다녀서 전부에 건다)
@@ -1265,6 +1475,9 @@ public class Match : MonoBehaviour
         GUIManager.Unregister(guideAText); // 3초 안에 씬을 떠나면 아직 남아 있다
         GUIManager.Unregister(guideBText);
         GUIManager.Unregister(guideCText);
+        GUIManager.Unregister(guideDText);
+        if (pumpAction != null)
+            pumpAction.performed -= OnD;
         foreach (GUIImage flash in laneFlash)
             GUIManager.Unregister(flash);
     }

@@ -12,7 +12,7 @@ description: 이 Unity 리듬게임(A/S/D 3레인)의 채보(노트 JSON)를 찍
 - 파일: `Assets/Resources/<id>.json`. 게임은 `Resources.Load(id)`로 읽는다(확장자 없이).
 - 형식: `{ "bpm": 122.0, "gridOffset": 0.35, "noteList": [ {"interval": 1.0, "input": 1, "message": ""} ] }`
   - `interval` = 앞 노트와 간격(박). **0이면 동시치기**. 게임은 음악 0초부터 누적한다.
-  - `input` 0/1/2 = 레인 A/B/C = 키보드 **A/S/D**.
+  - `input` 0/1/2 = 레인 A/B/C = 키보드 **A/S/D**. `input` 3 = 4번째 칸(F키). 펌프 발판 채보(`<곡>_pump_*`)에서만 쓴다. 메인 메뉴 SETTINGS에서 입력을 펌프로 바꾸면 이 채보를 4레인으로 친다. 키보드 모드는 혹시 3이 섞여 있어도 불러올 때 뺀다.
   - `gridOffset` = 첫 마디가 시작하는 초. 노트 에디터 그리드용이고 게임은 안 쓴다. 박자 세기를 따질 때는 이 값 기준으로 마디를 센다.
   - `message` = 그 노트 박이 지나갈 때 `DialogueManager.Send`로 보낸다. 노트 에디터로 저장한 파일은 모든 노트에 `"message": ""`가 있다.
 - 난이도 연결: Menu 씬 `SongSelect`의 곡 항목 `easy_id`/`normal_id`/`hard_id`. 비어 있으면 `id` 채보를 쓴다. 쉬움·매우 쉬움은 둘 다 `easy_id`.
@@ -21,7 +21,7 @@ description: 이 Unity 리듬게임(A/S/D 3레인)의 채보(노트 JSON)를 찍
 
 ## 판정과 손가락 (난이도를 가르는 진짜 이유)
 
-- 판정 범위: Perfect ±0.1s, Great ±0.2s, Good ±0.3s. **Good이나 Miss가 나오면 콤보가 끊긴다.** 헛친 입력은 콤보를 안 끊는다.
+- 판정 범위(Game 씬 기본, 중간 난이도): Perfect ±0.05s, Great ±0.1s, Good ±0.15s. 곡 선택 난이도 배율(어려움 0.7 ~ 매우 쉬움 2)을 곱한다. **Good이나 Miss가 나오면 콤보가 끊긴다.** Good 범위보다 0.1초 더 일찍 누르면 그 노트가 Miss(얼리 미스, 연타 방지). 그보다 이른 헛친 입력은 콤보를 안 끊는다.
 - 같은 레인 노트 사이가 **0.2초보다 짧으면 위험**하다. 한 노트를 0.1초 넘게 늦게 치면 판정이 다음 노트를 가져가서, 앞 노트가 Miss가 되고 한 칸씩 밀린다.
 - A는 약한 손가락(약지나 새끼)이다. 빠른 구간·연타가 A에 몰리면 체감 난도가 확 오른다. 동시치기를 하나로 줄일 때도 A보다 S/D를 남긴다.
 
@@ -54,6 +54,18 @@ python -I .claude/skills/rhythm-chart/scripts/chart_tool.py thin <원본>.json <
 6. MIDI가 있으면 Unity 메뉴 `Tools/MIDI to Stage`가 더 정확하다. 보컬 트랙만 쓰면 보컬 리듬 구간이 깔끔하다.
 
 초안은 귀로 확인한 게 아니다. 결과를 넘길 때 **"노트 에디터에서 들으면서 다듬어야 하는 초안"**이라고 분명히 말한다.
+
+### 3-1. 펌프(발판) 채보 만들기
+펌프 모드 = 펌프 잇 업 발판(USB, 4칸 = 키 A S D F). 손 채보를 그대로 밟게 하지 않고 **발판 전용 채보**를 따로 둔다.
+```
+python -I .claude/skills/rhythm-chart/scripts/chart_tool.py foot Assets/Resources/<어려움>.json Assets/Resources/<곡id>_pump_easy.json --profile pump_easy
+# pump_normal, pump_hard도 같은 원본(어려움)에서
+```
+- 파일 이름은 꼭 `<곡id>_pump_easy|normal|hard`. 곡 선택이 펌프 모드일 때 이 이름을 찾고, 없으면 키보드 채보(3레인)를 쓴다. 매우 쉬움은 easy.
+- 리듬: 쉬움 4분음표(초당 2칸 이하), 보통·어려움 8분까지(2초 6/8개). 점프(양발 동시)는 보통 = 마디 첫 박만, 어려움 = 정박만.
+- 레인: 1박보다 붙은 스텝은 왼발(A S)·오른발(D F)을 번갈아, 느리면 원래 손 레인 방향을 따른다. 점프는 마디 첫 박이면 A+F, 아니면 S+D.
+- 노트 절반 이상이 8분 격자 밖인 채보(셔플·MIDI 그대로)는 격자 거르기를 끄고 간격으로만 고른다.
+- 손 채보(키보드)에는 `input` 3을 넣지 않는다. 기록은 키보드와 따로(`best_<곡>_pump_<난이도>`, `score_<곡>_pump`).
 
 ### 4. 메시지(배너) 넣기
 - 배너 목록은 `Assets/Scripts/RhythmCallout.cs`의 `callouts`: `vocal` "이제 보컬 리듬!", `drum` "다시 드럼 리듬!", `chorus` "코러스! 몰아친다", `climax` "클라이맥스!", `finale` "마지막까지!". 새 이름을 쓰면 목록에도 추가해야 뜬다.

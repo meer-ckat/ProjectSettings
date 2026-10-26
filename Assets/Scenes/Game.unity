@@ -3112,9 +3112,9 @@ MonoBehaviour:
   shakeStrength: 0.08
   shakeDuration: 0.5
   rhythmSpriteBounce: {fileID: 609781082}
-  perfectWindow: 0.1
-  greatWindow: 0.2
-  goodWindow: 0.3
+  perfectWindow: 0.05
+  greatWindow: 0.1
+  goodWindow: 0.15
   InputA: 0
   InputB: 0
   InputC: 0
@@ -5121,7 +5121,7 @@ MonoBehaviour:
   RefTexture: {fileID: 1437157251, guid: db61ba9d58cf82d4a8413bc917144b16, type: 3}
   PixelSpace: 0.2
   wanted_Size: {x: 0.2, y: 0.2, z: 0}
-  matchToPlayerTree: 0
+  matchToPlayerTree: 1
 --- !u!4 &1335950910
 Transform:
   m_ObjectHideFlags: 0

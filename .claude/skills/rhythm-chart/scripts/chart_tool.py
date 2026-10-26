@@ -3,10 +3,12 @@
 
   stats  <chart.json> [--compare other.json]   난이도·위험 패턴 리포트
   thin   <src.json> <out.json> --profile easy|normal|hard   기존 채보에서 쉬운 난이도 파생 (hard = 원본 다듬기)
+  foot   <src.json> <out.json> --profile pump_easy|pump_normal|pump_hard   손 채보에서 펌프(발판 4칸) 채보 만들기
 
 채보 형식(게임 NoteManager가 읽는 것):
   { "bpm": 122.0, "gridOffset": 0.35, "noteList": [ {"interval": 1.0, "input": 1, "message": ""} ] }
-  interval = 앞 노트와의 간격(박), 0이면 동시치기. input 0/1/2 = 레인 A/B/C = 키보드 A/S/D.
+  interval = 앞 노트와의 간격(박), 0이면 동시치기. input 0/1/2 = 레인 A/B/C = 키보드 A/S/D, 3 = 펌프(F키).
+  펌프 모드는 <곡>_pump_<easy|normal|hard>.json 발판 전용 채보를 쓴다(input 0~3 = 발판 4칸 = A/S/D/F 키).
   게임은 음악 0초부터 interval을 누적한다. gridOffset은 에디터 그리드(마디 시작)용.
 """
 import argparse
@@ -14,7 +16,7 @@ import json
 import sys
 from collections import Counter
 
-LANES = 'ASD'
+LANES = 'ASDF'
 
 # 판정: perfect 0.1s, great 0.2s, good 0.3s. Good/Miss면 콤보가 끊긴다.
 # 같은 레인 노트가 0.2s 안쪽이면 늦게 친 입력이 다음 노트를 가져가 Miss가 연쇄된다 → JACK_RISK
@@ -35,6 +37,16 @@ PROFILES = {
     'hard': dict(grid=12, min_gap_beats=0.25, min_gap_s=0.11, chords=True, max_chords_per_bar=4,
                  chord_space_beats=0.5, chord_min_strength=3, triple_min_strength=4,
                  same_lane_beats=0.25, same_lane_s=JACK_RISK, max_in_2s=16),
+    # 펌프(발판) 리듬 고르기. 발은 손보다 느리다: 쉬움 4분음표, 보통·어려움 8분까지. 동시치기 = 점프(양발)
+    # 레인은 foot()이 발 교대에 맞춰 다시 정하므로 same_lane 규칙은 끈다
+    'pump_easy': dict(grid=1, min_gap_beats=1.0, min_gap_s=0.45, chords=False,
+                      same_lane_beats=0, same_lane_s=0, max_in_2s=4),
+    'pump_normal': dict(grid=2, min_gap_beats=0.5, min_gap_s=0.30, chords=True, max_chords_per_bar=1,
+                        chord_space_beats=1.0, chord_min_strength=4, triple_min_strength=99,  # 점프는 마디 첫 박에만
+                        same_lane_beats=0, same_lane_s=0, max_in_2s=6),
+    'pump_hard': dict(grid=2, min_gap_beats=0.5, min_gap_s=0.22, chords=True, max_chords_per_bar=2,
+                      chord_space_beats=1.0, chord_min_strength=3, triple_min_strength=99,  # 점프는 정박에만
+                      same_lane_beats=0, same_lane_s=0, max_in_2s=8),
 }
 
 
@@ -121,7 +133,7 @@ def stats(path):
     }
 
 
-def thin(src, dst, prof_name):
+def thin(src, dst, prof_name, loose=False):
     p = PROFILES[prof_name]
     d, ev = load(src)
     beat = 60.0 / d['bpm']
@@ -137,7 +149,7 @@ def thin(src, dst, prof_name):
     def on_grid(e):
         x = (e['b'] - off) * p['grid']
         return abs(x - round(x)) < 0.02
-    ev = [dict(e) for e in ev if on_grid(e)]
+    ev = [dict(e) for e in ev if loose or on_grid(e)]  # loose: 격자 무시 (박에 안 맞춰 찍힌 채보)
 
     # 2. 동시치기: 쉬움은 하나만, 그 밖은 마디당 개수 제한 + 빠른 줄기 속이면 하나로. 남길 레인은 약지(A)보다 S/D 우선
     bar_chords = Counter()
@@ -222,6 +234,50 @@ def thin(src, dst, prof_name):
     save(dst, d, ev)
 
 
+def foot(src, dst, prof_name):
+    """펌프(발판 4칸) 채보: thin으로 발에 맞는 리듬만 고른 뒤, 레인을 발 교대에 맞춰 다시 정한다.
+    발판 0 1 | 2 3 = 왼발 쪽 | 오른발 쪽 (키 A S | D F). 0·3이 바깥, 1·2가 안쪽
+    - 1박보다 붙은 스텝은 왼발·오른발을 번갈아 (같은 발로 빠르게 두 번 = 발 연타가 안 생기게)
+    - 1박 이상 떨어지면 원래 손 레인 방향(A=왼쪽, D=오른쪽)을 따라간다
+    - 바깥/안쪽은 원래 레인으로 고른다 (멜로디 높낮이가 발판 좌우로 이어지게)
+    - 동시치기는 점프: 마디 첫 박이면 바깥 두 칸(0+3), 아니면 안쪽 두 칸(1+2)"""
+    # 노트 절반 이상이 8분 격자 밖이면(셔플·MIDI 그대로 찍은 채보) 격자로 거르면 거의 다 사라진다 → 간격만으로 고른다
+    d0, ev0 = load(src)
+    off0 = d0.get('gridOffset', 0.0) * d0['bpm'] / 60.0
+    on8 = sum(1 for e in ev0 if abs((e['b'] - off0) * 2 - round((e['b'] - off0) * 2)) < 0.02)
+    loose = on8 < len(ev0) / 2
+    if loose:
+        print(f"{src}: 8분 격자에 맞는 노트 {on8}/{len(ev0)} → 격자 무시하고 간격으로만 고름", file=sys.stderr)
+    thin(src, dst, prof_name, loose)
+    d, ev = load(dst)
+    beat = 60.0 / d['bpm']
+    off = d.get('gridOffset', 0.0) / beat
+    last_foot, last_b = None, None
+    for e in ev:
+        lanes = sorted(set(e['lanes']))
+        fast = last_b is not None and e['b'] - last_b < 1.0 - 1e-4
+        if len(lanes) > 1:
+            e['lanes'] = [0, 3] if strength(e['b'] - off) == 4 else [1, 2]
+            last_foot = None  # 점프 뒤엔 어느 발이든
+        else:
+            src_lane = lanes[0]
+            if fast and last_foot is not None:
+                foot_side = 'R' if last_foot == 'L' else 'L'
+            elif src_lane == 0:
+                foot_side = 'L'
+            elif src_lane == 2:
+                foot_side = 'R'
+            else:
+                foot_side = 'R' if last_foot == 'L' else 'L'
+            if foot_side == 'L':
+                e['lanes'] = [0 if src_lane == 0 else 1]
+            else:
+                e['lanes'] = [3 if src_lane == 2 else 2]
+            last_foot = foot_side
+        last_b = e['b']
+    save(dst, d, ev)
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest='cmd', required=True)
@@ -232,10 +288,17 @@ def main():
     t.add_argument('src')
     t.add_argument('dst')
     t.add_argument('--profile', choices=list(PROFILES), required=True)
+    f = sub.add_parser('foot')
+    f.add_argument('src')
+    f.add_argument('dst')
+    f.add_argument('--profile', choices=[k for k in PROFILES if k.startswith('pump_')], required=True)
     a = ap.parse_args()
     if a.cmd == 'stats':
         for path in [a.chart] + ([a.compare] if a.compare else []):
             print(json.dumps(stats(path), ensure_ascii=False, indent=1))
+    elif a.cmd == 'foot':
+        foot(a.src, a.dst, a.profile)
+        print(json.dumps(stats(a.dst), ensure_ascii=False, indent=1))
     else:
         thin(a.src, a.dst, a.profile)
         print(json.dumps(stats(a.dst), ensure_ascii=False, indent=1))

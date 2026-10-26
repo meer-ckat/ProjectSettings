@@ -7,7 +7,8 @@ public enum NoteInputType
 {
     A,
     B,
-    C
+    C,
+    D // 펌프 (F키). 펌프 모드에서만 쓰고 키보드 모드에서는 불러올 때 뺀다
 }
 
 [Serializable]
@@ -55,6 +56,27 @@ public class NoteManager : MonoBehaviour
     public static NoteManager Instance { get; private set; }
 
     public NoteDataContainer CurrentData { get; private set; }
+
+    // 한 레인 노트를 뺀 새 목록 (키보드 모드에서 펌프 노트 빼기). interval은 앞 노트와의 간격이라
+    // 그냥 지우면 뒤가 전부 당겨진다 → 뺀 노트의 간격을 다음 노트에 더해서 박 위치를 그대로 둔다
+    public static List<Note> WithoutLane(List<Note> list, NoteInputType lane)
+    {
+        var result = new List<Note>(list.Count);
+        float carry = 0f;
+        foreach (Note n in list)
+        {
+            if (n.input == lane)
+            {
+                carry += n.interval;
+                continue;
+            }
+            Note kept = n;
+            kept.interval += carry;
+            carry = 0f;
+            result.Add(kept);
+        }
+        return result;
+    }
 
     private void Awake()
     {

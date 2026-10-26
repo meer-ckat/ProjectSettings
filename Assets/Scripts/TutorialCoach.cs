@@ -62,15 +62,21 @@ public class TutorialCoach : MonoBehaviour
     // Match.Resolve 안에서 불리므로 여기서 바로 Restart하면 안 됨 → 코루틴으로 미룸
     void OnMessage(string e)
     {
+        // 캘리브레이션 중에 대기 코루틴이 끝나면 match.Play로 메트로놈이 깔린다 → 대기를 끄고 끝날 때까지 판정 무시
+        if (e == "CalibrationStart")
+        {
+            StopAllCoroutines();
+            waiting = true;
+        }
         // 설정 창에서 다시 캘리브레이션해도 여기로 옴 → 하던 단계부터
-        if (e == "CalibrationDone")
+        else if (e == "CalibrationDone")
             Next(stage, stages[stage].tip);
         else if (waiting)
             return;
         else if (e == "Good" || e == "Miss")
             Next(stage, $"{e}! Great 이상만 통과야. 다시.");
         else if (e == "Finish" && stage + 1 < stages.Length)
-            Next(stage + 1, "나중에 수정해요 나중에, 다음.\n" + stages[stage + 1].tip);
+            Next(stage + 1, "좋아, 통과! 다음 단계.\n" + stages[stage + 1].tip);
         else if (e == "Finish")
             dialogue.Say(Speaker, "튜토리얼 끝! 이제 박자는 몸이 기억할 거야.");
     }

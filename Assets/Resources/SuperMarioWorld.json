@@ -3,588 +3,734 @@
     "gridOffset": 0.3237999975681305,
     "noteList": [
         {
-            "interval": 3.283600091934204,
-            "input": 2
+            "interval": 3.2836,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.641700029373169,
-            "input": 0
+            "interval": 1.6417,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 0
+            "interval": 0.6157,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 0
+            "interval": 0.9235,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 0
+            "interval": 0.9235,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 0
+            "interval": 0.6157,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 1.847000002861023,
-            "input": 1
+            "interval": 1.847,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.7182000279426575,
-            "input": 2
+            "interval": 0.7182,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 0
+            "interval": 0.7183,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.2053000032901764,
-            "input": 1
+            "interval": 0.2053,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.7182000279426575,
-            "input": 1
+            "interval": 0.7182,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 1
+            "interval": 0.9235,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 1
+            "interval": 0.4104,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 1
+            "interval": 0.4104,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 1
+            "interval": 0.6157,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 2
+            "interval": 0.9235,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.3077999949455261,
-            "input": 2
+            "interval": 0.3078,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 2
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 2
+            "interval": 0.2052,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.847000002861023,
-            "input": 0
+            "interval": 1.847,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.2314000129699708,
-            "input": 0
+            "interval": 1.2314,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 2
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.0261000394821168,
-            "input": 0
+            "interval": 1.0261,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.30790001153945925,
-            "input": 0
+            "interval": 0.3079,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.5130000114440918,
-            "input": 2
+            "interval": 0.513,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 0
+            "interval": 0.4105,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 1.641700029373169,
-            "input": 0
+            "interval": 1.6417,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 2
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.0261000394821168,
-            "input": 0
+            "interval": 1.0261,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 2
+            "interval": 0.6157,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.0261000394821168,
-            "input": 0
+            "interval": 1.0261,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 0
+            "interval": 0.4104,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 0
+            "interval": 0.4104,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 1.641800045967102,
-            "input": 1
+            "interval": 1.6418,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 1
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 1
+            "interval": 0.9235,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 2
+            "interval": 0.7183,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.7444000244140626,
-            "input": 0
+            "interval": 1.7444,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 0
+            "interval": 0.4105,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 0
+            "interval": 0.4105,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.6155999898910523,
-            "input": 1
+            "interval": 0.6156,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.2053000032901764,
-            "input": 2
+            "interval": 0.2053,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 1
+            "interval": 0.2052,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 1
+            "interval": 0.6157,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 3.2834999561309816,
-            "input": 1
+            "interval": 3.2835,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.641800045967102,
-            "input": 0
+            "interval": 1.6418,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 1
+            "interval": 0.4104,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 1.641800045967102,
-            "input": 2
+            "interval": 1.6418,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.7182000279426575,
-            "input": 2
+            "interval": 0.7182,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 2
+            "interval": 0.9235,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 0
+            "interval": 0.7183,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 1.7444000244140626,
-            "input": 1
+            "interval": 1.7444,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 1
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 1
+            "interval": 0.8209,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.3077999949455261,
-            "input": 1
+            "interval": 0.3078,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 1.0261000394821168,
-            "input": 1
+            "interval": 1.0261,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 1
+            "interval": 0.4104,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 1
+            "interval": 0.4104,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.6157000064849854,
-            "input": 1
+            "interval": 0.6157,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 2
+            "interval": 0.9235,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 2
+            "interval": 0.8209,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 2
+            "interval": 0.9235,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 2
+            "interval": 0.2052,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.0262000560760499,
-            "input": 2
+            "interval": 1.0262,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 2
+            "interval": 0.2052,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 2
+            "interval": 0.2052,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 2
+            "interval": 0.2052,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 1.847000002861023,
-            "input": 0
+            "interval": 1.847,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 2
+            "interval": 0.7183,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.9235000014305115,
-            "input": 1
+            "interval": 0.9235,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.2053000032901764,
-            "input": 2
+            "interval": 0.2053,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 0
+            "interval": 0.4104,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 1.0261000394821168,
-            "input": 1
+            "interval": 1.0261,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 0
+            "interval": 0.4104,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 2
+            "interval": 0.4104,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 1
+            "interval": 0.4105,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 1.2312999963760377,
-            "input": 2
+            "interval": 1.2313,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.7182999849319458,
-            "input": 1
+            "interval": 0.7183,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.820900022983551,
-            "input": 0
+            "interval": 0.8209,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.3077999949455261,
-            "input": 1
+            "interval": 0.3078,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.6155999898910523,
-            "input": 1
+            "interval": 0.6156,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 0
+            "interval": 0.4105,
+            "input": 0,
+            "message": ""
         },
         {
-            "interval": 0.41040000319480898,
-            "input": 1
+            "interval": 0.4104,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.4104999899864197,
-            "input": 2
+            "interval": 0.4105,
+            "input": 2,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 1
+            "interval": 0.2052,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 1
+            "interval": 0.2052,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 0.20520000159740449,
-            "input": 1
+            "interval": 0.2052,
+            "input": 1,
+            "message": ""
         },
         {
-            "interval": 1.7444000244140626,
-            "input": 0
+            "interval": 1.7444,
+            "input": 0,
+            "message": ""
         }
     ]
 }

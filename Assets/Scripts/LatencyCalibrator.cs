@@ -11,7 +11,8 @@ using UnityEngine.InputSystem;
 //
 // 화면: 게임처럼 노트가 오른쪽에서 와서 판정선을 지난다. 노트 위치는 게임과 같은 시계(dsp + audioOffset)라
 // 보정값을 바꾸면 노트가 삑보다 앞당겨지거나 늦어진다. 키를 누르면 그 순간 노트가 있던 자리에 눈금이 찍힌다
-// (판정선 오른쪽 = 일찍 침, 왼쪽 = 늦게 침). 10번 재면 자동 보정 → 이어서 -10/-1/+1/+10ms 버튼으로 손으로 맞추고 완료.
+// (판정선 오른쪽 = 일찍 침, 왼쪽 = 늦게 침). 10번 재면 자동 보정하고 바로 닫힌다.
+// 손 보정(ms 더하고 빼기)은 메인 메뉴 SETTINGS에서만 한다. 게임 중에 손 보정까지 시키면 강요처럼 느껴져서 뺐다
 // 화면은 I'm GUI 리테인드: Begin에서 만들어 페이드인, 끝나면 페이드아웃 뒤 지운다
 public class LatencyCalibrator : MonoBehaviour
 {
@@ -35,10 +36,9 @@ public class LatencyCalibrator : MonoBehaviour
     private readonly List<double> deltas = new(); // 측정값만
     private double startDsp;
     private bool running;      // 측정 중 (입력이 보정값 계산에 들어감)
-    private bool tuning;       // 측정 끝, 버튼으로 손보는 중 (삑·노트는 계속)
     private bool closing;
     private float lastPress = -1f;
-    private GUIStyle big, small, buttonStyle;
+    private GUIStyle big, small;
 
     // 화면. 전부 root 그룹 아래라 root의 투명도 하나로 같이 나타나고 사라진다
     private GUIGroup root;
@@ -86,10 +86,10 @@ public class LatencyCalibrator : MonoBehaviour
         // 튜토리얼이 다음 단계를 기다리던 중이면 그 대기(끝나면 match.Play)를 끄게 알린다
         DialogueManager.Send("CalibrationStart");
 
+        CancelInvoke(nameof(CloseScreen)); // 자동 닫힘 대기 중에 다시 시작하면 그 닫힘은 취소
         deltas.Clear();
         lastPress = -1f;
         closing = false;
-        tuning = false;
         Build();
 
         // UI가 다 뜬 뒤에 삑 시작
@@ -98,25 +98,25 @@ public class LatencyCalibrator : MonoBehaviour
         running = true;
     }
 
-    // 10번 다 재면 자동 보정값 저장 후 손보기 단계로. 삑·노트는 계속 돈다
+    // 10번 다 재면 자동 보정값 저장하고 결과를 잠깐 보여준 뒤 닫는다
     private void Measured()
     {
         running = false;
-        tuning = true;
         double median = Median(); // 한두 번 크게 빗나간 입력에 휘둘리지 않게
         SetOffset((float)-median);
-        title.Content.text = "자동 보정 완료. 노트가 판정선에 닿을 때 삑이 들리게 버튼으로 맞추세요";
+        title.Content.text = "자동 보정 완료!";
         info.Content.text = $"측정 중앙값 {Ms(median)}";
-        esc.Content.text = "Enter / 완료 버튼  끝내기";
+        esc.Content.text = "세밀한 조정은 메인 메뉴 SETTINGS에서";
+        Invoke(nameof(CloseScreen), 1.2f);
     }
 
-    // 퇴장. 취소(ESC)든 완료든 여기로. 손으로 바꾼 값은 버튼 누를 때마다 이미 저장돼 있다
+    // 퇴장. 취소(ESC)든 완료든 여기로
     private void CloseScreen()
     {
         if (closing)
             return;
         closing = true;
-        running = tuning = false;
+        running = false;
         clickSource.Stop();
         lane.ScaleTo(new Vector2(0f, 1f), fadeTime, 0f, TweenHelper.EaseInQuad);
         root.FadeOut(fadeTime, 0f, TweenHelper.EaseInQuad, Close);
@@ -138,14 +138,6 @@ public class LatencyCalibrator : MonoBehaviour
         PlayerPrefs.SetFloat(PrefsKey, offset);
         PlayerPrefs.Save();
         offsetLabel.Content.text = OffsetText();
-    }
-
-    // 버튼: 보정값을 ms 단위로 더하고 뺀다. +면 노트가 일찍 와서 일찍 쳐도 맞고, -면 늦게 쳐도 맞는다
-    private void Nudge(int ms)
-    {
-        if (closing)
-            return;
-        SetOffset(match.audioOffset + ms / 1000f);
     }
 
     private string OffsetText() =>
@@ -179,18 +171,14 @@ public class LatencyCalibrator : MonoBehaviour
         var kb = Keyboard.current;
         if (kb != null && kb.escapeKey.wasPressedThisFrame)
         {
-            CloseScreen(); // 측정 중이면 취소(보정값 그대로), 손보는 중이면 끝내기
+            CloseScreen(); // 측정 중이면 취소(보정값 그대로)
             return;
         }
 
-        if (tuning && kb != null && (kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame))
-        {
-            CloseScreen();
-            return;
-        }
-
+        // 펌프 발판(Joystick)도 받는다. 펌프 모드에선 키보드가 없을 수 있음
         bool pressed =
             (kb != null && kb.anyKey.wasPressedThisFrame) ||
+            (Joystick.current != null && JoystickPressed()) ||
             (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame);
         if (!pressed)
             return;
@@ -221,10 +209,18 @@ public class LatencyCalibrator : MonoBehaviour
             Measured();
     }
 
+    private static bool JoystickPressed()
+    {
+        foreach (var c in Joystick.current.allControls)
+            if (c is UnityEngine.InputSystem.Controls.ButtonControl b && b.wasPressedThisFrame)
+                return true;
+        return false;
+    }
+
     // 노트 k번째는 게임 시계(dsp - startDsp + audioOffset)가 k*interval일 때 판정선에 닿는다 = 게임 노트와 같은 식
     private void MoveNotes()
     {
-        bool beeping = running || tuning;
+        bool beeping = running;
         double vis = AudioSettings.dspTime - startDsp + match.audioOffset;
         long first = (long)Math.Floor(vis / interval) - 1; // 막 지나간 노트부터
         for (int i = 0; i < NotePool; i++)
@@ -247,7 +243,6 @@ public class LatencyCalibrator : MonoBehaviour
         {
             big = GUIStyleMaker.Label(fontSize: 28, alignment: TextAnchor.MiddleCenter);
             small = GUIStyleMaker.Label(fontSize: 18, alignment: TextAnchor.MiddleCenter);
-            buttonStyle = GUIStyleMaker.Button(fontSize: 22);
         }
 
         var white = Texture2D.whiteTexture;
@@ -275,23 +270,13 @@ public class LatencyCalibrator : MonoBehaviour
         title = Widget.Label(root, "노트가 판정선에 닿을 때 삑 소리에 맞춰 아무 키나 누르세요", new Rect(0, laneY - 150f, w, 40f), big);
         info = Widget.Label(root, "박자 익히는 중...", new Rect(0, laneY + 70f, w, 30f), small);
 
-        // 손 보정: -10 -1 +1 +10 완료. 측정 중에도 누를 수 있다
         offsetLabel = Widget.Label(root, "", new Rect(0, laneY + 120f, w, 30f), small);
         offsetLabel.Content.text = OffsetText();
-        float bw = 90f, bh = 44f, gap = 12f;
-        int[] steps = { -10, -1, 1, 10 };
-        float bx = w / 2f - (bw * 5f + gap * 4f) / 2f, by = laneY + 160f;
-        for (int i = 0; i < steps.Length; i++)
-        {
-            int ms = steps[i];
-            Widget.Button(root, (ms > 0 ? "+" : "") + ms, new Rect(bx + i * (bw + gap), by, bw, bh), () => Nudge(ms), buttonStyle);
-        }
-        Widget.Button(root, "완료", new Rect(bx + 4 * (bw + gap), by, bw, bh), CloseScreen, buttonStyle);
 
         esc = Widget.Label(root, "ESC  취소 (자동 측정 안 하고 지금 값으로)", new Rect(0, h - 50f, w, 30f), small);
 
         root.SetLayer(200);
-        root.isInteractable = true; // 버튼을 눌러야 해서 클릭을 받는다. 뒤 HUD(Restart 등)도 같이 막힘
+        root.isInteractable = true; // 클릭을 받아서 뒤 HUD(Restart 등)를 막는다
 
         // 인트로: 전체 페이드인, 레인은 가운데서 양옆으로 펼쳐지고, 글은 살짝 떠오른다
         root.FadeIn(fadeTime, 0f, TweenHelper.EaseOutQuad);

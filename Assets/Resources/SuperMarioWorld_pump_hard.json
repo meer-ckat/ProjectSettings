@@ -208,13 +208,8 @@
             "message": ""
         },
         {
-            "interval": 0.7183,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.513,
-            "input": 1,
+            "interval": 1.2313,
+            "input": 3,
             "message": ""
         },
         {
@@ -543,13 +538,8 @@
             "message": ""
         },
         {
-            "interval": 0.8209,
+            "interval": 1.4366,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.6157,
-            "input": 2,
             "message": ""
         },
         {

@@ -37,16 +37,18 @@ PROFILES = {
     'hard': dict(grid=12, min_gap_beats=0.25, min_gap_s=0.11, chords=True, max_chords_per_bar=4,
                  chord_space_beats=0.5, chord_min_strength=3, triple_min_strength=4,
                  same_lane_beats=0.25, same_lane_s=JACK_RISK, max_in_2s=16),
-    # 펌프(발판) 리듬 고르기. 발은 손보다 느리다: 쉬움 4분음표, 보통·어려움 8분까지. 동시치기 = 점프(양발)
+    # 펌프(발판) 리듬 고르기. 발은 손보다 느리다: 쉬움·보통 4분음표(2초 2개·4개), 어려움 8분까지(2초 5개). 동시치기 = 점프(양발)
     # 레인은 foot()이 발 교대에 맞춰 다시 정하므로 same_lane 규칙은 끈다
-    'pump_easy': dict(grid=1, min_gap_beats=1.0, min_gap_s=0.45, chords=False,
-                      same_lane_beats=0, same_lane_s=0, max_in_2s=4),
-    'pump_normal': dict(grid=2, min_gap_beats=0.5, min_gap_s=0.30, chords=True, max_chords_per_bar=1,
-                        chord_space_beats=1.0, chord_min_strength=4, triple_min_strength=99,  # 점프는 마디 첫 박에만
-                        same_lane_beats=0, same_lane_s=0, max_in_2s=6),
-    'pump_hard': dict(grid=2, min_gap_beats=0.5, min_gap_s=0.22, chords=True, max_chords_per_bar=2,
-                      chord_space_beats=1.0, chord_min_strength=3, triple_min_strength=99,  # 점프는 정박에만
-                      same_lane_beats=0, same_lane_s=0, max_in_2s=8),
+    # alt_s: 스텝 간격이 1박 또는 이 초보다 짧으면 왼발·오른발을 번갈아 (빠른 곡은 1박이 0.35초라 박 기준만으론 부족)
+    # 2026-10 발판으로 밟아 보고 너무 어렵다고 해서 한 단계씩 낮춤: 어려움 = 옛 보통 수준
+    'pump_easy': dict(grid=1, min_gap_beats=1.0, min_gap_s=0.55, chords=False,
+                      same_lane_beats=0, same_lane_s=0, max_in_2s=2, alt_s=0.8),
+    'pump_normal': dict(grid=1, min_gap_beats=1.0, min_gap_s=0.40, chords=True, max_chords_per_bar=1,
+                        chord_space_beats=2.0, chord_min_strength=4, triple_min_strength=99,  # 점프는 마디 첫 박, 앞뒤 2박 비었을 때만
+                        same_lane_beats=0, same_lane_s=0, max_in_2s=4, alt_s=0.8),
+    'pump_hard': dict(grid=2, min_gap_beats=0.5, min_gap_s=0.30, chords=True, max_chords_per_bar=1,
+                      chord_space_beats=1.0, chord_min_strength=4, triple_min_strength=99,  # 점프는 마디 첫 박에만
+                      same_lane_beats=0, same_lane_s=0, max_in_2s=5, alt_s=0.8),
 }
 
 
@@ -252,10 +254,11 @@ def foot(src, dst, prof_name):
     d, ev = load(dst)
     beat = 60.0 / d['bpm']
     off = d.get('gridOffset', 0.0) / beat
-    last_foot, last_b = None, None
+    alt = max(1.0, PROFILES[prof_name]['alt_s'] / beat)
+    last_foot, last_b, last_lanes = None, None, []
     for e in ev:
         lanes = sorted(set(e['lanes']))
-        fast = last_b is not None and e['b'] - last_b < 1.0 - 1e-4
+        fast = last_b is not None and e['b'] - last_b < alt - 1e-4
         if len(lanes) > 1:
             e['lanes'] = [0, 3] if strength(e['b'] - off) == 4 else [1, 2]
             last_foot = None  # 점프 뒤엔 어느 발이든
@@ -273,8 +276,10 @@ def foot(src, dst, prof_name):
                 e['lanes'] = [0 if src_lane == 0 else 1]
             else:
                 e['lanes'] = [3 if src_lane == 2 else 2]
+            if fast and e['lanes'][0] in last_lanes:  # 점프 바로 뒤 같은 칸 → 같은 발의 옆 칸 (0↔1, 2↔3)
+                e['lanes'] = [e['lanes'][0] ^ 1]
             last_foot = foot_side
-        last_b = e['b']
+        last_b, last_lanes = e['b'], e['lanes']
     save(dst, d, ev)
 
 

@@ -92,6 +92,7 @@ public class Match : MonoBehaviour
     };
     private const float LaneFlashTime = 0.2f;
     private readonly GUIImage[] laneFlash = new GUIImage[4];
+    public bool HideLaneFlash; // BadAppleDirector 카메라 연출 중: 화면에 곧게 선 기둥은 기울어진 레인과 안 맞아서 끈다
 
     // 펌프 모드: 곡 선택에서 켜고, 튜토리얼은 항상 키보드(3레인)
     bool pumpLane;
@@ -222,6 +223,9 @@ public class Match : MonoBehaviour
     // InputBlocked: 입력을 버리고 곡 시계도 멈춘다 → 노트가 그 자리에 얼고, 판정·Miss도 안 난다
     // HoldStart: Restart 뒤 음악 예약을 미룬다 (화면이 까만 동안 처음부터 다시 시작할 준비만)
     [HideInInspector] public bool InputBlocked;
+    // 치트(DebugKonami): 노트가 판정선에 닿는 순간 전부 Perfect로 친다. 켜져 있으면 손 입력은 버리고 기록도 안 남긴다
+    public static bool AutoPlay;
+    private bool autoPlayed; // 이번 판에 한 번이라도 켰나. 도중에 끄고 끝내도 기록 안 남김
     [HideInInspector] public bool HoldStart;
     public bool Started => started; // 음악이 예약돼서 currentTime이 이번 판 기준으로 돌고 있음 (BadApple이 본다)
 
@@ -334,7 +338,7 @@ public class Match : MonoBehaviour
     // 펌프 모드 준비. 키보드 모드면 채보에서 펌프 노트를 빼고, 펌프 모드면 C 레인 오른쪽에 D 레인을 만든다
     private void SetupPumpLane()
     {
-        pumpLane = SongSelect.PumpMode && FindAnyObjectByType<TutorialCoach>() == null;
+        pumpLane = SongSelect.PumpMode; //튜토리얼도 펌프 모드면 4레인 (TutorialCoach가 D 레인까지 돌려 씀)
 
         if (!pumpLane)
         {
@@ -356,7 +360,8 @@ public class Match : MonoBehaviour
         }
         GuideD.SetActive(true);
 
-        var playerInput = FindAnyObjectByType<PlayerInput>();
+        //씬에 PlayerInput이 2개(Setting용, 이것). 발판은 이 오브젝트 것에만 붙으니 꼭 이걸 써야 함
+        var playerInput = GetComponent<PlayerInput>();
         pumpAction = playerInput != null ? playerInput.actions.FindAction("d") : null;
         if (pumpAction != null)
             pumpAction.performed += OnD;
@@ -433,6 +438,7 @@ public class Match : MonoBehaviour
 
         notes = NoteManager.Instance.CurrentData.notes;
         SetupPumpLane();
+        SongSelect.ApplyInputScheme(GetComponent<PlayerInput>()); //이 오브젝트의 PlayerInput이 A/B/C 이벤트를 받음
 
         if (NoteManager.Instance.CurrentData.bpm > 0f)
             BPM = NoteManager.Instance.CurrentData.bpm;
@@ -530,6 +536,7 @@ public class Match : MonoBehaviour
 
         progressLevel = 1;
         judged = 0;
+        autoPlayed = false;
         perfect = 0;
         great = 0;
         good = 0;
@@ -579,6 +586,20 @@ public class Match : MonoBehaviour
         ExpireNotes();
         SpawnUpcomingNotes();
 
+        if (AutoPlay)
+        {
+            autoPlayed = true;
+            a = b = c = d = false;
+            for (int i = activeNotes.Count - 1; i >= 0; i--)
+            {
+                NoteObject note = activeNotes[i];
+                if (currentTime < note.hitTime)
+                    continue;
+                Resolve(note, Accuracy.Perfect);
+                ShowFeedback(note.input + " - Perfect (Auto)", JudgmentColor(Accuracy.Perfect));
+            }
+        }
+
         if (a)
             CheckAccuracyAndForward(NoteInputType.A);
 
@@ -598,6 +619,7 @@ public class Match : MonoBehaviour
 
         UpdateComboUI();
         UpdateSliderUI();
+        hudPanel.SetPos(new Vector2(GUIManager.LogicalWidth - 16 - 330, 16));
     }
 
     private bool paused;
@@ -677,8 +699,8 @@ public class Match : MonoBehaviour
         // 랭크는 정확도만 보고, 점수는 어떤 설정으로 쳤는지까지 반영한다
         int points = Points;
 
-        //최고기록 저장 (튜토리얼이나 Game씬 바로 실행은 SelectedDiff = -1이라 저장 안함)
-        if (SongSelect.SelectedDiff >= 0)
+        //최고기록 저장 (튜토리얼이나 Game씬 바로 실행은 SelectedDiff = -1이라 저장 안함, 자동 퍼펙트 치트도 저장 안함)
+        if (SongSelect.SelectedDiff >= 0 && !autoPlayed)
         {
             string key = SongSelect.BestKey(SongSelect.SelectedSong, SongSelect.SelectedDiff);
             if (MiracleProgress > PlayerPrefs.GetFloat(key, -1f))
@@ -1039,6 +1061,7 @@ public class Match : MonoBehaviour
             NoteObject note =
                 Instantiate(NotePrefab).GetComponent<NoteObject>();
 
+            note.transform.rotation = Quaternion.Euler(0, 0, notes[i].input==NoteInputType.A?90:notes[i].input==NoteInputType.B?0:notes[i].input==NoteInputType.C?-90:180);
             note.Setup(
                 notes[i].input,
                 hitTimes[i],
@@ -1310,11 +1333,15 @@ public class Match : MonoBehaviour
         if (!ready || !GUIStyleMaker.Initialized)
             return;
 
+        // 스토리 대사창이 위로 쌓이면서 판정 패널과 겹쳐서, 스토리가 끝난 뒤에 만든다 (인트로도 그때 나온다)
+        if (story != null && story.Playing)
+            return;
+
         if (hudPanel == null)
             BuildHud();
 
         // 음악 시작 전 MusicDelay초 동안 키 안내. 스토리가 있으면 끝난 다음부터
-        if (!guidesFlashed && (story == null || !story.Playing))
+        if (!guidesFlashed)
         {
             guidesFlashed = true;
             FlashGuide(guideAText);
@@ -1376,14 +1403,14 @@ public class Match : MonoBehaviour
         tutorsytle = GUIStyleMaker.Align(tutorsytle, TextAnchor.UpperCenter);
         tutorsytle = GUIStyleMaker.Background(tutorsytle, new Color(0.0f, 0.498f,1.0f,0.2f), Color.azure);
 
-        guideAText = Widget.BoxLabel("키보드 A", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideA.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
-        guideBText = Widget.BoxLabel("키보드 S", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideB.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
-        guideCText = Widget.BoxLabel("키보드 D", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideC.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+        guideAText = Widget.BoxLabel(!pumpLane?"키보드 A":"왼쪽 화살표", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideA.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+        guideBText = Widget.BoxLabel(!pumpLane?"키보드 S":"위쪽 화살표", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideB.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+        guideCText = Widget.BoxLabel(!pumpLane?"키보드 D":"오른쪽 화살표", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideC.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
         // 안내는 스토리가 끝난 뒤 LateUpdate가 띄운다
         guideAText.Opacity = guideBText.Opacity = guideCText.Opacity = 0f;
         if (pumpLane)
         {
-            guideDText = Widget.BoxLabel("펌프 F", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideD.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
+            guideDText = Widget.BoxLabel("아래쪽 화살표", new Rect(Camera.main.WorldToScreenPoint(new Vector3(GuideD.transform.position.x,HitPoint.transform.position.y,0)) - new Vector3(50, -50), new Vector2(100, 100)), tutorsytle);
             guideDText.Opacity = 0f;
         }
 
@@ -1427,6 +1454,8 @@ public class Match : MonoBehaviour
         hudPanel.Rect.height = y + 4f + 34f + 14f - 16f; // 줄 수에 맞춰 상자 높이 (위 16px은 창 y)
         feedbackShown = true;
 
+        hudPanel.SetPos(new Vector2(GUIManager.LogicalWidth - 16 - 330, 16));
+
         // 인트로: 패널과 줄이 왼쪽에서 차례로 튀어 들어온다 (그룹은 자식을 안 끌고 다녀서 전부에 건다)
         var parts = new List<GUIItem> { hudPanel };
         parts.AddRange(hudPanel.Childrens);
@@ -1446,8 +1475,8 @@ public class Match : MonoBehaviour
     private void FlashLane(NoteInputType lane, Accuracy result)
     {
         GUIImage flash = laneFlash[(int)lane];
-        if (flash == null)
-            return; // HUD가 아직 안 만들어짐
+        if (flash == null || HideLaneFlash)
+            return; // HUD가 아직 안 만들어짐, 또는 카메라 연출 중
 
         flash.Opacity = result == Accuracy.Perfect ? 0.45f : result == Accuracy.Great ? 0.3f : 0.18f;
         flash.FadeTo(0f, LaneFlashTime, 0f, TweenHelper.EaseOutQuad);

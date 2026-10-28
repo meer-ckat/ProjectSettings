@@ -82,7 +82,7 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -523,8 +523,30 @@
                 },
                 {
                     "name": "",
+                    "id": "3b690782-8518-483f-a62d-f3633bffee98",
+                    "path": "<HID::USB Gamepad >/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "a",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "cd57ea20-044a-4cdc-8a3c-5b3aa54993d3",
                     "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "b",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a990f8b3-7bc6-4bd3-abf1-3e0454f96be3",
+                    "path": "<HID::USB Gamepad >/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -545,8 +567,30 @@
                 },
                 {
                     "name": "",
+                    "id": "dfeb17fc-d79b-47d0-8461-363c9114e314",
+                    "path": "<HID::USB Gamepad >/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "c",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "65256479-c135-4653-904f-3b44853d42fe",
                     "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "d",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7280d9fb-fe01-4a0f-b92f-63d6a70e99d1",
+                    "path": "<HID::USB Gamepad >/button2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

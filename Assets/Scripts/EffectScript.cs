@@ -37,8 +37,15 @@ public class EffectScript : MonoBehaviour
         var corners = new Vector3[4];
         gage.GetWorldCorners(corners);
         Vector3 tip = (corners[2] + corners[3]) / 2f;
-        var cam = Camera.main.ScreenToWorldPoint(new Vector3(tip.x, tip.y, +1f));
-        glow.transform.position = cam;
+        // 화면 점에서 쏜 광선이 z = -2 평면(판정 박스 z = -1보다 앞)에 닿는 곳. 카메라 앞 1칸에 두면 perspective 연출 중엔 화면만큼 커진다
+        // ScreenPointToRay는 BadAppleDirector가 섞은 투영 행렬을 무시해서, 역행렬로 화면 점의 앞뒤 끝을 직접 구한다
+        Camera c = Camera.main;
+        Matrix4x4 inv = (c.projectionMatrix * c.worldToCameraMatrix).inverse;
+        Vector2 ndc = new Vector2(tip.x / c.pixelWidth * 2f - 1f, tip.y / c.pixelHeight * 2f - 1f);
+        Vector3 nearPt = inv.MultiplyPoint(new Vector3(ndc.x, ndc.y, -1f));
+        Ray ray = new Ray(nearPt, inv.MultiplyPoint(new Vector3(ndc.x, ndc.y, 1f)) - nearPt);
+        new Plane(Vector3.forward, new Vector3(0f, 0f, -2f)).Raycast(ray, out float hit);
+        glow.transform.position = ray.GetPoint(hit);
         float Scale = 0.4f + Size * 0.1f;
         glow.transform.localScale = new Vector3(Scale, Scale, Scale);
         Destroy(glow, 3);

@@ -1,0 +1,581 @@
+{
+    "bpm": 112.0,
+    "gridOffset": 0.1796,
+    "noteList": [
+        {
+            "interval": 2.3353,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 2.5,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.5,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.5,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.5,
+            "input": 3,
+            "message": ""
+        }
+    ]
+}

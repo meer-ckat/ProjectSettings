@@ -1,5 +1,7 @@
 {
   "lines": [
-    { "speaker": "나레이션", "portrait": "", "text": "lorem ipsum dolor sit amet Viva La Vida" }
+    {"speaker": "나레이션", "portrait": "", "text": "Lorem ipsum dolor sit amet."},
+    {"speaker": "도윤", "portrait": "Portraits/doyun", "text": "Lorem ipsum dolor sit amet."},
+    {"speaker": "주인공", "portrait": "Portraits/hero", "text": "Lorem ipsum dolor sit amet."}
   ]
 }

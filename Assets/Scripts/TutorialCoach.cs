@@ -48,6 +48,9 @@ public class TutorialCoach : MonoBehaviour
     {
         match = FindAnyObjectByType<Match>();
         dialogue = FindAnyObjectByType<DialogueManager>();
+        //펌프는 발로 밟아서 1박·1/2박 단계만 (1/3박 이하가 섞인 단계는 뺌)
+        if (SongSelect.PumpMode)
+            stages = Array.FindAll(stages, s => Array.TrueForAll(s.steps, x => x >= 0.5f));
         clicks = new AudioClip[stages.Length];
 
         yield return null; // Match.Start가 끝난 뒤에 캘리브레이션 (캘리브레이터가 match.Restart를 부름)
@@ -103,12 +106,13 @@ public class TutorialCoach : MonoBehaviour
         waiting = false;
         Stage s = stages[stage];
 
+        int lanes = SongSelect.PumpMode ? 4 : 3;
         var notes = new List<Note>();
         float beats = CountIn; // 다음 노트까지 간격 (첫 노트는 카운트인 뒤)
         float last = 0f;       // 마지막 노트 박 위치
         for (int i = 0; i < s.steps.Length * s.repeat; i++)
         {
-            notes.Add(new Note { interval = beats, input = (NoteInputType)(i % 3) }); // 레인 A→B→C 순환
+            notes.Add(new Note { interval = beats, input = (NoteInputType)(i % lanes) }); // 레인 A→B→C(→D) 순환
             last += beats;
             beats = s.steps[i % s.steps.Length];
         }

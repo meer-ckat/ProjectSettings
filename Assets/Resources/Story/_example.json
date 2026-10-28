@@ -1,7 +1,8 @@
 {
   "lines": [
-    { "speaker": "나레이션", "portrait": "", "text": "이 파일은 형식 예시입니다. 곡 id와 같은 이름(예: AS.json)으로 복사해서 쓰세요." },
-    { "speaker": "주인공", "portrait": "Portraits/hero", "text": "portrait에는 Resources 안 이미지 경로를 확장자 없이 적어요. 없으면 초상화 칸이 비어요." },
-    { "speaker": "주인공", "portrait": "Portraits/hero", "text": "같은 사람이 이어서 말하면 초상화는 그대로, 글만 바뀌어요." }
+    {"speaker": "나레이션", "portrait": "", "text": "이 파일은 형식 예시입니다. 곡 id와 같은 이름(예: AS.json)으로 복사해서 쓰세요. 나레이션은 가운데 창에 떠요."},
+    {"speaker": "민지", "portrait": "Portraits/minji", "text": "처음 나온 인물은 왼쪽 창이에요. portrait에는 Resources 안 이미지 경로를 확장자 없이 적어요."},
+    {"speaker": "주인공", "portrait": "Portraits/hero", "text": "두 번째로 나온 인물은 오른쪽 창, 초상화도 오른쪽 끝이에요. 없으면 초상화 칸만 비어요."},
+    {"speaker": "민지", "portrait": "Portraits/minji", "text": "대사마다 창이 새로 생기고 앞 창은 위로 밀려요. 한 창에 세 줄쯤 들어가니 길면 나눠 쓰세요."}
   ]
 }

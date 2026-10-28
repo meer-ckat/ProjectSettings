@@ -19,57 +19,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
             "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 3,
             "message": ""
         },
         {
@@ -78,7 +28,47 @@
             "message": ""
         },
         {
-            "interval": 1.5,
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 4.0,
             "input": 2,
             "message": ""
         },
@@ -118,22 +108,12 @@
             "message": ""
         },
         {
-            "interval": 1.5,
+            "interval": 3.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
+            "interval": 3.0,
             "input": 0,
             "message": ""
         },
@@ -178,23 +158,28 @@
             "message": ""
         },
         {
-            "interval": 1.5,
+            "interval": 3.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 1,
+            "interval": 3.0,
+            "input": 0,
             "message": ""
         },
         {
-            "interval": 1.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 1.5,
+            "interval": 1.0,
             "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
             "message": ""
         },
         {
@@ -204,7 +189,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -214,7 +199,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -224,22 +209,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -258,12 +228,7 @@
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.5001,
+            "interval": 3.0001,
             "input": 0,
             "message": ""
         },
@@ -288,18 +253,13 @@
             "message": ""
         },
         {
-            "interval": 2.0,
+            "interval": 2.9999,
             "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.9999,
-            "input": 1,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 2,
+            "input": 1,
             "message": ""
         },
         {
@@ -308,28 +268,13 @@
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
+            "interval": 5.0,
             "input": 0,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -364,17 +309,7 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
+            "input": 1,
             "message": ""
         },
         {
@@ -403,8 +338,13 @@
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 3,
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
             "message": ""
         }
     ]

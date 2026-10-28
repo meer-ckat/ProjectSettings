@@ -28,33 +28,18 @@
             "message": ""
         },
         {
-            "interval": 8.0,
+            "interval": 8.5,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": "drum"
         },
         {
             "interval": 5.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
+            "input": 3,
             "message": ""
         },
         {
@@ -79,7 +64,7 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
+            "input": 1,
             "message": ""
         },
         {
@@ -89,7 +74,12 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
             "message": ""
         },
         {
@@ -99,12 +89,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -133,13 +118,8 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
             "message": ""
         },
         {
@@ -188,12 +168,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -203,32 +183,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -238,38 +198,23 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 3,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
             "message": ""
         },
         {
@@ -283,47 +228,27 @@
             "message": ""
         },
         {
-            "interval": 1.5,
+            "interval": 2.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 2.0,
             "input": 3,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -353,33 +278,18 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
             "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.0,
+            "interval": 1.0,
             "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
             "message": ""
         },
         {
@@ -393,22 +303,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 3,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
+            "interval": 2.0,
             "input": 1,
             "message": ""
         },
@@ -418,18 +318,13 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 1,
+            "input": 2,
             "message": ""
         },
         {
@@ -438,38 +333,18 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
             "interval": 1.0,
             "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
@@ -493,37 +368,27 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 1,
-            "message": ""
-        },
-        {
             "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -538,57 +403,37 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
             "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 1,
             "message": ""
         },
@@ -653,22 +498,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -679,12 +514,12 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
+            "input": 1,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 1,
+            "input": 2,
             "message": ""
         },
         {
@@ -693,13 +528,8 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
             "message": ""
         },
         {
@@ -708,22 +538,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -733,18 +553,13 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 1,
+            "input": 2,
             "message": ""
         },
         {
@@ -753,22 +568,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -779,7 +584,12 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
             "message": ""
         },
         {
@@ -789,81 +599,21 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
         {
             "interval": 3.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 3,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 2.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -884,16 +634,6 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
@@ -908,32 +648,12 @@
             "message": ""
         },
         {
-            "interval": 0.0,
-            "input": 2,
+            "interval": 1.0,
+            "input": 3,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 1,
             "message": ""
         },
@@ -945,6 +665,11 @@
         {
             "interval": 1.0,
             "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 3,
             "message": ""
         },
         {
@@ -953,38 +678,8 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
             "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
             "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
             "message": ""
         },
         {
@@ -998,12 +693,52 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -1013,32 +748,102 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
+            "interval": 1.0,
+            "input": 0,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 2.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -1053,162 +858,7 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
             "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 1,
             "message": ""
         },
@@ -1223,12 +873,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -1238,33 +888,18 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
             "message": ""
         },
         {
@@ -1273,32 +908,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
             "message": "drum"
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 3,
             "message": ""
         },
@@ -1318,47 +933,7 @@
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 2.0,
             "input": 1,
             "message": ""
         },
@@ -1373,57 +948,7 @@
             "message": ""
         },
         {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
+            "interval": 2.0,
             "input": 3,
             "message": ""
         },
@@ -1433,37 +958,7 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 1,
-            "message": ""
-        },
-        {
             "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
@@ -1474,7 +969,12 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
@@ -1483,32 +983,82 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -1564,7 +1114,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -1574,7 +1124,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -1584,7 +1134,7 @@
         },
         {
             "interval": 1.0,
-            "input": 0,
+            "input": 2,
             "message": ""
         },
         {
@@ -1593,52 +1143,32 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 0,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
@@ -1648,22 +1178,12 @@
             "message": ""
         },
         {
-            "interval": 0.4999,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5001,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.4999,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5001,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -1673,12 +1193,82 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -1693,28 +1283,13 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
+            "interval": 2.0,
+            "input": 3,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 2,
+            "input": 1,
             "message": ""
         },
         {
@@ -1733,12 +1308,92 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 2.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 3.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 0.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -1748,262 +1403,7 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
             "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 2.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 2.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 3,
             "message": ""
         },
@@ -2018,26 +1418,6 @@
             "message": "vocal"
         },
         {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
             "interval": 1.0,
             "input": 1,
             "message": ""
@@ -2068,12 +1448,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -2083,12 +1463,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -2098,22 +1478,12 @@
             "message": ""
         },
         {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
             "interval": 1.5,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
             "input": 0,
             "message": ""
         },
@@ -2123,37 +1493,22 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
             "message": ""
         },
         {
             "interval": 2.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
         {
             "interval": 1.5,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
             "input": 0,
             "message": ""
         },
@@ -2163,58 +1518,33 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
             "message": ""
         },
         {
             "interval": 2.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
         {
             "interval": 1.5,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
             "input": 0,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
             "input": 2,
             "message": ""
         },
         {
             "interval": 1.0,
             "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
             "message": ""
         },
         {
@@ -2233,32 +1563,12 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 3,
             "message": ""
         },
@@ -2275,125 +1585,40 @@
         {
             "interval": 1.0,
             "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
             "message": ""
         },
         {
             "interval": 2.5,
-            "input": 2,
+            "input": 1,
             "message": ""
         },
         {
             "interval": 1.0,
-            "input": 1,
+            "input": 2,
             "message": "climax"
         },
         {
-            "interval": 8.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 8.5,
             "input": 3,
             "message": ""
         },
         {
-            "interval": 0.4999,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5001,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.4999,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5001,
-            "input": 2,
-            "message": ""
-        },
-        {
             "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
+            "interval": 1.0,
+            "input": 3,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
@@ -2408,28 +1633,48 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
+            "interval": 2.0,
+            "input": 0,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
+            "interval": 1.0,
+            "input": 3,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
             "interval": 1.0,
             "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
@@ -2448,47 +1693,27 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 2,
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
             "interval": 1.9999,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5001,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0001,
             "input": 1,
             "message": ""
         },
@@ -2499,36 +1724,31 @@
         },
         {
             "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 1,
+            "interval": 1.0,
+            "input": 0,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
@@ -2543,32 +1763,127 @@
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 2,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
-            "interval": 0.5,
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 2.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 2,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 0,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 3,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
+            "input": 1,
+            "message": ""
+        },
+        {
+            "interval": 1.0,
             "input": 3,
             "message": ""
         },
@@ -2579,181 +1894,6 @@
         },
         {
             "interval": 2.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 3,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.0,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 1,
-            "message": ""
-        },
-        {
-            "interval": 1.5,
             "input": 2,
             "message": ""
         },
@@ -2768,18 +1908,13 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
             "interval": 2.5,
-            "input": 1,
+            "input": 2,
             "message": ""
         },
         {
@@ -2788,12 +1923,7 @@
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 2.0,
             "input": 0,
             "message": ""
         },
@@ -2803,32 +1933,22 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 2.5,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
+            "interval": 2.5,
+            "input": 2,
+            "message": ""
+        },
+        {
             "interval": 1.5,
             "input": 0,
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 2.0,
             "input": 0,
             "message": ""
         },
@@ -2838,18 +1958,13 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
+            "interval": 1.0,
+            "input": 1,
             "message": ""
         },
         {
             "interval": 2.5,
-            "input": 1,
+            "input": 2,
             "message": "finale"
         },
         {
@@ -2858,12 +1973,7 @@
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 2.0,
             "input": 0,
             "message": ""
         },
@@ -2873,32 +1983,22 @@
             "message": ""
         },
         {
-            "interval": 0.5,
-            "input": 0,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 2.4999,
+            "interval": 1.0,
             "input": 1,
             "message": ""
         },
         {
+            "interval": 2.4999,
+            "input": 2,
+            "message": ""
+        },
+        {
             "interval": 1.5,
             "input": 0,
             "message": ""
         },
         {
-            "interval": 1.5,
-            "input": 2,
-            "message": ""
-        },
-        {
-            "interval": 0.5,
+            "interval": 2.0,
             "input": 0,
             "message": ""
         }

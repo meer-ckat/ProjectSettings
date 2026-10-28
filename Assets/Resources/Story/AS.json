@@ -1,5 +1,7 @@
 {
   "lines": [
-    { "speaker": "나레이션", "portrait": "", "text": "lorem ipsum dolor sit amet 또 하나의 계절" }
+    {"speaker": "나레이션", "portrait": "", "text": "Lorem ipsum dolor sit amet."},
+    {"speaker": "서준", "portrait": "Portraits/seojun", "text": "Lorem ipsum dolor sit amet."},
+    {"speaker": "주인공", "portrait": "Portraits/hero", "text": "Lorem ipsum dolor sit amet."}
   ]
 }

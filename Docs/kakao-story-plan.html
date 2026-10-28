@@ -1,0 +1,320 @@
+<title>카톡식 스토리 대사창</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 레이아웃: 위에 16:9 게임 화면 미리보기, 아래에 계획 본문 한 칼럼 */
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --fg: #16202a;
+  --muted: #5b6b7a;
+  --line: #d9e0e7;
+  --accent: #3a6ea5;
+  --code-bg: #eaeff4;
+  --warn: #b5541c;
+  --warn-bg: #fbeee4;
+  /* 게임 대사창 색 (StoryDialogue.cs 그대로). 게임 화면이라 테마와 상관없이 고정 */
+  --g-scene: #26323c;
+  --g-box: #ffffff;
+  --g-ink: #0b1215;
+  --g-face: #c9d3dc;
+  --font-display: "IBM Plex Sans KR", "Noto Sans KR", system-ui, sans-serif;
+  --font-body: "Noto Sans KR", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11171d; --surface: #182029; --fg: #e3e9ef; --muted: #93a3b3; --line: #2a3541;
+    --accent: #7fb0e3; --code-bg: #1f2a35; --warn: #f0a070; --warn-bg: #2e2119; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11171d; --surface: #182029; --fg: #e3e9ef; --muted: #93a3b3; --line: #2a3541;
+  --accent: #7fb0e3; --code-bg: #1f2a35; --warn: #f0a070; --warn-bg: #2e2119; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+.wrap { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 34px; }
+h1 { font-family: var(--font-display); font-size: 30px; line-height: 1.25; margin: 0 0 8px; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-size: 19px; margin: 0 0 10px; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0; max-width: 65ch; }
+.lede b { color: var(--fg); }
+section p { margin: 0 0 10px; max-width: 65ch; }
+code { font-family: var(--font-mono); font-size: 13px; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; margin: 0; }
+.rules { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.rules li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.rules li:last-child { border-bottom: 0; }
+.tag { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; justify-self: start; background: var(--code-bg); }
+ol.steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 12px; }
+ol.steps li { padding-left: 4px; max-width: 65ch; }
+ol.steps b { font-family: var(--font-display); }
+.file { color: var(--muted); font-size: 13px; }
+.warn { background: var(--warn-bg); border-left: 3px solid var(--warn); padding: 12px 16px; border-radius: 0 8px 8px 0; }
+.warn h2 { color: var(--warn); }
+.warn ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.skip { color: var(--muted); font-size: 14px; margin: 0; }
+
+/* ---- 게임 화면 미리보기 (1080p 기준 값을 % 로) ---- */
+.demo { display: flex; flex-direction: column; gap: 10px; }
+.songs { display: flex; flex-wrap: wrap; gap: 6px; }
+.songs button { font: 500 12.5px var(--font-body); border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 4px 10px; border-radius: 999px; cursor: pointer; }
+.songs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.songs button:focus-visible, .screen:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.screen { position: relative; aspect-ratio: 16 / 9; max-width: 100%; background: var(--g-scene); border-radius: 10px; overflow: hidden; cursor: pointer; user-select: none; container-type: size; }
+.esc { position: absolute; right: 3%; top: 3%; color: #fff; opacity: .5; font-size: 2.1cqh; }
+.box { position: absolute; bottom: 4cqh; width: 76%; height: 21cqh; background: var(--g-box); color: var(--g-ink); border: .35cqh solid var(--g-ink); border-radius: 1.3cqh; display: flex; gap: 2.2cqh; padding: 2cqh 2.6cqh; align-items: center; transition: transform .25s cubic-bezier(.25,.46,.45,.94), opacity .25s; animation: rise .4s cubic-bezier(.34,1.56,.64,1) both; }
+.box.left { left: 3%; }
+.box.right { right: 3%; flex-direction: row-reverse; }
+.box.mid { left: 50%; margin-left: -38%; justify-content: center; text-align: center; }
+.box.old { opacity: .6; }
+.face { width: 17cqh; height: 17cqh; flex: none; border-radius: .8cqh; background: var(--g-face); display: grid; place-items: center; font-weight: 700; font-size: 5cqh; color: var(--g-ink); }
+.txt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .6cqh; align-self: stretch; }
+.box.right .txt { text-align: right; }
+.name { font-weight: 700; font-size: 3.3cqh; }
+.say { font-size: 3.5cqh; line-height: 1.4; }
+.say .hide { color: transparent; }
+.mark { position: absolute; bottom: 1.3cqh; font-size: 2cqh; animation: blink 1s infinite; }
+.box.left .mark, .box.mid .mark { right: 2cqh; }
+.box.right .mark { left: 2cqh; }
+.hint { font-size: 12.5px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.hint button { font: 500 12.5px var(--font-body); background: none; border: 0; color: var(--accent); cursor: pointer; padding: 0; }
+@keyframes rise { from { opacity: 0; translate: 0 22cqh; } to { opacity: 1; translate: 0 0; } }
+@keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .box { animation: none; transition: none; } .mark { animation: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>카톡식 스토리 대사창</h1>
+    <p class="lede"><b>지금 대사창 모양(흰 상자·검은 테두리·초상화·이름·타자 효과)은 그대로 둔다.</b> 바뀌는 건 두 가지뿐. 대사가 나올 때마다 상자가 새로 생기고 앞 상자는 위로 밀려 올라간다. 그리고 인물에 따라 상자가 왼쪽이나 오른쪽에 붙는다.</p>
+  </header>
+
+  <section class="demo" aria-label="미리보기">
+    <div class="songs" id="songs"></div>
+    <div class="screen" id="screen" tabindex="0" role="button" aria-label="다음 대사">
+      <span class="esc">ESC 건너뛰기</span>
+    </div>
+    <div class="hint"><span>클릭·스페이스 = 글 다 보이기 → 다음 대사</span><button type="button" id="reset">처음부터</button></div>
+  </section>
+
+  <section>
+    <h2>규칙</h2>
+    <ul class="rules">
+      <li><span class="tag">JSON</span><span>형식 그대로. <code>speaker</code>, <code>portrait</code>, <code>text</code> 세 개. 새 필드 없음.</span></li>
+      <li><span class="tag">왼쪽·오른쪽</span><span>처음 나온 인물 = 왼쪽, 두 번째로 나온 인물 = 오른쪽, 세 번째 = 다시 왼쪽… 한 번 정해진 자리는 끝까지 안 바뀐다.</span></li>
+      <li><span class="tag">초상화</span><span>왼쪽 상자는 초상화가 왼쪽 끝, 오른쪽 상자는 초상화가 오른쪽 끝(바깥쪽). 이름·글도 그쪽으로 정렬.</span></li>
+      <li><span class="tag">나레이션</span><span><code>"나레이션"</code>이거나 speaker가 비면 가운데 상자, 초상화 없음.</span></li>
+      <li><span class="tag">위로 밀기</span><span>새 상자는 지금처럼 아래에서 튀어 올라오고, 떠 있던 상자는 전부 상자 높이+간격만큼 위로. 지난 상자는 살짝 흐리게(0.6), ▼는 맨 아래 상자에만.</span></li>
+      <li><span class="tag">조작</span><span>지금과 같음. 누르면 글 다 보이기 → 다음 대사. ESC = 전부 건너뛰기. 끝나면 지금처럼 아래로 빠지고 음악 시작.</span></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>구현 순서</h2>
+    <ol class="steps">
+      <li><b>상자 하나 만드는 함수로 떼기.</b> 지금 <code>Build()</code>에 있는 상자·초상화·이름·글·▼ 만드는 부분을 <code>MakeBox(Line, side)</code>로 옮긴다. 스타일·폰트·텍스처는 한 번만 만들고 같이 쓴다. 상자 폭은 화면의 76%, 높이 230, 간격 16(1080p 기준, 지금 300에서 줄임). 화면에 상자 4개가 꽉 차게 보인다.
+        <div class="file">StoryDialogue.cs · Build() 나누기</div></li>
+      <li><b>왼쪽·오른쪽 정하기.</b> <code>Dictionary&lt;string, int&gt;</code>에 인물이 처음 나온 순서를 적고, 짝수면 왼쪽 홀수면 오른쪽. 오른쪽이면 초상화 x를 상자 오른쪽 끝으로, 글 정렬을 <code>UpperRight</code>로.
+        <div class="file">StoryDialogue.cs · Next()</div></li>
+      <li><b>위로 밀기.</b> 상자마다 그 상자에 딸린 항목 묶음(<code>GUIItem[]</code>)과 목표 y를 들고 있는다. 새 대사가 오면 전부 목표 y에서 (높이+간격)을 빼고 <code>MoveTo</code> 0.25초.
+        <div class="file">StoryDialogue.cs · 새 리스트 boxes</div></li>
+      <li><b>화면 위로 나간 상자 지우기.</b> 목표 y가 0보다 위로 가면 <code>GUIManager.Unregister</code>.</li>
+      <li><b>끝내기.</b> <code>Finish()</code>는 지금 Wave를 남은 상자 전부에 건다. <code>EndedDsp</code> 기록은 그대로.</li>
+      <li><b>placeholder 스토리 6곡.</b> 위 미리보기 대사를 <code>Resources/Story/</code>의 각 곡 파일에 넣는다. 첫 줄 나레이션에 <code>임시 스토리</code>를 넣어 나중에 찾기 쉽게. <code>_example.json</code> 설명도 새 규칙으로.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>JSON 예시</h2>
+<pre>{
+  "lines": [
+    { "speaker": "나레이션", "portrait": "", "text": "임시 스토리. 연습실, 저녁 7시." },
+    { "speaker": "민지", "portrait": "Portraits/minji", "text": "오늘도 Bounce 첫 박 놓치면 치킨이다." },
+    { "speaker": "주인공", "portrait": "Portraits/hero", "text": "이번엔 안 놓쳐. 밤새 손목 풀었거든." },
+    { "speaker": "민지", "portrait": "Portraits/minji", "text": "말만. 시작한다?" }
+  ]
+}</pre>
+    <p class="file">민지가 먼저 나왔으니 왼쪽, 주인공은 오른쪽.</p>
+  </section>
+
+  <section class="warn">
+    <h2>조심할 것</h2>
+    <ul>
+      <li><b>그룹은 자식을 안 끌고 다닌다.</b> 상자만 옮기면 초상화·글이 제자리에 남는다. 지금 <code>parts</code>처럼 상자마다 묶음을 만들어 같이 옮긴다.</li>
+      <li><b>연타하면 위치가 어긋날 수 있다.</b> <code>MoveTo</code>는 "지금 위치"에서 출발한다. 그래서 목표 y를 따로 들고 거기서 빼야 상자가 겹치지 않는다.</li>
+      <li><b>상자 높이를 줄이면 긴 대사는 잘린다.</b> 230 높이에 38px 글씨면 세 줄쯤. 긴 대사는 두 줄로 나눠 쓴다.</li>
+    </ul>
+  </section>
+
+  <p class="skip">뺀 것: 자리를 JSON에서 직접 정하는 <code>side</code> 필드. 자동 배정이 안 맞는 장면이 생기면 그때 붙인다.</p>
+</div>
+
+<script>
+const STORIES = {
+  stage1: { title: "Bounce", lines: [
+    ["나레이션", "임시 스토리. 연습실, 저녁 7시."],
+    ["민지", "오늘도 Bounce 첫 박 놓치면 치킨이다."],
+    ["주인공", "이번엔 안 놓쳐. 밤새 손목 풀었거든."],
+    ["민지", "어제도 그 말 했잖아. 결국 두 마리 시켰고."],
+    ["주인공", "어제는 손이 덜 풀렸던 거고."],
+    ["민지", "변명은 치킨 먹으면서 들을게. 시작한다?"],
+    ["주인공", "와라. 이번엔 첫 박부터 간다."],
+  ]},
+  AS: { title: "또 하나의 계절", lines: [
+    ["나레이션", "임시 스토리. 가을, 오전 9시."],
+    ["서준", "벌써 가을이네. 작년 이맘때 기억나?"],
+    ["주인공", "그 곡 처음 쳤던 날이잖아."],
+    ["서준", "그때는 반도 못 쳤지. 후렴에서 손 꼬이고."],
+    ["주인공", "그 뒤로 매일 후렴만 쳤어."],
+    ["서준", "계절 하나 지날 동안 그것만?"],
+    ["주인공", "응. 그러니까 오늘은 끝까지 간다."],
+  ]},
+  SuperMarioWorld: { title: "Super Mario World", lines: [
+    ["나레이션", "임시 스토리. 오락실, 오후 4시."],
+    ["하린", "버섯 먹으면 커지는 거 알지?"],
+    ["주인공", "갑자기 웬 버섯."],
+    ["하린", "노트를 먹으면 점수가 커져. 콤보 끊지 마."],
+    ["주인공", "끊기면?"],
+    ["하린", "작아지지. 버섯 놓친 마리오처럼."],
+    ["주인공", "그럼 하나도 안 놓치면 되겠네."],
+    ["하린", "말은 쉽지. 코인 넣었다, 시작!"],
+  ]},
+  VivaLaVida: { title: "Viva La Vida", lines: [
+    ["나레이션", "임시 스토리. 자정 직전."],
+    ["도윤", "자정에 이 곡 들으면 기분 이상하지 않아?"],
+    ["주인공", "왕이었다가 다 잃은 사람 노래니까."],
+    ["도윤", "그럼 오늘은 왕으로 끝내자."],
+    ["주인공", "왕관은 풀콤 찍어야 주는 거지?"],
+    ["도윤", "당연하지. 미스 하나면 다시 평민."],
+    ["주인공", "종소리 울리기 전에 끝낸다."],
+  ]},
+  badapple: { title: "Bad Apple!!", lines: [
+    ["나레이션", "임시 스토리. 시간을 알 수 없다."],
+    ["???", "흑과 백만 남은 세계에 온 걸 환영해."],
+    ["주인공", "누구야?"],
+    ["???", "이름은 중요하지 않아. 박자만 중요하지."],
+    ["주인공", "박자를 놓치면?"],
+    ["???", "그림자에 먹혀. 나처럼."],
+    ["주인공", "…그럼 안 놓치면 돼."],
+    ["나레이션", "주변이 어두워진다."],
+  ]},
+  "one_republic-counting_stars": { title: "Counting Stars", lines: [
+    ["나레이션", "임시 스토리. 새벽 2시, 옥상."],
+    ["유나", "아직 안 자?"],
+    ["주인공", "잠이 안 와서 별 세는 중."],
+    ["유나", "몇 개 셌는데?"],
+    ["주인공", "세다 보면 자꾸 처음부터 다시 세게 돼."],
+    ["유나", "그럼 노트나 세. 그건 화면에 다 나오잖아."],
+    ["주인공", "좋아. 하나도 안 놓치고 세 볼게."],
+  ]},
+};
+
+const BOX_STEP = 22.5; // 상자 높이 21 + 간격 1.5 (화면 높이 %)
+const CHAR_MS = 30;    // StoryDialogue.charDelay 0.03
+const $ = id => document.getElementById(id);
+const screen = $("screen");
+let key, cur, sides, boxes, typing;
+
+function sideOf(who) {
+  if (!who || who === "나레이션") return "mid";
+  if (!(who in sides)) sides[who] = Object.keys(sides).length;
+  return sides[who] % 2 === 0 ? "left" : "right";
+}
+
+function makeBox(who, text) {
+  const side = sideOf(who);
+  const box = document.createElement("div");
+  box.className = "box " + side;
+  box.innerHTML = (side === "mid" ? "" : '<div class="face"></div>') +
+    '<div class="txt">' + (side === "mid" ? "" : '<div class="name"></div>') + '<div class="say"></div></div><span class="mark">▼</span>';
+  if (side !== "mid") {
+    box.querySelector(".face").textContent = who[0];
+    box.querySelector(".name").textContent = who;
+  }
+  box.dataset.lift = 0;
+  return box;
+}
+
+// 안 나온 글자도 투명하게 같이 그린다 (StoryDialogue와 같은 이유: 줄바꿈 위치 고정)
+function paint(n) {
+  const say = typing.box.querySelector(".say");
+  say.replaceChildren(document.createTextNode(typing.text.slice(0, n)));
+  const rest = document.createElement("span");
+  rest.className = "hide"; rest.textContent = typing.text.slice(n);
+  say.appendChild(rest);
+  typing.box.querySelector(".mark").hidden = n < typing.text.length;
+}
+
+function startTyping(box, text) {
+  typing = { box, text, n: 0 };
+  paint(0);
+  typing.timer = setInterval(() => {
+    typing.n++;
+    paint(typing.n);
+    if (typing.n >= text.length) { clearInterval(typing.timer); typing.timer = null; }
+  }, CHAR_MS);
+}
+
+function next() {
+  if (typing && typing.timer) { clearInterval(typing.timer); typing.timer = null; paint(typing.text.length); return; }
+  const lines = STORIES[key].lines;
+  if (cur + 1 >= lines.length) { finish(); return; }
+  const [who, text] = lines[++cur];
+
+  // 떠 있던 상자는 전부 한 칸 위로. 목표 값을 따로 들고 있어서 연타해도 안 겹친다
+  for (const b of boxes) {
+    b.dataset.lift = +b.dataset.lift + BOX_STEP;
+    b.style.transform = `translateY(-${b.dataset.lift}cqh)`;
+    b.classList.add("old");
+    b.querySelector(".mark").hidden = true;
+  }
+  boxes = boxes.filter(b => {
+    if (+b.dataset.lift > 100) { b.remove(); return false; }
+    return true;
+  });
+
+  const box = makeBox(who, text);
+  screen.appendChild(box);
+  boxes.push(box);
+  startTyping(box, text);
+}
+
+function finish() {
+  if (cur === Infinity) return;
+  cur = Infinity;
+  for (const b of boxes) { b.style.transform = `translateY(${30 - +b.dataset.lift}cqh)`; b.style.opacity = 0; }
+  setTimeout(() => {
+    const note = document.createElement("div");
+    note.className = "esc"; note.style.cssText = "left:0;right:0;top:45%;text-align:center;opacity:.8;font-size:2.6cqh";
+    note.textContent = "(여기서 음악 시작)";
+    screen.appendChild(note);
+  }, 300);
+}
+
+function load(k) {
+  if (typing && typing.timer) clearInterval(typing.timer);
+  key = k; cur = -1; sides = {}; boxes = []; typing = null;
+  screen.querySelectorAll(".box, .esc:not(:first-child)").forEach(e => e.remove());
+  document.querySelectorAll("#songs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.k === k));
+  next();
+}
+
+Object.entries(STORIES).forEach(([k, s]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.dataset.k = k; b.textContent = s.title;
+  b.onclick = () => load(k);
+  $("songs").appendChild(b);
+});
+screen.addEventListener("click", next);
+screen.addEventListener("keydown", e => {
+  if (e.key === " " || e.key === "Enter") { e.preventDefault(); next(); }
+  if (e.key === "Escape") finish();
+});
+$("reset").onclick = () => load(key);
+load("stage1");
+</script>

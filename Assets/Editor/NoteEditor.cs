@@ -90,6 +90,14 @@ public class NoteEditor : EditorWindow
     private AudioSource source;
     private bool playing;
 
+    // 재생 중 노트음: 게임 타건음과 같은 '틱'. 게임처럼 음악 시계 기준으로 0.1초 앞까지 미리 예약해서 음악과 딱 맞게 난다
+    private const string HitSoundPref = "NoteEditor.HitSound";
+    private bool hitSoundOn;
+    private readonly AudioSource[] hitSources = new AudioSource[16];
+    private int nextHitSource;
+    private AudioClip hitTick;
+    private float scheduledUntil = -1f; // 이 음악 시각(초)까지의 노트는 예약을 마침. -1 = 다시 잡기
+
     private readonly HashSet<EditorNote> selected = new();
     private EditorNote dragging; // 끌고 있는 노트. 선택된 나머지도 같이 움직인다
     private float dragOffset;
@@ -108,6 +116,7 @@ public class NoteEditor : EditorWindow
     {
         Undo.undoRedoPerformed += OnUndoRedo;
         LoadMidi(); // 가이드 목록은 직렬화 안 되니 스크립트 리로드 후 다시 읽는다
+        hitSoundOn = EditorPrefs.GetBool(HitSoundPref, true);
     }
 
     private void OnDisable()
@@ -115,6 +124,9 @@ public class NoteEditor : EditorWindow
         Undo.undoRedoPerformed -= OnUndoRedo;
         if (source != null)
             DestroyImmediate(source.gameObject);
+        foreach (AudioSource s in hitSources)
+            if (s != null)
+                DestroyImmediate(s.gameObject);
     }
 
     private void OnLostFocus() => held.Clear(); // 포커스 밖에서 뗀 키는 KeyUp이 안 옴
@@ -202,7 +214,61 @@ public class NoteEditor : EditorWindow
         }
 
         playheadBeat = Mathf.Max(0f, SecondsToBeat(source.timeSamples / (float)music.frequency + MusicOffset));
+        if (hitSoundOn)
+            ScheduleHitSounds();
         Repaint();
+    }
+
+    // 노트 시각(초) = 음악 시각. 게임 Match.ScheduleNoteSounds와 같은 기준이라 에디터에서 맞게 들리면 게임에서도 맞다.
+    // 이어폰 딜레이(AudioOffset)는 안 쓴다: 음악과 노트음이 같은 출력으로 나가서 같이 늦는다
+    private void ScheduleHitSounds()
+    {
+        if (hitTick == null)
+        {
+            int rate = AudioSettings.outputSampleRate; // 40ms 노이즈가 빠르게 줄어드는 틱 (게임 HitSound 기본값과 같음)
+            var data = new float[(int)(rate * 0.04f)];
+            var rng = new System.Random(1);
+            for (int i = 0; i < data.Length; i++)
+                data[i] = (float)(rng.NextDouble() * 2.0 - 1.0) * Mathf.Exp(-i / (rate * 0.006f));
+            hitTick = AudioClip.Create("NoteEditorHit", data.Length, 1, rate, false);
+            hitTick.SetData(data, 0);
+        }
+        for (int i = 0; i < hitSources.Length; i++)
+            if (hitSources[i] == null)
+            {
+                hitSources[i] = EditorUtility.CreateGameObjectWithHideFlags(
+                    "NoteEditorHit", HideFlags.HideAndDontSave, typeof(AudioSource)).GetComponent<AudioSource>();
+                hitSources[i].playOnAwake = false;
+            }
+
+        float musicNow = source.timeSamples / (float)music.frequency;
+        // 처음이거나 재생 바를 옮겼으면(되감기·건너뛰기) 지금부터 다시 예약
+        if (scheduledUntil < 0f || scheduledUntil < musicNow - 0.2f || scheduledUntil > musicNow + 1f)
+            scheduledUntil = musicNow;
+        float until = musicNow + 0.1f * speed;
+        double dspNow = AudioSettings.dspTime;
+        float last = -1f;
+        foreach (EditorNote n in notes.OrderBy(n => n.beat))
+        {
+            float t = BeatToSeconds(n.beat);
+            if (t <= scheduledUntil || t > until || Mathf.Abs(t - last) < 1e-4f)
+                continue; // 동시치기는 한 번만
+            last = t;
+            AudioSource s = hitSources[nextHitSource];
+            nextHitSource = (nextHitSource + 1) % hitSources.Length;
+            s.clip = hitTick;
+            s.volume = 0.8f;
+            s.PlayScheduled(dspNow + (t - musicNow) / speed);
+        }
+        scheduledUntil = until;
+    }
+
+    private void StopHitSounds()
+    {
+        scheduledUntil = -1f;
+        foreach (AudioSource s in hitSources)
+            if (s != null)
+                s.Stop(); // 예약만 해 둔 틱도 취소
     }
 
     private void Play()
@@ -226,6 +292,7 @@ public class NoteEditor : EditorWindow
         Seek(playheadBeat);
         source.Play();
         Seek(playheadBeat);
+        StopHitSounds();
         playing = true;
     }
 
@@ -563,6 +630,7 @@ public class NoteEditor : EditorWindow
     {
         if (source != null)
             source.Pause();
+        StopHitSounds();
         playing = false;
     }
 
@@ -895,10 +963,19 @@ public class NoteEditor : EditorWindow
                                            speed, 0.25f, 2f, GUILayout.Width(220));
             if (GUILayout.Button("1×", GUILayout.Width(28)))
                 speed = 1f;
+            bool newHit = GUILayout.Toggle(hitSoundOn, new GUIContent("노트음", "재생 중 노트마다 게임 타건음과 같은 틱 소리"), GUILayout.Width(64));
             if (EditorGUI.EndChangeCheck() && playing)
             {
                 source.pitch = speed;
                 Seek(playheadBeat); // 오프셋 길이가 바뀌어서 들리는 위치를 다시 맞춤
+                StopHitSounds();
+            }
+            if (newHit != hitSoundOn)
+            {
+                hitSoundOn = newHit;
+                EditorPrefs.SetBool(HitSoundPref, hitSoundOn);
+                if (!hitSoundOn)
+                    StopHitSounds();
             }
 
             if (GUILayout.Button("저장", GUILayout.Width(50)))

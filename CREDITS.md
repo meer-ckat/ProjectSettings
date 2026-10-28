@@ -14,6 +14,12 @@
 - Viva La Vida - Coldplay
 - Super Mario World - Overworld Theme - 콘도 코지 (Nintendo)
 - Kerosene - Crystal Castles
+- Bad Apple!! - Alstroemeria Records (feat. nomico), 영상 あにら (Anira)
+- Crab Rave - Noisestorm
+- Rolling in the Deep - Adele
+- Blinding Lights - The Weeknd
+- 또 하나의 계절 - 최준오
+- Bounce - Pixabay
 - Music provided by Matteo Bosi - www.alchemystudio.it (2D Handcrafted Art 수록곡)
 
 ## 효과음
@@ -57,6 +63,12 @@ All songs are the property of their respective copyright holders. They are used 
 - Viva La Vida - Coldplay
 - Super Mario World - Overworld Theme - Koji Kondo (Nintendo)
 - Kerosene - Crystal Castles
+- Bad Apple!! - Alstroemeria Records (feat. nomico), video by Anira
+- Crab Rave - Noisestorm
+- Rolling in the Deep - Adele
+- Blinding Lights - The Weeknd
+- Another Season (또 하나의 계절) - Choi Junoh (최준오)
+- Bounce - Pixabay
 - Music provided by Matteo Bosi - www.alchemystudio.it (from 2D Handcrafted Art)
 
 ## Sound Effects

@@ -48,3 +48,8 @@ Asset Store EULA상 에셋 원본 파일을 따로 재배포할 수 없다. 빌�
 | Viva La Vida | Coldplay |
 | Super Mario World - Overworld Theme | Nintendo / 近藤浩治 (Koji Kondo) |
 | Kerosene | Crystal Castles |
+| Bad Apple!! | Alstroemeria Records (feat. nomico) |
+| Crab Rave | Noisestorm (Monstercat) |
+| Rolling in the Deep | Adele |
+| Blinding Lights | The Weeknd |
+| 또 하나의 계절 | 최준오 |

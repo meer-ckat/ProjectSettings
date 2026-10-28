@@ -310,6 +310,46 @@ MonoBehaviour:
       \uC5C6\uC5C8\uC2B5\uB2C8\uB2E4. \uD30C\uC774\uC36C \uC778\uCF54\uB354\uB791
       ffmpeg \uBA85\uB839\uC5B4 \uBE7C\uACE0\uB294 \uC81C\uAC00 \uB2E4 \uD504\uB85C\uADF8\uB798\uBC0D
       \uD588\uC8E0."
+  - id: CrabRave
+    title: Crab Rave
+    artist: "\uB450\uC810\uBC15\uC774\uBBFC\uAF43\uAC8C"
+    cover: {fileID: 2800000, guid: 384deaecd831a0f40838ffc54f667416, type: 3}
+    easy_id: CrabRave_easy
+    normal_id: CrabRave_normal
+    hard_id: CrabRave_hard
+    easy_desc: "\uAC8C"
+    normal_desc: "\uCDA4\uCD94\uB294 \uAC8C"
+    hard_desc: "\uAC8C \uC5F4\uBCD1\uC2DD"
+  - id: RollingIn
+    title: Rolling In the deep
+    artist: Adele
+    cover: {fileID: 2800000, guid: 822868b68dcca5d4184ad0b7310bc0bf, type: 3}
+    easy_id: RollingIn_easy
+    normal_id: RollingIn_normal
+    hard_id: RollingIn_hard
+    easy_desc: "\uB864\uB9AC \uB864\uB9AC \uB864\uB9B0"
+    normal_desc: "\uAE4A\uC740 \uACF3\uC5D0\uC11C \uD68C\uC804"
+    hard_desc: "\uC544\uB378"
+  - id: Blinding Light
+    title: Blinding Lights
+    artist: The Weeknd
+    cover: {fileID: 2800000, guid: 822868b68dcca5d4184ad0b7310bc0bf, type: 3}
+    easy_id: Blinding Light_easy
+    normal_id: Blinding Light_normal
+    hard_id: Blinding Light_hard
+    easy_desc: "\uB208\uAC10\uAE30\uB294 \uBD88\t"
+    normal_desc: "\uC548\uBCF4\uC774\uB294 \uBD88"
+    hard_desc: "\uC12C\uAD11\uD0C4"
+  - id: Happiness
+    title: Happiness
+    artist: The Weekend
+    cover: {fileID: 2800000, guid: 822868b68dcca5d4184ad0b7310bc0bf, type: 3}
+    easy_id: Happiness_easy
+    normal_id: Happiness_normal
+    hard_id: Happiness_hard
+    easy_desc: "\uD589\uBCF5\t"
+    normal_desc: "\uC880 \uB35C \uD589\uBCF5"
+    hard_desc: "\u3145\u3142"
   creditText: "\uD06C\uB808\uB527\r\n\r\n\uC194\uAC00\uB78C\uACE0\uB4F1\uD559\uAD50
     \uC0C1\uC0C1\uACF5\uC791 \uC804\uB78C\uD68C \uCD9C\uD488\uC791 (\uBE44\uC601\uB9AC
     \uD559\uC0DD \uC791\uD488)\r\n\r\n[\uC81C\uC791]\r\n\uAC8C\uC784 \uB514\uC790\uC778,
@@ -322,7 +362,9 @@ MonoBehaviour:
     Stars - OneRepublic\r\nViva La Vida - Coldplay\r\nSuper Mario World - Overworld
     Theme - \uCF58\uB3C4 \uCF54\uC9C0 (Nintendo)\r\nKerosene - Crystal Castles\r\nBad
     Apple!! - Alstroemeria Records (feat. nomico), \uC601\uC0C1 \u3042\u306B\u3089
-    (Anira)\r\nMusic provided by Matteo Bosi - www.alchemystudio.it (2D Handcrafted
+    (Anira)\r\nCrab Rave - Noisestorm\r\nRolling in the Deep - Adele\r\nBlinding
+    Lights - The Weeknd\r\n또 하나의 계절 - 최준오\r\nBounce
+    - Pixabay\r\nMusic provided by Matteo Bosi - www.alchemystudio.it (2D Handcrafted
     Art \uC218\uB85D\uACE1)\r\n\r\n[\uD6A8\uACFC\uC74C]\r\nPixabay (Pixabay Content
     License)\r\n\r\n[\uAE00\uAF34]\r\n\uC5D0\uC774\uD22C\uC9C0\uCCB4 Medium - \uC5D0\uC774\uD22C\uC9C0\r\nLiberation
     Sans - Red Hat (SIL Open Font License 1.1)\r\n\r\n[\uADF8\uB798\uD53D\xB7\uC774\uD399\uD2B8
@@ -369,6 +411,13 @@ MonoBehaviour:
   - 1
   - 1.5
   - 2
+  difficultyScales_score:
+  - 1
+  - 0.8
+  - 0.6
+  - 0.4
+  lenientJudgeScale: 1.5
+  lenientScoreScale: 0.7
   windowTime: 0.2
 --- !u!114 &104606392
 MonoBehaviour:
@@ -519,6 +568,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9caa3d8a-6b2f-4e8e-8bad-6ede561bd9be
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 56a07466-7cfe-4492-8b7e-bbeaa162d991
+    m_ActionName: 'Player/d[/Keyboard/f,/USB Gamepad /button2]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

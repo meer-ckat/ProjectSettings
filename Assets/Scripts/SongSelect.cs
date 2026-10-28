@@ -28,6 +28,21 @@ public class SongSelect : MonoBehaviour
     //펌프 모드: 펌프 잇 업 발판(USB, 4칸 = A S D F 키). <곡>_pump_<easy|normal|hard> 발판 전용 채보를 쓴다. 메인 메뉴 SETTINGS에서 켬
     public static bool PumpMode = false;
     const string PumpKey = "pumpMode";
+
+    //게임 중에는 설정대로 입력 기기를 고정한다 (Match가 부름). 펌프 모드면 발판 + 키보드(예비), 아니면 키보드만. 발판이 안 꽂혀 있으면 키보드
+    //펌프 모드에도 키보드를 붙이는 이유: 레인 바인딩이 "USB Gamepad" 기종에만 묶여 있어서 다른 발판이면 발판 입력이 안 들어온다
+    //자동 전환은 끈다 (켜두면 발판이 꽂혀 있을 때 그쪽으로 넘어감)
+    public static void ApplyInputScheme(PlayerInput pi)
+    {
+        if (pi == null) return;
+        pi.neverAutoSwitchControlSchemes = true;
+        if (PumpMode && Joystick.current != null && Keyboard.current != null)
+            pi.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Joystick.current); //메뉴와 같은 방식. 넘긴 기기는 스킴과 상관없이 다 붙음
+        else if (PumpMode && Joystick.current != null)
+            pi.SwitchCurrentControlScheme("Joystick", Joystick.current);
+        else if (Keyboard.current != null)
+            pi.SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current);
+    }
     public AudioClip swipeClip;
     public AudioClip enterClip;
     private AudioSource source;
@@ -302,6 +317,10 @@ public class SongSelect : MonoBehaviour
         wait = true;
         Strict = PlayerPrefs.GetInt(StrictKey, 1) == 1; //저장 안 했으면 켜짐
         PumpMode = PlayerPrefs.GetInt(PumpKey, 0) == 1; //저장 안 했으면 키보드
+        //메뉴는 입력 모드와 상관없이 키보드와 발판 둘 다 받는다 (넘긴 기기는 스킴과 상관없이 다 붙음)
+        //ponytail: 메뉴 시작할 때 꽂혀 있던 발판만. 메뉴 도중에 꽂으면 씬을 다시 들어와야 함
+        if (Keyboard.current != null && Joystick.current != null)
+            GetComponent<PlayerInput>().SwitchCurrentControlScheme("Keyboard&Mouse", Keyboard.current, Joystick.current);
         Invoke(nameof(a), 2f);
         StartCoroutine(PreloadSamples());
     }
